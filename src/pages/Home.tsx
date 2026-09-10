@@ -260,7 +260,7 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-400">
-                Tell us about your business and what the website needs to do. If you&rsquo;re in Clark, include whether the site should support sales, recruitment, or both — we&rsquo;ll come back with a clear scope and a fixed price.
+                Tell us about your business and what the website needs to do — we&rsquo;ll come back with a clear scope and a fixed price.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

@@ -33,6 +33,8 @@ export function ContactPage() {
   const [needs, setNeeds] = useState<string[]>([]);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState | "needs", string>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendFailed, setSendFailed] = useState(false);
 
   const whatsappLink = useMemo(() => {
     const summary = [
@@ -56,7 +58,7 @@ export function ContactPage() {
     setErrors((prev) => ({ ...prev, needs: undefined }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const next: Partial<Record<keyof FormState | "needs", string>> = {};
     if (!form.name.trim()) next.name = "Please tell us your name.";
@@ -65,7 +67,34 @@ export function ContactPage() {
     if (!form.message.trim()) next.message = "A short description helps us help you.";
     if (!needs.length) next.needs = "Pick at least one option, or choose 'Something else'.";
     setErrors(next);
-    if (Object.keys(next).length === 0) setSubmitted(true);
+    if (Object.keys(next).length > 0) return;
+
+    setSending(true);
+    setSendFailed(false);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/erwinvalles20@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `New website enquiry — ${form.business || form.name}`,
+          Name: form.name,
+          Email: form.email,
+          Phone: form.phone || "Not provided",
+          Business: form.business || "Not provided",
+          "Current site": form.currentSite || "Not provided",
+          Needs: needs.join(", ") || "Not specified",
+          Budget: form.budget || "Not specified",
+          Timeline: form.timeline || "Not specified",
+          Message: form.message,
+        }),
+      });
+      if (!response.ok) throw new Error("Form submission failed");
+      setSubmitted(true);
+    } catch {
+      setSendFailed(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const fieldClass = (hasError?: string) =>
@@ -79,7 +108,7 @@ export function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title={<>Let&rsquo;s build something <span className="text-gold-gradient">great.</span></>}
-        intro="Tell us about your business and what the website needs to do. If you're in Clark, include whether the site should support sales, recruitment, or both — we'll reply with practical questions, a clear scope and a fixed price."
+        intro="Tell us about your business and what the website needs to do — we'll reply with practical questions, a clear scope and a fixed price."
         crumbs={[{ label: "Contact" }]}
         chips={["Free consultation", "Proposal within 48 hours", "No obligation"]}
       />
@@ -94,9 +123,9 @@ export function ContactPage() {
                     <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-400/15">
                       <CheckCircle2 className="h-8 w-8 text-emerald-400" aria-hidden="true" />
                     </span>
-                    <h2 className="mt-6 font-display text-2xl font-bold text-white">Thanks, {form.name.split(" ")[0] || "there"} — message noted.</h2>
+                    <h2 className="mt-6 font-display text-2xl font-bold text-white">Thanks, {form.name.split(" ")[0] || "there"} — we've got it.</h2>
                     <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-400">
-                      This demo form confirms your details locally. On the live site this would be sent straight to the studio inbox. To reach us immediately, use the phone or WhatsApp options on this page.
+                      Your message has been sent to the studio inbox. {site.responseTime} For anything urgent, use the phone or WhatsApp options below.
                     </p>
                     <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                       <GoldButton to={whatsappLink} external>Send these details on WhatsApp</GoldButton>
@@ -179,11 +208,24 @@ export function ContactPage() {
                       {errors.message && <p className="mt-2 flex items-center gap-1.5 text-xs text-rose-400"><AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />{errors.message}</p>}
                     </div>
 
+                    {sendFailed && (
+                      <div className="mt-6 flex items-start gap-3 rounded-2xl border border-rose-500/30 bg-rose-500/[0.06] px-5 py-4 text-sm text-rose-200">
+                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                        <p>
+                          Something went wrong sending that. Please try again, or reach us directly on{" "}
+                          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
+                            WhatsApp
+                          </a>{" "}
+                          or <a href={site.phoneHref} className="font-semibold underline underline-offset-2">phone</a>.
+                        </p>
+                      </div>
+                    )}
+
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                      <button type="submit" className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-8 py-4 text-sm font-semibold text-ink-950 shadow-[0_8px_36px_-8px_rgba(246,193,74,0.55)] transition-all duration-300 hover:brightness-110 active:scale-[0.98]">
+                      <button type="submit" disabled={sending} className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-8 py-4 text-sm font-semibold text-ink-950 shadow-[0_8px_36px_-8px_rgba(246,193,74,0.55)] transition-all duration-300 hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70">
                         <span className="absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[120%]" aria-hidden="true" />
                         <Send className="h-4 w-4" aria-hidden="true" />
-                        Send my request
+                        {sending ? "Sending…" : "Send my request"}
                       </button>
                       <p className="text-xs text-slate-500">We reply to most enquiries within a few hours on business days.</p>
                     </div>
