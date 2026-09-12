@@ -7,6 +7,10 @@ import { useRoute } from "@/router";
 const origin = "https://webdesignpampanga.com";
 const businessId = `${origin}/#business`;
 const websiteId = `${origin}/#website`;
+const authorId = `${origin}/#erwin-valles`;
+const socialImage = `${origin}/brand/og-image.svg`;
+const articlePublished = "2026-09-10";
+const articleModified = "2026-09-12";
 
 function canonicalPath(path: string) {
   if (path === "/") return "/";
@@ -102,13 +106,12 @@ export function StructuredData() {
             url,
             headline: post.title,
             description: post.metaDescription,
-            author: {
-              "@type": "Organization",
-              "@id": businessId,
-              name: "Web Design Pampanga",
-            },
+            image: [socialImage],
+            datePublished: articlePublished,
+            dateModified: articleModified,
+            author: { "@id": authorId },
             publisher: { "@id": businessId },
-            mainEntityOfPage: url,
+            mainEntityOfPage: { "@id": `${url}#webpage` },
             isPartOf: { "@id": websiteId },
             inLanguage: "en-PH",
           },
