@@ -7,6 +7,7 @@ import { StructuredData } from "@/components/StructuredData";
 import { RouterProvider, matchRoute, useRoute } from "@/router";
 import { HomePage } from "@/pages/Home";
 import { AboutPage } from "@/pages/About";
+import { AuthorPage } from "@/pages/Author";
 import { ServicePage } from "@/pages/ServicePage";
 import { IndustriesPage } from "@/pages/Industries";
 import { IndustryPage } from "@/pages/IndustryPage";
@@ -28,6 +29,7 @@ interface RouteDefinition {
 const routes: RouteDefinition[] = [
   { pattern: "/", render: () => <HomePage /> },
   { pattern: "/about", render: () => <AboutPage /> },
+  { pattern: "/author/erwin-valles", render: () => <AuthorPage /> },
   { pattern: "/portfolio", render: () => <PortfolioPage /> },
   { pattern: "/portfolio/:slug", render: (p) => <ProjectSitePage slug={p.slug} /> },
   { pattern: "/pricing", render: () => <PricingPage /> },
