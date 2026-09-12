@@ -33,17 +33,24 @@ const routes = new Set([
   ...blogSlugs.map((slug) => `/blog/${slug}/`),
 ]);
 
-function withCanonical(html, route) {
+function forRoute(html, route) {
   const canonical = `${origin}${route}`;
-  const tag = `    <link rel="canonical" href="${canonical}" />\n`;
-  return html.replace("    <meta name=\"theme-color\"", `${tag}    <meta name=\"theme-color\"`);
+  return html
+    .replace(
+      /<link rel="canonical" href="[^"]+"\s*\/>/,
+      `<link rel="canonical" href="${canonical}" />`,
+    )
+    .replace(
+      /<meta property="og:url" content="[^"]+"\s*\/>/,
+      `<meta property="og:url" content="${canonical}" />`,
+    );
 }
 
 for (const route of routes) {
   if (route === "/") continue;
   const dir = path.join(dist, route.replace(/^\//, ""));
   await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, "index.html"), withCanonical(template, route), "utf8");
+  await writeFile(path.join(dir, "index.html"), forRoute(template, route), "utf8");
 }
 
 await writeFile(path.join(dist, "404.html"), template, "utf8");
