@@ -148,7 +148,7 @@ function LiveWalkthrough({ project, active }: { project: Project; active: boolea
   );
 }
 
-function BrowserChrome({ project }: { project: Project }) {
+function BrowserChrome() {
   return (
     <div className="flex h-11 items-center gap-3 border-b border-white/[0.08] bg-[#090b11]/95 px-4 sm:px-5">
       <div className="flex gap-1.5" aria-hidden="true">
@@ -156,8 +156,8 @@ function BrowserChrome({ project }: { project: Project }) {
         <span className="h-2.5 w-2.5 rounded-full bg-white/12" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/[0.07]" />
       </div>
-      <div className="mx-auto max-w-[55%] truncate rounded-full border border-white/[0.06] bg-white/[0.035] px-4 py-1.5 text-center font-mono text-[9px] tracking-[0.08em] text-white/35 sm:text-[10px]">
-        {project.slug.replaceAll("-", "")}.com
+      <div className="mx-auto rounded-full border border-white/[0.06] bg-white/[0.035] px-4 py-1.5 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-white/30 sm:text-[10px]">
+        Interactive preview
       </div>
       <span className="w-[43px]" aria-hidden="true" />
     </div>
@@ -173,7 +173,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
   const y = useSpring(py, { stiffness: 90, damping: 22, mass: 0.45 });
   const shape = cardShapes[index % cardShapes.length];
   const frameShape = frameShapes[index % frameShapes.length];
-  const number = String(index + 1).padStart(2, "0");
+  const projectNumber = String(index + 1).padStart(2, "0");
   const accent = project.accent ?? "#f6c14a";
 
   const style = {
@@ -214,7 +214,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
 
       <motion.div style={{ x, y }} className="relative p-3 sm:p-4 lg:p-5">
         <div className={`${frameShape} overflow-hidden border border-white/[0.1] bg-[#090b11] shadow-[0_30px_80px_-34px_rgba(0,0,0,.95)]`}>
-          <BrowserChrome project={project} />
+          <BrowserChrome />
           <div className="h-[230px] sm:h-[310px] lg:h-[360px]">
             {project.image ? (
               <ScreenshotWalkthrough project={project} active={active} />
@@ -228,7 +228,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
       <div className="relative flex items-end justify-between gap-5 px-6 pb-7 pt-3 sm:px-8 sm:pb-8 sm:pt-4">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
-            <span style={{ color: accent }}>{number}</span>
+            <span style={{ color: accent }}>{projectNumber}</span>
             <span>{project.industry}</span>
             <span className="inline-flex items-center gap-1.5 normal-case tracking-normal text-white/30">
               <MapPin className="h-3 w-3" aria-hidden="true" />
