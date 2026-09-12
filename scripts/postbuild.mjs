@@ -8,6 +8,8 @@ const template = await readFile(path.join(dist, "index.html"), "utf8");
 const socialImage = `${origin}/brand/og-image.svg`;
 const articlePublished = "2026-09-10";
 const articleModified = "2026-09-12";
+const authorId = `${origin}/#erwin-valles`;
+const authorUrl = `${origin}/author/erwin-valles/`;
 
 function escapeHtml(value) {
   return value
@@ -38,6 +40,7 @@ const portfolioSlugs = await slugsFrom("src/data/portfolio.ts");
 
 const routeMeta = new Map([
   ["/about/", { title: "About Erwin Valles | Web Design Pampanga", description: "Meet Erwin Valles, the person behind Web Design Pampanga. Web design, technical SEO, local SEO and conversion-focused websites for Pampanga businesses." }],
+  ["/author/erwin-valles/", { title: "Erwin Valles | Web Designer & SEO Specialist in Pampanga", description: "Erwin Valles is the founder of Web Design Pampanga, working across web design, technical SEO, local SEO, structured data and conversion-focused website planning." }],
   ["/portfolio/", { title: "Web Design Portfolio | Web Design Pampanga", description: "Explore website design directions for businesses in Pampanga, including corporate, hospitality, healthcare, property and local service websites." }],
   ["/pricing/", { title: "Website Design Pricing Pampanga | Packages & Care Plans", description: "Website design pricing in Pampanga with clear starting prices, fixed project scopes and ongoing website care plans." }],
   ["/contact/", { title: "Contact Web Design Pampanga | Request a Fixed-Price Quote", description: "Contact Web Design Pampanga for a free consultation and fixed-price website quote. Call, WhatsApp or send your project details online." }],
@@ -46,7 +49,9 @@ const routeMeta = new Map([
   ["/blog/", { title: "Web Design & SEO Guides by Erwin Valles | Web Design Pampanga", description: "Detailed guides by Erwin Valles about web design, website costs, local SEO, conversion and choosing a web designer in Pampanga." }],
 ]);
 
-const routeKind = new Map();
+const routeKind = new Map([
+  ["/author/erwin-valles/", { kind: "author" }],
+]);
 for (const entry of serviceEntries) {
   const route = `/${entry.slug}/`;
   routeMeta.set(route, entry);
@@ -142,7 +147,7 @@ function schemaForRoute(route, meta) {
       name: meta.title,
       description: meta.description,
       isPartOf: { "@id": `${origin}/#website` },
-      about: { "@id": `${origin}/#business` },
+      about: { "@id": info?.kind === "author" ? authorId : `${origin}/#business` },
       inLanguage: "en-PH",
     },
     breadcrumbList(route, meta),
@@ -187,10 +192,36 @@ function schemaForRoute(route, meta) {
       datePublished: articlePublished,
       dateModified: articleModified,
       mainEntityOfPage: { "@id": `${canonical}#webpage` },
-      author: { "@id": `${origin}/#erwin-valles` },
+      author: { "@id": authorId },
       publisher: { "@id": `${origin}/#business` },
       inLanguage: "en-PH",
     });
+  }
+
+  if (info?.kind === "author") {
+    graph.push(
+      {
+        "@type": "ProfilePage",
+        "@id": `${authorUrl}#profile`,
+        url: authorUrl,
+        name: meta.title,
+        description: meta.description,
+        mainEntity: { "@id": authorId },
+        isPartOf: { "@id": `${origin}/#website` },
+        inLanguage: "en-PH",
+      },
+      {
+        "@type": "Person",
+        "@id": authorId,
+        name: "Erwin Valles",
+        url: authorUrl,
+        image: "https://avatars.githubusercontent.com/u/20321511?v=4",
+        jobTitle: "Web Designer & SEO Specialist",
+        worksFor: { "@id": `${origin}/#business` },
+        knowsAbout: ["Web design", "Technical SEO", "Local SEO", "Structured data", "Conversion rate optimization", "Website architecture"],
+        sameAs: ["https://github.com/erwinmehehe"],
+      },
+    );
   }
 
   const payload = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
@@ -255,7 +286,7 @@ await writeFile(path.join(dist, "404.html"), template, "utf8");
 
 const indexableRoutes = [...routes].filter((route) => !route.startsWith("/portfolio/") || route === "/portfolio/");
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/sitemap/0.9">
 ${indexableRoutes.map((route) => `  <url><loc>${origin}${route}</loc></url>`).join("\n")}
 </urlset>\n`;
 await writeFile(path.join(dist, "sitemap.xml"), sitemap, "utf8");
