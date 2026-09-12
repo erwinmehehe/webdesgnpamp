@@ -70,7 +70,7 @@ export function IndustryStrip() {
           </div>
         ) : (
           <div
-            className="flex w-max animate-marquee py-1 will-change-transform"
+            className="flex w-max animate-marquee py-1 will-change-transform [animation-duration:28s]"
             role="region"
             aria-label="Industries moving continuously from right to left"
           >
