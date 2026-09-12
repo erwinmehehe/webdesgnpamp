@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, Clock, Tag } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock, Github, Tag } from "lucide-react";
 import { CTABand, Eyebrow, GhostButton, GoldButton, PageHero, Section, SectionIntro } from "@/components/blocks";
 import { Reveal } from "@/components/Reveal";
 import { Link, usePageMeta } from "@/router";
@@ -9,7 +9,7 @@ import { NotFoundPage } from "@/pages/NotFound";
 export function BlogPage() {
   usePageMeta(
     "Blog | Web Design & SEO Insights for Pampanga Businesses",
-    "Practical guides on website costs, choosing a web designer, local SEO and what Clark businesses need from a website.",
+    "Practical guides by Erwin Valles on website costs, choosing a web designer, local SEO and building better business websites in Pampanga.",
   );
 
   const [featured, ...rest] = posts;
@@ -17,9 +17,9 @@ export function BlogPage() {
   return (
     <>
       <PageHero
-        eyebrow="Blog"
+        eyebrow="Blog by Erwin Valles"
         title={<>Practical notes on websites, search and <span className="text-gold-gradient">local business.</span></>}
-        intro="No fluff and no jargon: buying guides, pricing breakdowns and local SEO advice written for business owners in Pampanga who'd rather not become web experts."
+        intro="Detailed guides on web design, SEO, pricing and local search written for Pampanga business owners who want useful answers instead of generic marketing advice."
         crumbs={[{ label: "Blog" }]}
         chips={[...new Set(posts.map((p) => p.category))]}
       >
@@ -49,6 +49,7 @@ export function BlogPage() {
                 </div>
                 <h2 className="mt-5 font-display text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl lg:text-[2.2rem]">{featured.title}</h2>
                 <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-400">{featured.excerpt}</p>
+                <p className="mt-4 text-sm text-slate-500">By <Link to="/about/" className="font-medium text-slate-300 hover:text-gold-300">Erwin Valles</Link></p>
                 <div className="mt-7">
                   <Link to={`/blog/${featured.slug}/`} className="group/link inline-flex items-center gap-2 text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300">
                     Read the guide
@@ -59,7 +60,7 @@ export function BlogPage() {
               <div className="glass rounded-3xl p-6">
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-gold-400">In this guide</p>
                 <ul className="mt-4 space-y-3">
-                  {featured.blocks.filter((b) => b.type === "h2").slice(0, 4).map((block) => (
+                  {featured.blocks.filter((b) => b.type === "h2").slice(0, 5).map((block) => (
                     <li key={block.text} className="flex items-start gap-2.5 text-sm text-slate-300">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400" aria-hidden="true" />
                       {block.text}
@@ -101,7 +102,7 @@ function PostCard({ post }: { post: Post }) {
       <h3 className="mt-5 font-display text-lg font-semibold leading-snug text-white transition-colors duration-300 group-hover:text-gold-300">{post.title}</h3>
       <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-400">{post.excerpt}</p>
       <div className="mt-6 flex items-center justify-between border-t border-white/[0.07] pt-5">
-        <span className="text-xs text-slate-500">{post.date}</span>
+        <span className="text-xs text-slate-500">By {post.author}</span>
         <Link to={`/blog/${post.slug}/`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-400" aria-label={`Read ${post.title}`}>
           Read
           <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
@@ -157,7 +158,10 @@ export function BlogPostPage({ slug }: { slug: string }) {
             </div>
             <h1 className="mt-6 font-display text-[2rem] font-bold leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-[2.85rem]">{post.title}</h1>
             <p className="mt-5 text-base leading-relaxed text-slate-400 sm:text-lg">{post.excerpt}</p>
-            <p className="mt-6 text-sm text-slate-500">By {post.author} · {site.location}</p>
+            <div className="mt-6 flex items-center gap-3">
+              <img src="https://avatars.githubusercontent.com/u/20321511?v=4" alt="Erwin Valles" className="h-10 w-10 rounded-full border border-white/[0.1] object-cover" />
+              <p className="text-sm text-slate-500">By <Link to="/about/" className="font-medium text-slate-300 transition-colors hover:text-gold-300">Erwin Valles</Link> · Web Designer & SEO Specialist</p>
+            </div>
           </div>
         </section>
 
@@ -202,15 +206,34 @@ export function BlogPostPage({ slug }: { slug: string }) {
                 );
               })}
             </div>
+
+            <Reveal delay={0.08}>
+              <p className="mt-10 rounded-2xl border border-white/[0.07] bg-white/[0.025] px-6 py-5 text-sm leading-relaxed text-slate-400">
+                Need help applying this to your own website? Visit <Link to="/" className="font-semibold text-gold-400 transition-colors hover:text-gold-300">Web Design Pampanga</Link> for web design, technical SEO and local SEO support for businesses across Pampanga.
+              </p>
+            </Reveal>
+
             <Reveal delay={0.1}>
               <div className="mt-14 rounded-[2rem] border border-white/[0.07] bg-gradient-to-b from-white/[0.045] to-white/[0.012] p-8">
-                <Eyebrow>Written by the studio</Eyebrow>
-                <p className="mt-4 text-sm leading-relaxed text-slate-400">
-                  {site.name} is an independent web design studio based in Pampanga. We design clear, conversion-focused websites for businesses in Clark, Angeles City, San Fernando and across the province.
-                </p>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+                  <img src="https://avatars.githubusercontent.com/u/20321511?v=4" alt="Erwin Valles, founder of Web Design Pampanga" className="h-20 w-20 shrink-0 rounded-2xl border border-white/[0.1] object-cover" />
+                  <div className="min-w-0 flex-1">
+                    <Eyebrow>About the author</Eyebrow>
+                    <h2 className="mt-3 font-display text-xl font-semibold text-white">Erwin Valles</h2>
+                    <p className="mt-1 text-sm font-medium text-gold-400">Web Designer & SEO Specialist · Web Design Pampanga</p>
+                    <p className="mt-4 text-sm leading-relaxed text-slate-400">Erwin works across web design, technical SEO, local SEO, structured data, website architecture and conversion-focused page planning. He writes these guides from the same practical framework used when planning and improving business websites.</p>
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      <Link to="/about/" className="text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300">About Erwin</Link>
+                      <a href="https://github.com/erwinmehehe" target="_blank" rel="me noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 transition-colors hover:text-white">
+                        <Github className="h-4 w-4" aria-hidden="true" />
+                        GitHub
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-7 flex flex-col gap-3 border-t border-white/[0.07] pt-6 sm:flex-row">
                   <GoldButton to="/contact/" className="sm:w-auto">Get My Fixed-Price Quote</GoldButton>
-                  <GhostButton to="/portfolio/">See sample work</GhostButton>
+                  <GhostButton to="/">Web Design Pampanga</GhostButton>
                 </div>
               </div>
             </Reveal>
