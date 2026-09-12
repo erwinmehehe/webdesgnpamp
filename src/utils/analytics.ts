@@ -59,6 +59,10 @@ function classifyClick(anchor: HTMLAnchorElement) {
   }
 }
 
+function isQuoteForm(form: HTMLFormElement) {
+  return window.location.pathname.replace(/\/+$/, "") === "/contact";
+}
+
 export function initAnalytics() {
   if (gaId) {
     window.dataLayer = window.dataLayer || [];
@@ -70,7 +74,7 @@ export function initAnalytics() {
 
   if (clarityId) {
     window.clarity = window.clarity || ((...args: unknown[]) => {
-      const queued = (window.clarity as unknown as { q?: unknown[] });
+      const queued = window.clarity as unknown as { q?: unknown[] };
       queued.q = queued.q || [];
       queued.q.push(args);
     });
@@ -92,15 +96,15 @@ export function initAnalytics() {
   const startedForms = new WeakSet<HTMLFormElement>();
   document.addEventListener("focusin", (event) => {
     const target = event.target as Element | null;
-    const form = target?.closest('form[data-conversion-form="quote"]');
-    if (!(form instanceof HTMLFormElement) || startedForms.has(form)) return;
+    const form = target?.closest("form");
+    if (!(form instanceof HTMLFormElement) || !isQuoteForm(form) || startedForms.has(form)) return;
     startedForms.add(form);
     trackEvent("form_start", { form_name: "quote" });
   });
 
   document.addEventListener("submit", (event) => {
     const form = event.target;
-    if (form instanceof HTMLFormElement && form.dataset.conversionForm === "quote") {
+    if (form instanceof HTMLFormElement && isQuoteForm(form)) {
       trackEvent("form_submit_attempt", { form_name: "quote" });
     }
   });
