@@ -5,7 +5,7 @@ import {
   Smartphone, Sparkles, Timer, TrendingUp,
 } from "lucide-react";
 import { Link } from "@/router";
-import { clientLogos, site, trustBar } from "@/data/site";
+import { googleReviewsUrl, site, trustBar } from "@/data/site";
 
 const easeOut = [0.21, 0.65, 0.15, 1] as const;
 
@@ -100,7 +100,6 @@ export function Hero() {
           </a>
         </motion.div>
 
-        {/* Micro-copy — removes hesitation */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -110,7 +109,6 @@ export function Hero() {
           Free consult &middot; No obligation &middot; Reply within 2 hours
         </motion.p>
 
-        {/* Trust bar — proof immediately after the CTA */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,16 +127,15 @@ export function Hero() {
               </div>
             ))}
           </dl>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-            {clientLogos.map((logo) => (
-              <span
-                key={logo}
-                className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-600 transition-colors duration-300 hover:text-slate-400"
-              >
-                {logo}
-              </span>
-            ))}
-          </div>
+          <a
+            href={googleReviewsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-auto mt-4 flex w-fit items-center gap-2 text-xs font-semibold text-gold-400 transition-colors hover:text-gold-300"
+          >
+            Read our Google reviews
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }} className="mt-8 flex flex-col items-center justify-center gap-3 text-sm text-slate-400 sm:flex-row sm:gap-5">
@@ -153,7 +150,6 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* Browser mockup — interactive preview */}
         <motion.div initial={{ opacity: 0, y: 56, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 1.1, delay: 0.55, ease: easeOut }} className="relative mx-auto mt-16 max-w-5xl sm:mt-20">
           <div className="absolute -inset-x-10 -top-12 bottom-0 rounded-[3rem] bg-gradient-to-b from-gold-500/[0.14] via-orange-500/[0.05] to-transparent blur-2xl" aria-hidden="true" />
 
