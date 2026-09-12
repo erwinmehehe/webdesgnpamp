@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
-  MapPin,
   MessageCircle,
   Phone,
   Smartphone,
@@ -13,6 +12,15 @@ import {
 import { Hero } from "@/components/Hero";
 import { ProjectCard } from "@/components/ProjectCard";
 import { IndustryStrip } from "@/components/IndustryStrip";
+import {
+  AdvancedStudioCTA,
+  BeforeAfterSection,
+  CapabilitySection,
+  PerformanceProofSection,
+  ProjectBreakdownsSection,
+  SiteAuditSection,
+  StudioLabSection,
+} from "@/components/home/AdvancedStudioSections";
 import {
   CTABand,
   CheckList,
@@ -30,9 +38,8 @@ import {
 import { Reveal, staggerItem } from "@/components/Reveal";
 import { Link, usePageMeta } from "@/router";
 import { featuredProjects } from "@/data/portfolio";
-import { locations } from "@/data/locations";
 import { services } from "@/data/services";
-import { generalFaqs, painPoints, site } from "@/data/site";
+import { generalFaqs, site } from "@/data/site";
 
 const whyUs = [
   {
@@ -67,15 +74,15 @@ export function HomePage() {
       <Section id="work" divider>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
-            <Reveal><Eyebrow>Sample work</Eyebrow></Reveal>
+            <Reveal><Eyebrow>Interactive sample work</Eyebrow></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl lg:text-[2.6rem]">
-                Website directions for <span className="text-gold-gradient">different businesses.</span>
+              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
+                Move through the websites, not just <span className="text-gold-gradient">screenshots.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 text-base leading-relaxed text-slate-400">
-                These are design samples, not client case studies. Each one shows a different approach to layout, content and mobile UX.
+                Hover a sample on desktop and the page scrolls through the design. Each concept uses a different layout, content structure and visual direction.
               </p>
             </Reveal>
           </div>
@@ -101,42 +108,18 @@ export function HomePage() {
       </Section>
 
       <IndustryStrip />
-
-      <Section ambient divider>
-        <SectionIntro
-          eyebrow="Common website problems"
-          title={<>A website can look fine and still <span className="text-gold-gradient">cost you enquiries.</span></>}
-          description="Most problems are simple: the site is hard to understand, awkward on a phone, too slow, or makes it difficult to get in touch."
-        />
-        <div className="mt-14 grid gap-4 sm:grid-cols-2">
-          {painPoints.map((point, index) => (
-            <Reveal key={point.title} delay={0.08 * index}>
-              <div className="group flex h-full gap-5 rounded-3xl border border-white/[0.07] bg-gradient-to-b from-white/[0.04] to-white/[0.012] p-6 transition-all duration-500 hover:border-gold-400/25 sm:p-7">
-                <span className="font-display text-sm font-bold text-slate-600 transition-colors duration-500 group-hover:text-gold-400/70">0{index + 1}</span>
-                <div>
-                  <h3 className="font-display text-lg font-semibold text-white">{point.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{point.description}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal delay={0.2}>
-          <div className="mt-8 flex flex-col items-center justify-between gap-5 rounded-3xl border border-gold-400/20 bg-gradient-to-r from-gold-500/[0.08] to-white/[0.02] px-7 py-7 sm:flex-row">
-            <div className="text-center sm:text-left">
-              <p className="font-display text-lg font-semibold text-white">Start with the problem that matters most.</p>
-              <p className="mt-1 text-sm text-slate-400">A redesign does not need to change everything. It needs to fix the parts that are getting in the way.</p>
-            </div>
-            <GoldButton to="/web-design/" className="w-full shrink-0 sm:w-auto">See web design service</GoldButton>
-          </div>
-        </Reveal>
-      </Section>
+      <BeforeAfterSection />
+      <ProjectBreakdownsSection />
+      <StudioLabSection />
+      <CapabilitySection />
+      <PerformanceProofSection />
+      <SiteAuditSection />
 
       <Section id="services" divider>
         <SectionIntro
           eyebrow="Services"
-          title={<>What I can <span className="text-gold-gradient">help with.</span></>}
-          description="Web design, development, WordPress, ecommerce, redesigns, maintenance and SEO for businesses that want one person responsible for the website."
+          title={<>Design, code and SEO under <span className="text-gold-gradient">one roof.</span></>}
+          description="I can handle the visual design, frontend build, WordPress, ecommerce, redesign work, maintenance and search structure without handing the project between different suppliers."
         />
         <motion.div
           initial="hidden"
@@ -169,24 +152,24 @@ export function HomePage() {
       <Section id="why-us" ambient divider>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <Reveal><Eyebrow>Why Web Design Pampanga</Eyebrow></Reveal>
+            <Reveal><Eyebrow>How I work</Eyebrow></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl lg:text-[2.6rem]">
-                Direct, practical and <span className="text-gold-gradient">easy to work with.</span>
+              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.7rem]">
+                Advanced when useful. <span className="text-gold-gradient">Simple when better.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">
-                You work directly with me. I keep the scope clear, explain the trade-offs and build the site around the actual business, not a generic package.
+                Motion, 3D and custom interaction are tools, not decoration. I use them when they improve the experience and keep the core site fast, readable and easy to maintain.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-7">
-                <CheckList items={["Price and scope agreed before work starts", "You keep control of your domain, hosting and files", "Based in Pampanga and available directly", "Updates in plain English"]} />
+                <CheckList items={["Price and scope agreed before work starts", "You keep control of your domain, hosting and files", "Design and SEO planned together", "No unnecessary tech added for show"]} />
               </div>
             </Reveal>
             <Reveal delay={0.26}>
-              <div className="mt-8"><GoldButton to="/about/">About Erwin</GoldButton></div>
+              <div className="mt-8"><GoldButton to="/about/">About the studio</GoldButton></div>
             </Reveal>
           </div>
           <InfoCardGrid items={whyUs} columns={2} />
@@ -196,7 +179,7 @@ export function HomePage() {
           <Reveal>
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
               <div>
-                <Eyebrow>How it works</Eyebrow>
+                <Eyebrow>Process</Eyebrow>
                 <h3 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">Four steps from brief to launch.</h3>
               </div>
               <p className="max-w-sm text-sm leading-relaxed text-slate-500">You know what is being worked on, what I need from you and what happens next.</p>
@@ -208,7 +191,7 @@ export function HomePage() {
         <div className="mt-16"><StatStrip /></div>
       </Section>
 
-      <Section id="pricing" ambient divider>
+      <Section id="pricing" divider>
         <SectionIntro
           eyebrow="Pricing"
           title={<>Clear <span className="text-gold-gradient">starting prices.</span></>}
@@ -225,7 +208,7 @@ export function HomePage() {
         </Reveal>
       </Section>
 
-      <Section divider>
+      <Section ambient divider>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <Reveal><Eyebrow>FAQ</Eyebrow></Reveal>
@@ -247,18 +230,20 @@ export function HomePage() {
         </div>
       </Section>
 
+      <AdvancedStudioCTA />
+
       <Section id="contact" ambient divider>
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
           <div>
             <Reveal><Eyebrow>Get in touch</Eyebrow></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl lg:text-[2.6rem]">
+              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.7rem]">
                 Have a website project <span className="text-gold-gradient">in mind?</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-400">
-                Send the basics. I will review what you need and tell you what the next step should be.
+                Send the basics. I will review what you need, what can wait and what I would recommend building first.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
@@ -267,13 +252,9 @@ export function HomePage() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold-400/15"><Phone className="h-5 w-5 text-gold-400" aria-hidden="true" /></span>
                   <span><span className="block text-sm font-semibold text-white">{site.phoneDisplay}</span><span className="mt-0.5 block text-xs text-slate-500">Call or text · {site.hours}</span></span>
                 </a>
-                <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-400/30 hover:bg-white/[0.05]">
+                <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:bg-white/[0.05]">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-400/15"><MessageCircle className="h-5 w-5 text-emerald-400" aria-hidden="true" /></span>
                   <span><span className="block text-sm font-semibold text-white">WhatsApp</span><span className="mt-0.5 block text-xs text-slate-500">Send your business name and website link if you have one.</span></span>
-                </a>
-                <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-400/30 hover:bg-white/[0.05]">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-400/15"><MapPin className="h-5 w-5 text-violet-300" aria-hidden="true" /></span>
-                  <span><span className="block text-sm font-semibold text-white">{site.location}</span><span className="mt-0.5 block text-xs text-slate-500">View the business listing on Google</span></span>
                 </a>
               </div>
             </Reveal>
@@ -281,12 +262,13 @@ export function HomePage() {
 
           <Reveal delay={0.15}>
             <div className="glass rounded-[2rem] p-8">
-              <h3 className="font-display text-xl font-semibold text-white">Before I quote</h3>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold-400">Start with the project</p>
+              <h3 className="mt-4 font-display text-xl font-semibold text-white">I only need enough detail to scope the next step.</h3>
               <ol className="mt-6 space-y-6">
                 {[
-                  { title: "Tell me what you need", body: "Business name, current website if you have one, and the main thing you want to improve." },
-                  { title: "I review the scope", body: "I may ask a few questions if they affect the page count, features or timeline." },
-                  { title: "You get the price in writing", body: "The quote lists the scope, timeline, price and what is included." },
+                  { title: "What are you building?", body: "New website, redesign, ecommerce, SEO or something custom." },
+                  { title: "What matters most?", body: "More enquiries, clearer information, better search visibility, hiring, bookings or sales." },
+                  { title: "What already exists?", body: "A current website, brand assets, content, integrations or just the idea." },
                 ].map((item, index) => (
                   <li key={item.title} className="flex gap-4">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-400/25 bg-gold-400/10 font-display text-xs font-bold text-gold-400">0{index + 1}</span>
@@ -294,17 +276,7 @@ export function HomePage() {
                   </li>
                 ))}
               </ol>
-              <div className="mt-8"><GoldButton to="/contact/" className="w-full">Send project details</GoldButton></div>
-              <p className="mt-4 text-center text-xs text-slate-500">{site.responseTime}</p>
-              <ul className="mt-8 flex flex-wrap gap-2 border-t border-white/[0.07] pt-6" aria-label="Areas we serve">
-                {locations.map((location) => (
-                  <li key={location.slug}>
-                    <Link to={`/locations/${location.slug}/`} className="block rounded-full border border-white/[0.08] px-3 py-1 text-[11px] text-slate-500 transition-colors hover:border-gold-400/30 hover:text-gold-300">
-                      {location.shortName}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-8"><GoldButton to="/contact/" className="w-full">Start the project brief</GoldButton></div>
             </div>
           </Reveal>
         </div>
@@ -312,8 +284,8 @@ export function HomePage() {
 
       <CTABand
         eyebrow="Need a better website?"
-        title="Tell me what you are working with."
-        intro="I can look at the current site, the new project or even just a rough idea and tell you what I would recommend next."
+        title="Show me what you are working with."
+        intro="I can look at the current site, a new project or even a rough idea and tell you what I would recommend next."
       />
     </>
   );
