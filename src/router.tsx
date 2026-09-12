@@ -9,16 +9,12 @@ import {
   type ReactNode,
 } from "react";
 
-/* Hash-based router — every page reachable from a single static index.html.
- *   #/            -> home
- *   #/about/      -> about page
- *   #/#contact    -> home page, scrolled to #contact
- */
-
 export interface RouteState {
   path: string;
   anchor: string;
 }
+
+const origin = "https://webdesignpampanga.com";
 
 function normalize(path: string) {
   let p = path.trim();
@@ -27,10 +23,23 @@ function normalize(path: string) {
   return p === "" ? "/" : p;
 }
 
-export function parseHash(hash: string = window.location.hash): RouteState {
-  const raw = hash.replace(/^#/, "");
-  const [pathPart, anchor = ""] = raw.split("#");
-  return { path: normalize(pathPart || "/"), anchor };
+function canonicalPath(path: string) {
+  if (path === "/") return "/";
+  return `${normalize(path)}/`;
+}
+
+export function parseLocation(): RouteState {
+  const legacyHash = window.location.hash;
+  if (legacyHash.startsWith("#/")) {
+    const raw = legacyHash.slice(1);
+    const [legacyPath, legacyAnchor = ""] = raw.split("#");
+    return { path: normalize(legacyPath || "/"), anchor: legacyAnchor };
+  }
+
+  return {
+    path: normalize(window.location.pathname || "/"),
+    anchor: window.location.hash.replace(/^#/, ""),
+  };
 }
 
 const RouteContext = createContext<RouteState>({ path: "/", anchor: "" });
@@ -55,26 +64,30 @@ export function matchRoute(path: string, pattern: string): Record<string, string
 }
 
 export function navigate(to: string, opts: { replace?: boolean } = {}) {
-  const next = to.startsWith("#") ? to : `#${to}`;
-  if (window.location.hash === next) {
-    window.dispatchEvent(new Event("hashchange"));
-    return;
-  }
-  if (opts.replace) {
-    window.history.replaceState(null, "", next);
-    window.dispatchEvent(new Event("hashchange"));
-  } else {
-    window.location.hash = next;
-  }
+  const target = to.startsWith("#") ? `${window.location.pathname}${to}` : to;
+  const method = opts.replace ? "replaceState" : "pushState";
+  window.history[method](null, "", target);
+  window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
 export function RouterProvider({ children }: { children: ReactNode }) {
-  const [route, setRoute] = useState<RouteState>(() => parseHash());
+  const [route, setRoute] = useState<RouteState>(() => parseLocation());
 
   useEffect(() => {
-    const onChange = () => setRoute(parseHash());
+    if (window.location.hash.startsWith("#/")) {
+      const next = canonicalPath(route.path) + (route.anchor ? `#${route.anchor}` : "");
+      window.history.replaceState(null, "", next);
+      setRoute(parseLocation());
+      return;
+    }
+
+    const onChange = () => setRoute(parseLocation());
+    window.addEventListener("popstate", onChange);
     window.addEventListener("hashchange", onChange);
-    return () => window.removeEventListener("hashchange", onChange);
+    return () => {
+      window.removeEventListener("popstate", onChange);
+      window.removeEventListener("hashchange", onChange);
+    };
   }, []);
 
   useEffect(() => {
@@ -105,6 +118,7 @@ export function Link({
   ...rest
 }: { to: string } & AnchorHTMLAttributes<HTMLAnchorElement>) {
   const isExternal = /^(https?:|mailto:|tel:)/.test(to);
+  const href = isExternal ? to : to.startsWith("#") ? to : canonicalPath(to);
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement>) => {
       onClick?.(event);
@@ -117,23 +131,51 @@ export function Link({
   );
 
   return (
-    <a href={isExternal ? to : `#${to}`} onClick={handleClick} {...rest}>
+    <a href={href} onClick={handleClick} {...rest}>
       {children}
     </a>
   );
 }
 
+function upsertMeta(selector: string, attr: string, value: string) {
+  let tag = document.querySelector(selector);
+  if (!tag) {
+    tag = document.createElement("meta");
+    const match = selector.match(/meta\[(name|property)="([^"]+)"\]/);
+    if (match) tag.setAttribute(match[1], match[2]);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute(attr, value);
+}
+
 export function usePageMeta(title: string, description?: string) {
+  const { path } = useRoute();
+
   useEffect(() => {
-    document.title = title;
-    if (description) {
-      let tag = document.querySelector('meta[name="description"]');
-      if (!tag) {
-        tag = document.createElement("meta");
-        tag.setAttribute("name", "description");
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute("content", description);
+    const resolvedTitle =
+      path === "/" && title === "Web Design Pampanga | Professional Business Websites in Pampanga"
+        ? "Web Design Pampanga | Custom Websites for Local Businesses"
+        : title;
+    const resolvedDescription =
+      path === "/" && description
+        ? "Custom web design for Pampanga businesses. Mobile-first websites built for credibility, local SEO and more calls, messages and enquiries."
+        : description;
+
+    document.title = resolvedTitle;
+    if (resolvedDescription) {
+      upsertMeta('meta[name="description"]', "content", resolvedDescription);
+      upsertMeta('meta[property="og:description"]', "content", resolvedDescription);
     }
-  }, [title, description]);
+    upsertMeta('meta[property="og:title"]', "content", resolvedTitle);
+
+    const canonical = `${origin}${canonicalPath(path)}`;
+    let canonicalTag = document.querySelector('link[rel="canonical"]');
+    if (!canonicalTag) {
+      canonicalTag = document.createElement("link");
+      canonicalTag.setAttribute("rel", "canonical");
+      document.head.appendChild(canonicalTag);
+    }
+    canonicalTag.setAttribute("href", canonical);
+    upsertMeta('meta[property="og:url"]', "content", canonical);
+  }, [title, description, path]);
 }
