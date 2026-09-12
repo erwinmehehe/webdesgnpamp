@@ -3,6 +3,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContact } from "@/components/FloatingContact";
+import { StructuredData } from "@/components/StructuredData";
 import { RouterProvider, matchRoute, useRoute } from "@/router";
 import { HomePage } from "@/pages/Home";
 import { AboutPage } from "@/pages/About";
@@ -70,6 +71,7 @@ function Shell() {
 
   return (
     <div className="relative min-h-screen bg-ink-950 text-slate-300">
+      <StructuredData />
       <ScrollProgress />
       <a
         href="#main-content"
