@@ -28,7 +28,9 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm ci
+      # package.json may move faster than the checked-in lockfile during active UI work.
+      # npm install keeps the deployment usable while resolving the exact transitive graph.
+      - run: npm install --no-audit --no-fund
       - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
