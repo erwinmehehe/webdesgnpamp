@@ -1,25 +1,50 @@
-import { CheckCircle2, Clock, Github, HeartHandshake, MapPin, Palette, Search, ShieldCheck, Sparkles } from "lucide-react";
+import { CheckCircle2, Clock, Github, HeartHandshake, MapPin, Palette, Search, ShieldCheck } from "lucide-react";
 import {
-  CTABand, CheckList, CrossLinks, Eyebrow, GoldButton,
-  InfoCardGrid, PageHero, ProcessSteps, Section, SectionIntro, StatStrip,
+  CTABand,
+  CheckList,
+  CrossLinks,
+  Eyebrow,
+  GoldButton,
+  InfoCardGrid,
+  PageHero,
+  ProcessSteps,
+  Section,
+  SectionIntro,
+  StatStrip,
 } from "@/components/blocks";
 import { Reveal } from "@/components/Reveal";
 import { Link, usePageMeta } from "@/router";
 import { services } from "@/data/services";
-import { site, testimonials } from "@/data/site";
+import { site } from "@/data/site";
 
 const values = [
-  { icon: HeartHandshake, title: "One studio, start to finish", description: "Design, development, SEO and maintenance under one roof — so nothing falls between two suppliers who never speak." },
-  { icon: ShieldCheck, title: "Honest scope, fixed prices", description: "You get a written scope and a fixed number before we start. If something changes, you'll know the cost before any work continues." },
-  { icon: Clock, title: "Respect for your time", description: "We ask good questions early, keep meetings short, and give you plain-language updates instead of jargon and silence." },
-  { icon: Palette, title: "Craft over decoration", description: "Typography, spacing, hierarchy and speed get the attention. Trends and effects are used when they help the customer decide." },
+  {
+    icon: HeartHandshake,
+    title: "Direct contact",
+    description: "You work with me from the first conversation through launch. There is no account manager in the middle.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Clear scope and price",
+    description: "I write down what is included, the timeline and the price before the project starts.",
+  },
+  {
+    icon: Clock,
+    title: "Respect for your time",
+    description: "I keep meetings useful, ask for what I need and explain decisions without burying you in jargon.",
+  },
+  {
+    icon: Palette,
+    title: "Design with a job to do",
+    description: "Typography, layout and motion should make the site easier to use. They are not there just to decorate the page.",
+  },
 ];
 
 const specialties = [
-  "Conversion-focused web design",
-  "Technical SEO and site architecture",
-  "Local SEO for Pampanga businesses",
-  "Structured data and schema markup",
+  "Web design",
+  "Technical SEO",
+  "Local SEO",
+  "Structured data",
   "Content structure and internal linking",
   "CRO, analytics and lead tracking",
 ];
@@ -27,18 +52,18 @@ const specialties = [
 export function AboutPage() {
   usePageMeta(
     "About Erwin Valles | Web Design Pampanga",
-    "Meet Erwin Valles, the person behind Web Design Pampanga. Web design, technical SEO, local SEO and conversion-focused websites for Pampanga businesses.",
+    "Meet Erwin Valles, the web designer and SEO specialist behind Web Design Pampanga.",
   );
 
   return (
     <>
       <PageHero
-        eyebrow="About Web Design Pampanga"
-        title={<>A local studio with a real person <span className="text-gold-gradient">behind the work.</span></>}
-        intro="Web Design Pampanga is led by Erwin Valles. The work combines web design, SEO and conversion thinking so local businesses get a website that is easier to find, easier to trust and easier to contact."
+        eyebrow="About"
+        title={<>I&rsquo;m Erwin Valles, the person behind <span className="text-gold-gradient">Web Design Pampanga.</span></>}
+        intro="I design and improve websites for businesses that need better presentation, clearer content and stronger SEO foundations. You deal with me directly from planning to launch."
         crumbs={[{ label: "About" }]}
       >
-        <GoldButton to="/contact/">Get My Fixed-Price Quote</GoldButton>
+        <GoldButton to="/contact/">Start a project</GoldButton>
       </PageHero>
 
       <Section divider>
@@ -64,61 +89,109 @@ export function AboutPage() {
           </Reveal>
 
           <div>
-            <Reveal><Eyebrow>Founder</Eyebrow></Reveal>
+            <Reveal><Eyebrow>What I do</Eyebrow></Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">
-                Meet <span className="text-gold-gradient">Erwin Valles.</span>
+                Design, build and SEO in <span className="text-gold-gradient">one project.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <div className="mt-6 space-y-4 text-base leading-relaxed text-slate-400">
-                <p>Erwin is the person behind Web Design Pampanga. His work sits at the intersection of website design and SEO: planning pages around search intent, building clear customer journeys, improving technical crawlability, and making sure a website gives people an obvious next step.</p>
-                <p>That means projects are not treated as a visual redesign alone. Site structure, metadata, schema, internal links, local search signals, mobile usability and conversion paths are considered alongside typography, layout and branding.</p>
-                <p>For Pampanga businesses, the goal is practical: build a site that represents the business properly, can be understood by search engines, and helps turn more visitors into calls, messages, bookings or enquiries.</p>
+                <p>I work on the parts of a website that affect whether people understand the business, trust it and get in touch.</p>
+                <p>That includes the page structure, design, mobile layout, technical SEO, metadata, schema, internal links, forms and tracking. I would rather fix the basics properly than add effects that do not help the customer.</p>
+                <p>Most of my work is with businesses in Pampanga, but the process works the same way for remote projects.</p>
               </div>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-7 flex flex-wrap gap-3">
-                <a href="https://github.com/erwinmehehe" target="_blank" rel="me noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300"><Github className="h-4 w-4" aria-hidden="true" />GitHub profile</a>
-                <Link to="/author/erwin-valles/" className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300"><Search className="h-4 w-4" aria-hidden="true" />Author profile & articles</Link>
+                <a href="https://github.com/erwinmehehe" target="_blank" rel="me noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300">
+                  <Github className="h-4 w-4" aria-hidden="true" />GitHub
+                </a>
+                <Link to="/author/erwin-valles/" className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300">
+                  <Search className="h-4 w-4" aria-hidden="true" />Articles by Erwin
+                </Link>
               </div>
             </Reveal>
           </div>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{specialties.map((item, i) => <Reveal key={item} delay={0.05 * i}><div className="flex h-full items-start gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" /><span className="text-sm leading-relaxed text-slate-300">{item}</span></div></Reveal>)}</div>
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {specialties.map((item, index) => (
+            <Reveal key={item} delay={0.05 * index}>
+              <div className="flex h-full items-start gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
+                <span className="text-sm leading-relaxed text-slate-300">{item}</span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
         <div className="mt-16"><StatStrip /></div>
       </Section>
 
       <Section ambient divider>
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
-            <Reveal><Eyebrow>How we work</Eyebrow></Reveal>
-            <Reveal delay={0.08}><h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">Practical process, <span className="text-gold-gradient">careful craft.</span></h2></Reveal>
-            <Reveal delay={0.14}><div className="mt-6 space-y-4 text-base leading-relaxed text-slate-400"><p>Pampanga businesses rarely need a website for its own sake. They need more enquiries, better credibility with corporate buyers, an easier recruitment flow, or a presence that finally matches the quality of the work. We start there and work backwards into structure, design and code.</p><p>A focused site that launches in a month and converts is worth far more than an ambitious build that stalls for six months. If something is not needed yet, we will say so and plan it for later.</p></div></Reveal>
-            <Reveal delay={0.2}><div className="mt-7"><CheckList items={["Fixed price and written scope before any work starts", "Mobile-first design, tested on real devices", "On-page SEO foundations in every build", "You keep full ownership of domain, hosting and files"]} /></div></Reveal>
+            <Reveal><Eyebrow>How I work</Eyebrow></Reveal>
+            <Reveal delay={0.08}>
+              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">
+                Keep the project <span className="text-gold-gradient">simple and useful.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <div className="mt-6 space-y-4 text-base leading-relaxed text-slate-400">
+                <p>Before I design anything, I want to know what the website is supposed to improve. That might be enquiries, credibility, recruitment, local visibility or simply making the business easier to understand.</p>
+                <p>Once that is clear, the rest of the work is easier to judge. If a feature is not needed yet, I will say so.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div className="mt-7">
+                <CheckList items={["Written scope and price before work starts", "Mobile layouts included", "SEO basics included in the build", "You keep control of domain, hosting and files"]} />
+              </div>
+            </Reveal>
           </div>
+
           <Reveal delay={0.12}>
             <div className="glass rounded-[2rem] p-8">
-              <Eyebrow>Local presence</Eyebrow>
-              <div className="mt-5 flex items-start gap-3"><MapPin className="mt-1 h-5 w-5 shrink-0 text-gold-400" aria-hidden="true" /><div><p className="font-display text-lg font-semibold text-white">Built for Pampanga businesses</p><p className="mt-2 text-sm leading-relaxed text-slate-400">Working with businesses across Clark, Angeles City, San Fernando, Mabalacat and the wider province, with on-site or online project discussions depending on what is practical.</p></div></div>
-              <p className="mt-6 text-sm leading-relaxed text-slate-400">Local knowledge matters most when it changes the work: the services customers search for, how they prefer to contact a business, what trust signals matter, and how location pages should be written without turning into thin copy.</p>
-              <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex text-sm font-semibold text-gold-400 hover:text-gold-300">View Web Design Pampanga on Google →</a>
+              <Eyebrow>Based in Pampanga</Eyebrow>
+              <div className="mt-5 flex items-start gap-3">
+                <MapPin className="mt-1 h-5 w-5 shrink-0 text-gold-400" aria-hidden="true" />
+                <div>
+                  <p className="font-display text-lg font-semibold text-white">Working with businesses across Pampanga</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">Clark, Angeles City, San Fernando, Mabalacat and nearby areas are all within the normal service area.</p>
+                </div>
+              </div>
+              <p className="mt-6 text-sm leading-relaxed text-slate-400">Projects can be discussed online or in person when that makes sense. The website still needs to work for the people actually searching, calling and messaging locally.</p>
+              <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex text-sm font-semibold text-gold-400 hover:text-gold-300">View the Google Business Profile →</a>
             </div>
           </Reveal>
         </div>
       </Section>
 
-      <Section divider><SectionIntro eyebrow="What we stand for" title={<>Four commitments we don&rsquo;t <span className="text-gold-gradient">compromise on.</span></>} description="These shape how projects run and how decisions get made when scope, design and search requirements compete." /><div className="mt-14"><InfoCardGrid items={values} columns={2} /></div></Section>
-
-      <Section ambient divider>
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16"><div className="lg:sticky lg:top-28 lg:self-start"><Reveal><Eyebrow>Process</Eyebrow></Reveal><Reveal delay={0.08}><h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">Four stages, no surprises.</h2></Reveal><Reveal delay={0.14}><p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">Discovery, strategy, build and launch. Each stage has a clear purpose and a clear decision point before the project moves forward.</p></Reveal><Reveal delay={0.2}><div className="mt-7"><GoldButton to="/contact/">Start the conversation</GoldButton></div></Reveal><Reveal delay={0.24}><p className="mt-4 flex items-center gap-2 text-xs text-slate-500"><Sparkles className="h-3.5 w-3.5 text-gold-400/80" aria-hidden="true" />{site.responseTime}</p></Reveal></div><ProcessSteps /></div>
+      <Section divider>
+        <SectionIntro
+          eyebrow="What you can expect"
+          title={<>Four things I try to keep <span className="text-gold-gradient">consistent on every project.</span></>}
+          description="Clear ownership, clear scope, useful communication and design decisions that have a reason behind them."
+        />
+        <div className="mt-14"><InfoCardGrid items={values} columns={2} /></div>
       </Section>
 
-      <Section divider><SectionIntro eyebrow="In their words" title="What clients say after launch" description="Feedback from businesses that needed clearer websites, stronger mobile usability and better enquiry paths." /><div className="mt-14 grid gap-6 lg:grid-cols-3">{testimonials.map((t, i) => <Reveal key={t.name} delay={0.08 * i}><figure className="glass flex h-full flex-col rounded-3xl p-8"><blockquote className="flex-1 text-[15px] leading-relaxed text-slate-300">{t.quote}</blockquote><figcaption className="mt-6"><p className="text-sm font-semibold text-white">{t.name}</p><p className="mt-0.5 text-xs text-slate-500">{t.role} · {t.location}</p></figcaption></figure></Reveal>)}</div></Section>
+      <Section ambient divider>
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <Reveal><Eyebrow>Process</Eyebrow></Reveal>
+            <Reveal delay={0.08}><h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">Plan, design, build, launch.</h2></Reveal>
+            <Reveal delay={0.14}><p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">Four stages, with a clear decision before the project moves to the next one.</p></Reveal>
+            <Reveal delay={0.2}><div className="mt-7"><GoldButton to="/contact/">Tell me about the project</GoldButton></div></Reveal>
+            <Reveal delay={0.24}><p className="mt-4 text-xs text-slate-500">{site.responseTime}</p></Reveal>
+          </div>
+          <ProcessSteps />
+        </div>
+      </Section>
 
-      <CrossLinks eyebrow="Where to next" title="Explore what we do" links={services.slice(0, 6).map((s) => ({ label: s.name, description: s.short, to: `/${s.slug}/`, icon: s.icon }))} />
-      <CTABand eyebrow="Let's talk" title="Tell us what your website needs to do." intro="A short conversation is usually enough to know whether we're the right studio for your project — and what it would realistically cost." />
+      <CrossLinks eyebrow="Services" title="What I can help with" links={services.slice(0, 6).map((service) => ({ label: service.name, description: service.short, to: `/${service.slug}/`, icon: service.icon }))} />
+      <CTABand eyebrow="Have a project in mind?" title="Tell me what you need." intro="Send the basics and I will tell you what I would recommend, what it should cost and what I need from you to start." />
     </>
   );
 }
