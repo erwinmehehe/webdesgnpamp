@@ -63,6 +63,14 @@ function isQuoteForm(form: HTMLFormElement) {
   return window.location.pathname.replace(/\/+$/, "") === "/contact";
 }
 
+function quoteFormLooksValid(form: HTMLFormElement) {
+  const name = (form.querySelector<HTMLInputElement>("#name")?.value || "").trim();
+  const email = (form.querySelector<HTMLInputElement>("#email")?.value || "").trim();
+  const message = (form.querySelector<HTMLTextAreaElement>("#message")?.value || "").trim();
+  const hasNeed = Boolean(form.querySelector('button[aria-pressed="true"]'));
+  return Boolean(name && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && message && hasNeed);
+}
+
 export function initAnalytics() {
   if (gaId) {
     window.dataLayer = window.dataLayer || [];
@@ -83,7 +91,7 @@ export function initAnalytics() {
 
   trackPageView();
 
-  const onNavigation = () => window.setTimeout(trackPageView, 0);
+  const onNavigation = () => window.setTimeout(trackPageView, 50);
   window.addEventListener("popstate", onNavigation);
   window.addEventListener("hashchange", onNavigation);
 
@@ -104,8 +112,10 @@ export function initAnalytics() {
 
   document.addEventListener("submit", (event) => {
     const form = event.target;
-    if (form instanceof HTMLFormElement && isQuoteForm(form)) {
-      trackEvent("form_submit_attempt", { form_name: "quote" });
+    if (!(form instanceof HTMLFormElement) || !isQuoteForm(form)) return;
+    trackEvent("form_submit_attempt", { form_name: "quote" });
+    if (quoteFormLooksValid(form)) {
+      trackEvent("form_submit", { form_name: "quote" });
     }
   });
 }
