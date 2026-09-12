@@ -56,6 +56,10 @@ export function AuthorPage() {
               <img
                 src="https://avatars.githubusercontent.com/u/20321511?v=4"
                 alt="Erwin Valles, founder of Web Design Pampanga"
+                width="460"
+                height="460"
+                loading="lazy"
+                decoding="async"
                 className="aspect-square w-full rounded-2xl object-cover"
               />
               <div className="mt-6">
