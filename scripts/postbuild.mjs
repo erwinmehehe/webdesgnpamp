@@ -5,6 +5,9 @@ const root = process.cwd();
 const dist = path.join(root, "dist");
 const origin = "https://webdesignpampanga.com";
 const template = await readFile(path.join(dist, "index.html"), "utf8");
+const socialImage = `${origin}/brand/og-image.svg`;
+const articlePublished = "2026-09-10";
+const articleModified = "2026-09-12";
 
 function escapeHtml(value) {
   return value
@@ -180,6 +183,9 @@ function schemaForRoute(route, meta) {
       headline: titleBeforePipe(meta.title),
       description: meta.description,
       url: canonical,
+      image: [socialImage],
+      datePublished: articlePublished,
+      dateModified: articleModified,
       mainEntityOfPage: { "@id": `${canonical}#webpage` },
       author: { "@id": `${origin}/#erwin-valles` },
       publisher: { "@id": `${origin}/#business` },
@@ -224,7 +230,12 @@ function forRoute(html, route) {
       .replace(/<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${description}" />`);
 
     if (routeKind.get(route)?.kind === "article") {
-      output = output.replace('<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />');
+      output = output
+        .replace('<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />')
+        .replace(
+          "  </head>",
+          `    <meta property="article:published_time" content="${articlePublished}" />\n    <meta property="article:modified_time" content="${articleModified}" />\n  </head>`,
+        );
     }
 
     output = output.replace("  </head>", `${schemaForRoute(route, meta)}  </head>`);
