@@ -49,7 +49,7 @@ export function BlogPage() {
                 </div>
                 <h2 className="mt-5 font-display text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl lg:text-[2.2rem]">{featured.title}</h2>
                 <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-400">{featured.excerpt}</p>
-                <p className="mt-4 text-sm text-slate-500">By <Link to="/about/" className="font-medium text-slate-300 hover:text-gold-300">Erwin Valles</Link></p>
+                <p className="mt-4 text-sm text-slate-500">By <Link to="/author/erwin-valles/" className="font-medium text-slate-300 hover:text-gold-300">Erwin Valles</Link></p>
                 <div className="mt-7">
                   <Link to={`/blog/${featured.slug}/`} className="group/link inline-flex items-center gap-2 text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300">
                     Read the guide
@@ -160,7 +160,7 @@ export function BlogPostPage({ slug }: { slug: string }) {
             <p className="mt-5 text-base leading-relaxed text-slate-400 sm:text-lg">{post.excerpt}</p>
             <div className="mt-6 flex items-center gap-3">
               <img src="https://avatars.githubusercontent.com/u/20321511?v=4" alt="Erwin Valles" className="h-10 w-10 rounded-full border border-white/[0.1] object-cover" />
-              <p className="text-sm text-slate-500">By <Link to="/about/" className="font-medium text-slate-300 transition-colors hover:text-gold-300">Erwin Valles</Link> · Web Designer & SEO Specialist</p>
+              <p className="text-sm text-slate-500">By <Link to="/author/erwin-valles/" className="font-medium text-slate-300 transition-colors hover:text-gold-300">Erwin Valles</Link> · Web Designer & SEO Specialist</p>
             </div>
           </div>
         </section>
@@ -223,7 +223,7 @@ export function BlogPostPage({ slug }: { slug: string }) {
                     <p className="mt-1 text-sm font-medium text-gold-400">Web Designer & SEO Specialist · Web Design Pampanga</p>
                     <p className="mt-4 text-sm leading-relaxed text-slate-400">Erwin works across web design, technical SEO, local SEO, structured data, website architecture and conversion-focused page planning. He writes these guides from the same practical framework used when planning and improving business websites.</p>
                     <div className="mt-5 flex flex-wrap gap-3">
-                      <Link to="/about/" className="text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300">About Erwin</Link>
+                      <Link to="/author/erwin-valles/" className="text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300">Erwin&apos;s author profile</Link>
                       <a href="https://github.com/erwinmehehe" target="_blank" rel="me noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 transition-colors hover:text-white">
                         <Github className="h-4 w-4" aria-hidden="true" />
                         GitHub
