@@ -74,16 +74,17 @@ export function RouterProvider({ children }: { children: ReactNode }) {
   const [route, setRoute] = useState<RouteState>(() => parseLocation());
 
   useEffect(() => {
-    if (window.location.hash.startsWith("#/")) {
-      const next = canonicalPath(route.path) + (route.anchor ? `#${route.anchor}` : "");
-      window.history.replaceState(null, "", next);
-      setRoute(parseLocation());
-      return;
-    }
-
     const onChange = () => setRoute(parseLocation());
     window.addEventListener("popstate", onChange);
     window.addEventListener("hashchange", onChange);
+
+    if (window.location.hash.startsWith("#/")) {
+      const current = parseLocation();
+      const next = canonicalPath(current.path) + (current.anchor ? `#${current.anchor}` : "");
+      window.history.replaceState(null, "", next);
+      setRoute(parseLocation());
+    }
+
     return () => {
       window.removeEventListener("popstate", onChange);
       window.removeEventListener("hashchange", onChange);
