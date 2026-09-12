@@ -51,20 +51,27 @@ export function StructuredData() {
           serviceType: service.name,
           description: service.metaDescription,
           provider: { "@id": businessId },
-          areaServed: {
-            "@type": "AdministrativeArea",
-            name: "Pampanga, Philippines",
-          },
-          availableChannel: {
-            "@type": "ServiceChannel",
-            serviceUrl: `${origin}/contact/`,
-          },
+          areaServed: { "@type": "AdministrativeArea", name: "Pampanga, Philippines" },
+          availableChannel: { "@type": "ServiceChannel", serviceUrl: `${origin}/contact/` },
           isPartOf: { "@id": websiteId },
         },
-        breadcrumb([
-          { name: "Home", path: "/" },
-          { name: service.name, path: cleanPath },
-        ]),
+        breadcrumb([{ name: "Home", path: "/" }, { name: service.name, path: cleanPath }]),
+      );
+    }
+
+    if (path === "/services") {
+      graph.push(
+        {
+          "@type": "CollectionPage",
+          "@id": `${url}#webpage`,
+          url,
+          name: "Web Design & SEO Services Pampanga",
+          description: "Web design, development, WordPress, ecommerce, redesign, maintenance and SEO services for Pampanga businesses.",
+          isPartOf: { "@id": websiteId },
+          about: { "@id": businessId },
+          inLanguage: "en-PH",
+        },
+        breadcrumb([{ name: "Home", path: "/" }, { name: "Services", path: "/services/" }]),
       );
     }
 
@@ -81,17 +88,10 @@ export function StructuredData() {
             serviceType: "Web Design",
             description: location.metaDescription,
             provider: { "@id": businessId },
-            areaServed: {
-              "@type": "Place",
-              name: `${location.name}, Pampanga, Philippines`,
-            },
+            areaServed: { "@type": "Place", name: `${location.name}, Pampanga, Philippines` },
             isPartOf: { "@id": websiteId },
           },
-          breadcrumb([
-            { name: "Home", path: "/" },
-            { name: "Locations", path: "/locations/" },
-            { name: location.shortName, path: cleanPath },
-          ]),
+          breadcrumb([{ name: "Home", path: "/" }, { name: "Locations", path: "/locations/" }, { name: location.shortName, path: cleanPath }]),
         );
       }
     }
@@ -116,11 +116,7 @@ export function StructuredData() {
             isPartOf: { "@id": websiteId },
             inLanguage: "en-PH",
           },
-          breadcrumb([
-            { name: "Home", path: "/" },
-            { name: "Blog", path: "/blog/" },
-            { name: post.title, path: cleanPath },
-          ]),
+          breadcrumb([{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: post.title, path: cleanPath }]),
         );
       }
     }
@@ -148,29 +144,26 @@ export function StructuredData() {
           knowsAbout: ["Web design", "Technical SEO", "Local SEO", "Structured data", "Conversion rate optimization", "Website architecture"],
           sameAs: ["https://github.com/erwinmehehe"],
         },
-        breadcrumb([
-          { name: "Home", path: "/" },
-          { name: "Erwin Valles", path: "/author/erwin-valles/" },
-        ]),
+        breadcrumb([{ name: "Home", path: "/" }, { name: "Erwin Valles", path: "/author/erwin-valles/" }]),
       );
     }
 
     const staticCrumbs: Record<string, string> = {
       "/about": "About",
+      "/why-web-design-pampanga": "Why Web Design Pampanga",
       "/portfolio": "Portfolio",
       "/pricing": "Pricing",
       "/contact": "Contact",
       "/industries": "Industries",
       "/locations": "Locations",
       "/blog": "Blog",
+      "/privacy-policy": "Privacy Policy",
+      "/terms": "Website Terms",
+      "/case-studies": "Case Studies",
+      "/thank-you": "Thank You",
     };
     if (staticCrumbs[path]) {
-      graph.push(
-        breadcrumb([
-          { name: "Home", path: "/" },
-          { name: staticCrumbs[path], path: cleanPath },
-        ]),
-      );
+      graph.push(breadcrumb([{ name: "Home", path: "/" }, { name: staticCrumbs[path], path: cleanPath }]));
     }
 
     if (!graph.length) return;
@@ -178,10 +171,7 @@ export function StructuredData() {
     const script = document.createElement("script");
     script.id = "route-structured-data";
     script.type = "application/ld+json";
-    script.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@graph": graph,
-    });
+    script.text = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
     document.head.appendChild(script);
 
     return () => script.remove();
