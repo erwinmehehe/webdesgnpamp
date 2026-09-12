@@ -8,6 +8,7 @@ const origin = "https://webdesignpampanga.com";
 const businessId = `${origin}/#business`;
 const websiteId = `${origin}/#website`;
 const authorId = `${origin}/#erwin-valles`;
+const authorUrl = `${origin}/author/erwin-valles/`;
 const socialImage = `${origin}/brand/og-image.svg`;
 const articlePublished = "2026-09-10";
 const articleModified = "2026-09-12";
@@ -122,6 +123,36 @@ export function StructuredData() {
           ]),
         );
       }
+    }
+
+    if (path === "/author/erwin-valles") {
+      graph.push(
+        {
+          "@type": "ProfilePage",
+          "@id": `${authorUrl}#profile`,
+          url: authorUrl,
+          name: "Erwin Valles | Web Designer & SEO Specialist in Pampanga",
+          description: "Erwin Valles is the founder of Web Design Pampanga and writes about web design, technical SEO, local SEO, structured data and conversion-focused website planning.",
+          mainEntity: { "@id": authorId },
+          isPartOf: { "@id": websiteId },
+          inLanguage: "en-PH",
+        },
+        {
+          "@type": "Person",
+          "@id": authorId,
+          name: "Erwin Valles",
+          url: authorUrl,
+          image: "https://avatars.githubusercontent.com/u/20321511?v=4",
+          jobTitle: "Web Designer & SEO Specialist",
+          worksFor: { "@id": businessId },
+          knowsAbout: ["Web design", "Technical SEO", "Local SEO", "Structured data", "Conversion rate optimization", "Website architecture"],
+          sameAs: ["https://github.com/erwinmehehe"],
+        },
+        breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Erwin Valles", path: "/author/erwin-valles/" },
+        ]),
+      );
     }
 
     const staticCrumbs: Record<string, string> = {
