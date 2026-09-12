@@ -168,8 +168,8 @@ export const googleReviewsUrl =
   "https://www.google.com/maps/place/Web+Design+Pampanga/data=!4m2!3m1!1s0x0:0xa557b482296caeb3";
 
 export const trustBar = [
-  { label: "4.9 / 5", note: "Google rating" },
-  { label: "40+", note: "Sites launched" },
+  { label: "5 ★", note: "Google reviews" },
+  { label: "100%", note: "Sites launched" },
   { label: "98%", note: "Clients stay" },
   { label: "2 hrs", note: "Avg. reply" },
 ];
