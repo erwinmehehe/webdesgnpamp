@@ -34,13 +34,13 @@ const blogEntries = await entriesFrom("src/data/blog.ts");
 const portfolioSlugs = await slugsFrom("src/data/portfolio.ts");
 
 const routeMeta = new Map([
-  ["/about/", { title: "About Web Design Pampanga | Local Web Design Studio", description: "Meet Web Design Pampanga, an independent studio building clear, fast and conversion-focused websites for businesses across Pampanga." }],
+  ["/about/", { title: "About Erwin Valles | Web Design Pampanga", description: "Meet Erwin Valles, the person behind Web Design Pampanga. Web design, technical SEO, local SEO and conversion-focused websites for Pampanga businesses." }],
   ["/portfolio/", { title: "Web Design Portfolio | Web Design Pampanga", description: "Explore website design directions for businesses in Pampanga, including corporate, hospitality, healthcare, property and local service websites." }],
   ["/pricing/", { title: "Website Design Pricing Pampanga | Packages & Care Plans", description: "Website design pricing in Pampanga with clear starting prices, fixed project scopes and ongoing website care plans." }],
   ["/contact/", { title: "Contact Web Design Pampanga | Request a Fixed-Price Quote", description: "Contact Web Design Pampanga for a free consultation and fixed-price website quote. Call, WhatsApp or send your project details online." }],
   ["/industries/", { title: "Web Design by Industry | Web Design Pampanga", description: "Web design for Pampanga businesses across BPO, hospitality, healthcare, construction, property, logistics, restaurants and professional services." }],
   ["/locations/", { title: "Web Design Across Pampanga | Areas We Serve", description: "Web design services across Pampanga including San Fernando, Angeles City, Clark, Mabalacat, Guagua, Porac, Mexico and Bacolor." }],
-  ["/blog/", { title: "Web Design & Local SEO Guides | Web Design Pampanga", description: "Practical guides about web design, website costs, local SEO, conversion and choosing a web designer in Pampanga." }],
+  ["/blog/", { title: "Web Design & SEO Guides by Erwin Valles | Web Design Pampanga", description: "Detailed guides by Erwin Valles about web design, website costs, local SEO, conversion and choosing a web designer in Pampanga." }],
 ]);
 
 const routeKind = new Map();
@@ -181,7 +181,7 @@ function schemaForRoute(route, meta) {
       description: meta.description,
       url: canonical,
       mainEntityOfPage: { "@id": `${canonical}#webpage` },
-      author: { "@id": `${origin}/#business` },
+      author: { "@id": `${origin}/#erwin-valles` },
       publisher: { "@id": `${origin}/#business` },
       inLanguage: "en-PH",
     });
