@@ -7,7 +7,7 @@ Language: English (Philippines)
 Primary market: Pampanga, Philippines
 Business name: Web Design Pampanga
 Founder and article author: Erwin Valles
-Founder profile: https://webdesignpampanga.com/about/
+Founder profile: https://webdesignpampanga.com/author/erwin-valles/
 GitHub profile: https://github.com/erwinmehehe
 Phone: +63 967 248 8693
 Email: hello@webdesignpampanga.com
@@ -17,7 +17,8 @@ Sitemap: https://webdesignpampanga.com/sitemap.xml
 ## Core pages
 
 - [Home](https://webdesignpampanga.com/): Web Design Pampanga overview, services, process, pricing and contact options.
-- [About Erwin Valles](https://webdesignpampanga.com/about/): Founder profile, specialties and information about how Web Design Pampanga works.
+- [About Web Design Pampanga](https://webdesignpampanga.com/about/): Information about Erwin Valles and how Web Design Pampanga works.
+- [Erwin Valles author profile](https://webdesignpampanga.com/author/erwin-valles/): Founder profile, specialties and all current articles by Erwin Valles.
 - [Portfolio](https://webdesignpampanga.com/portfolio/): Website design directions and project examples.
 - [Pricing](https://webdesignpampanga.com/pricing/): Website package starting prices and care plans.
 - [Contact](https://webdesignpampanga.com/contact/): Quote request, phone and WhatsApp contact options.
