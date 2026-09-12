@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import { SiteEffects } from "@/components/portfolio/SiteEffects";
 import { SiteFrame, SitePreview } from "@/components/portfolio/SitePreview";
 import { Link, usePageMeta } from "@/router";
 import { projects } from "@/data/portfolio";
@@ -21,7 +22,6 @@ export function ProjectSitePage({ slug }: { slug: string }) {
 
   return (
     <div className="min-h-screen bg-ink-950">
-      {/* slim return bar */}
       <div className="sticky top-0 z-20 border-b border-white/[0.08] bg-ink-950/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-3 sm:px-8">
           <Link
@@ -40,15 +40,15 @@ export function ProjectSitePage({ slug }: { slug: string }) {
         </div>
       </div>
 
-      {/* the website, full width */}
       <div className="mx-auto max-w-[1400px] px-3 py-6 sm:px-6">
-        <div className="overflow-hidden rounded-xl border border-white/10">
+        <div className="relative overflow-hidden rounded-xl border border-white/10 shadow-[0_28px_100px_-48px_rgba(0,0,0,.9)]">
           <SiteFrame>
             <SitePreview slug={project.slug} />
           </SiteFrame>
+          <SiteEffects slug={project.slug} active />
         </div>
         <p className="mt-4 text-center text-xs text-slate-600">
-          Concept design · {project.industry}. Client domains are kept private.
+          Concept design · {project.industry}. Built to demonstrate visual direction and interaction design.
         </p>
       </div>
     </div>
