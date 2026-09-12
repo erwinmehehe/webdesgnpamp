@@ -21,6 +21,7 @@ import { IndustryPage } from "@/pages/IndustryPage";
 import { LocationsPage } from "@/pages/Locations";
 import { LocationPage } from "@/pages/LocationPage";
 import { PortfolioPage } from "@/pages/Portfolio";
+import { DepthPortfolioDemoPage } from "@/pages/DepthPortfolioDemo";
 import { PricingPage } from "@/pages/PricingPage";
 import { BlogPage, BlogPostPage } from "@/pages/Blog";
 import { ContactPage } from "@/pages/Contact";
@@ -44,6 +45,7 @@ const routes: RouteDefinition[] = [
   { pattern: "/thank-you", render: () => <ThankYouPage /> },
   { pattern: "/case-studies", render: () => <CaseStudiesPage /> },
   { pattern: "/portfolio", render: () => <PortfolioPage /> },
+  { pattern: "/depth-portfolio", render: () => <DepthPortfolioDemoPage /> },
   { pattern: "/portfolio/:slug", render: (p) => <ProjectSitePage slug={p.slug} /> },
   { pattern: "/pricing", render: () => <PricingPage /> },
   { pattern: "/contact", render: () => <ContactPage /> },
@@ -83,6 +85,14 @@ function ScrollProgress() {
 
 function Shell() {
   const { path } = useRoute();
+
+  if (path === "/depth-portfolio") {
+    return (
+      <main id="main-content" key={path}>
+        <Routes />
+      </main>
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-ink-950 text-slate-300">
