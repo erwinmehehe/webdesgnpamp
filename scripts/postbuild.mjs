@@ -43,10 +43,27 @@ const routeMeta = new Map([
   ["/blog/", { title: "Web Design & Local SEO Guides | Web Design Pampanga", description: "Practical guides about web design, website costs, local SEO, conversion and choosing a web designer in Pampanga." }],
 ]);
 
-for (const entry of serviceEntries) routeMeta.set(`/${entry.slug}/`, entry);
-for (const entry of industryEntries) routeMeta.set(`/industries/${entry.slug}/`, entry);
-for (const entry of locationEntries) routeMeta.set(`/locations/${entry.slug}/`, entry);
-for (const entry of blogEntries) routeMeta.set(`/blog/${entry.slug}/`, entry);
+const routeKind = new Map();
+for (const entry of serviceEntries) {
+  const route = `/${entry.slug}/`;
+  routeMeta.set(route, entry);
+  routeKind.set(route, { kind: "service", entry });
+}
+for (const entry of industryEntries) {
+  const route = `/industries/${entry.slug}/`;
+  routeMeta.set(route, entry);
+  routeKind.set(route, { kind: "industry", entry });
+}
+for (const entry of locationEntries) {
+  const route = `/locations/${entry.slug}/`;
+  routeMeta.set(route, entry);
+  routeKind.set(route, { kind: "location", entry });
+}
+for (const entry of blogEntries) {
+  const route = `/blog/${entry.slug}/`;
+  routeMeta.set(route, entry);
+  routeKind.set(route, { kind: "article", entry });
+}
 
 const routes = new Set([
   "/",
@@ -54,9 +71,130 @@ const routes = new Set([
   ...portfolioSlugs.map((slug) => `/portfolio/${slug}/`),
 ]);
 
+function titleBeforePipe(title) {
+  return title.split("|")[0].trim();
+}
+
+function humanizeSlug(slug) {
+  const special = {
+    seo: "SEO",
+    bpo: "BPO",
+    ecommerce: "E-commerce",
+    wordpress: "WordPress",
+  };
+  return slug
+    .split("-")
+    .map((part) => special[part] ?? `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .join(" ");
+}
+
+function pageLabel(route, meta) {
+  const info = routeKind.get(route);
+  if (info?.kind === "service") return humanizeSlug(info.entry.slug);
+  if (info?.kind === "location") {
+    return titleBeforePipe(meta.title).replace(/^Web Design\s+/i, "").trim();
+  }
+  return titleBeforePipe(meta.title);
+}
+
+function breadcrumbList(route, meta) {
+  const canonical = `${origin}${route}`;
+  const parts = route.split("/").filter(Boolean);
+  const items = [{ name: "Home", item: `${origin}/` }];
+  const parentNames = {
+    locations: "Locations",
+    industries: "Industries",
+    blog: "Blog",
+    portfolio: "Portfolio",
+  };
+
+  if (parts.length > 1 && parentNames[parts[0]]) {
+    items.push({ name: parentNames[parts[0]], item: `${origin}/${parts[0]}/` });
+  }
+
+  items.push({ name: pageLabel(route, meta), item: canonical });
+
+  return {
+    "@type": "BreadcrumbList",
+    "@id": `${canonical}#breadcrumb`,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.item,
+    })),
+  };
+}
+
+function schemaForRoute(route, meta) {
+  if (!meta) return "";
+
+  const canonical = `${origin}${route}`;
+  const info = routeKind.get(route);
+  const graph = [
+    {
+      "@type": "WebPage",
+      "@id": `${canonical}#webpage`,
+      url: canonical,
+      name: meta.title,
+      description: meta.description,
+      isPartOf: { "@id": `${origin}/#website` },
+      about: { "@id": `${origin}/#business` },
+      inLanguage: "en-PH",
+    },
+    breadcrumbList(route, meta),
+  ];
+
+  if (info?.kind === "service") {
+    const serviceName = humanizeSlug(info.entry.slug);
+    graph.push({
+      "@type": "Service",
+      "@id": `${canonical}#service`,
+      name: serviceName,
+      serviceType: serviceName,
+      description: meta.description,
+      url: canonical,
+      provider: { "@id": `${origin}/#business` },
+      areaServed: { "@type": "AdministrativeArea", name: "Pampanga, Philippines" },
+    });
+  }
+
+  if (info?.kind === "location") {
+    const locationName = pageLabel(route, meta);
+    graph.push({
+      "@type": "Service",
+      "@id": `${canonical}#service`,
+      name: `Web Design in ${locationName}`,
+      serviceType: "Web Design",
+      description: meta.description,
+      url: canonical,
+      provider: { "@id": `${origin}/#business` },
+      areaServed: { "@type": "Place", name: locationName },
+    });
+  }
+
+  if (info?.kind === "article") {
+    graph.push({
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      headline: titleBeforePipe(meta.title),
+      description: meta.description,
+      url: canonical,
+      mainEntityOfPage: { "@id": `${canonical}#webpage` },
+      author: { "@id": `${origin}/#business` },
+      publisher: { "@id": `${origin}/#business` },
+      inLanguage: "en-PH",
+    });
+  }
+
+  const payload = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+  return `    <script type="application/ld+json">${payload}</script>\n`;
+}
+
 function forRoute(html, route) {
   const canonical = `${origin}${route}`;
   const meta = routeMeta.get(route);
+  const isConceptProject = route.startsWith("/portfolio/") && route !== "/portfolio/";
   let output = html
     .replace(
       /<link rel="canonical" href="[^"]+"\s*\/>/,
@@ -67,6 +205,13 @@ function forRoute(html, route) {
       `<meta property="og:url" content="${canonical}" />`,
     );
 
+  if (isConceptProject) {
+    output = output.replace(
+      /<meta name="robots" content="[^"]+"\s*\/>/,
+      '<meta name="robots" content="noindex,follow" />',
+    );
+  }
+
   if (meta) {
     const title = escapeHtml(meta.title);
     const description = escapeHtml(meta.description);
@@ -74,7 +219,15 @@ function forRoute(html, route) {
       .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
       .replace(/<meta\s+name="description"\s+content="[^"]*"\s*\/>/, `<meta name="description" content="${description}" />`)
       .replace(/<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/, `<meta property="og:title" content="${title}" />`)
-      .replace(/<meta\s+property="og:description"\s+content="[^"]*"\s*\/>/, `<meta property="og:description" content="${description}" />`);
+      .replace(/<meta\s+property="og:description"\s+content="[^"]*"\s*\/>/, `<meta property="og:description" content="${description}" />`)
+      .replace(/<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/, `<meta name="twitter:title" content="${title}" />`)
+      .replace(/<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${description}" />`);
+
+    if (routeKind.get(route)?.kind === "article") {
+      output = output.replace('<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />');
+    }
+
+    output = output.replace("  </head>", `${schemaForRoute(route, meta)}  </head>`);
   }
 
   return output;
