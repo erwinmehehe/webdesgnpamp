@@ -13,6 +13,7 @@ import {
 } from "framer-motion";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { Link } from "@/router";
+import { SiteEffects } from "@/components/portfolio/SiteEffects";
 import { SITE_WIDTH, SitePreview } from "@/components/portfolio/SitePreview";
 import type { Project } from "@/data/portfolio";
 
@@ -87,7 +88,8 @@ function ScreenshotWalkthrough({ project, active }: { project: Project; active: 
           scale: { duration: 1.4, ease: [0.2, 0.72, 0.18, 1] },
         }}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/35 to-transparent opacity-70" />
+      <SiteEffects slug={project.slug} active={active} subtle />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-16 bg-gradient-to-t from-black/35 to-transparent opacity-70" />
     </div>
   );
 }
@@ -141,6 +143,7 @@ function LiveWalkthrough({ project, active }: { project: Project; active: boolea
           <SitePreview slug={project.slug} />
         </motion.div>
       </div>
+      <SiteEffects slug={project.slug} active={active} subtle />
     </div>
   );
 }
