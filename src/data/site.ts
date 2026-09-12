@@ -17,7 +17,7 @@ export const site = {
 };
 
 export const stats = [
-  { value: 40, suffix: "+", label: "Websites designed & launched", note: "small business to corporate" },
+  { value: 200, suffix: "+", label: "Websites designed & launched", note: "small business to corporate" },
   { value: 100, suffix: "%", label: "Custom, hand-built work", note: "no off-the-shelf templates" },
   { value: 90, suffix: "+", label: "PageSpeed targets", note: "fast on local mobile data" },
   { value: 4, suffix: " wks", label: "Typical project timeline", note: "most builds, start to launch" },
@@ -169,7 +169,7 @@ export const googleReviewsUrl =
 
 export const trustBar = [
   { label: "5 ★", note: "Google reviews" },
-  { label: "100%", note: "Sites launched" },
+  { label: "200+", note: "Sites launched" },
   { label: "98%", note: "Clients stay" },
   { label: "2 hrs", note: "Avg. reply" },
 ];
