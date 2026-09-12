@@ -48,7 +48,11 @@ export function AboutPage() {
               <img
                 src="https://avatars.githubusercontent.com/u/20321511?v=4"
                 alt="Erwin Valles, founder of Web Design Pampanga"
+                width="800"
+                height="800"
                 loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="aspect-square w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 via-transparent to-transparent" aria-hidden="true" />
@@ -75,38 +79,14 @@ export function AboutPage() {
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-7 flex flex-wrap gap-3">
-                <a
-                  href="https://github.com/erwinmehehe"
-                  target="_blank"
-                  rel="me noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300"
-                >
-                  <Github className="h-4 w-4" aria-hidden="true" />
-                  GitHub profile
-                </a>
-                <Link
-                  to="/blog/"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300"
-                >
-                  <Search className="h-4 w-4" aria-hidden="true" />
-                  Read Erwin&rsquo;s articles
-                </Link>
+                <a href="https://github.com/erwinmehehe" target="_blank" rel="me noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300"><Github className="h-4 w-4" aria-hidden="true" />GitHub profile</a>
+                <Link to="/author/erwin-valles/" className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300"><Search className="h-4 w-4" aria-hidden="true" />Author profile & articles</Link>
               </div>
             </Reveal>
           </div>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {specialties.map((item, i) => (
-            <Reveal key={item} delay={0.05 * i}>
-              <div className="flex h-full items-start gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
-                <span className="text-sm leading-relaxed text-slate-300">{item}</span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{specialties.map((item, i) => <Reveal key={item} delay={0.05 * i}><div className="flex h-full items-start gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" /><span className="text-sm leading-relaxed text-slate-300">{item}</span></div></Reveal>)}</div>
         <div className="mt-16"><StatStrip /></div>
       </Section>
 
@@ -114,87 +94,30 @@ export function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
             <Reveal><Eyebrow>How we work</Eyebrow></Reveal>
-            <Reveal delay={0.08}>
-              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">
-                Practical process, <span className="text-gold-gradient">careful craft.</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <div className="mt-6 space-y-4 text-base leading-relaxed text-slate-400">
-                <p>Pampanga businesses rarely need a website for its own sake. They need more enquiries, better credibility with corporate buyers, an easier recruitment flow, or a presence that finally matches the quality of the work. We start there and work backwards into structure, design and code.</p>
-                <p>A focused site that launches in a month and converts is worth far more than an ambitious build that stalls for six months. If something is not needed yet, we will say so and plan it for later.</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <div className="mt-7">
-                <CheckList items={["Fixed price and written scope before any work starts", "Mobile-first design, tested on real devices", "On-page SEO foundations in every build", "You keep full ownership of domain, hosting and files"]} />
-              </div>
-            </Reveal>
+            <Reveal delay={0.08}><h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">Practical process, <span className="text-gold-gradient">careful craft.</span></h2></Reveal>
+            <Reveal delay={0.14}><div className="mt-6 space-y-4 text-base leading-relaxed text-slate-400"><p>Pampanga businesses rarely need a website for its own sake. They need more enquiries, better credibility with corporate buyers, an easier recruitment flow, or a presence that finally matches the quality of the work. We start there and work backwards into structure, design and code.</p><p>A focused site that launches in a month and converts is worth far more than an ambitious build that stalls for six months. If something is not needed yet, we will say so and plan it for later.</p></div></Reveal>
+            <Reveal delay={0.2}><div className="mt-7"><CheckList items={["Fixed price and written scope before any work starts", "Mobile-first design, tested on real devices", "On-page SEO foundations in every build", "You keep full ownership of domain, hosting and files"]} /></div></Reveal>
           </div>
           <Reveal delay={0.12}>
             <div className="glass rounded-[2rem] p-8">
               <Eyebrow>Local presence</Eyebrow>
-              <div className="mt-5 flex items-start gap-3">
-                <MapPin className="mt-1 h-5 w-5 shrink-0 text-gold-400" aria-hidden="true" />
-                <div>
-                  <p className="font-display text-lg font-semibold text-white">Built for Pampanga businesses</p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-400">Working with businesses across Clark, Angeles City, San Fernando, Mabalacat and the wider province, with on-site or online project discussions depending on what is practical.</p>
-                </div>
-              </div>
+              <div className="mt-5 flex items-start gap-3"><MapPin className="mt-1 h-5 w-5 shrink-0 text-gold-400" aria-hidden="true" /><div><p className="font-display text-lg font-semibold text-white">Built for Pampanga businesses</p><p className="mt-2 text-sm leading-relaxed text-slate-400">Working with businesses across Clark, Angeles City, San Fernando, Mabalacat and the wider province, with on-site or online project discussions depending on what is practical.</p></div></div>
               <p className="mt-6 text-sm leading-relaxed text-slate-400">Local knowledge matters most when it changes the work: the services customers search for, how they prefer to contact a business, what trust signals matter, and how location pages should be written without turning into thin copy.</p>
+              <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex text-sm font-semibold text-gold-400 hover:text-gold-300">View Web Design Pampanga on Google →</a>
             </div>
           </Reveal>
         </div>
       </Section>
 
-      <Section divider>
-        <SectionIntro eyebrow="What we stand for" title={<>Four commitments we don&rsquo;t <span className="text-gold-gradient">compromise on.</span></>} description="These shape how projects run and how decisions get made when scope, design and search requirements compete." />
-        <div className="mt-14"><InfoCardGrid items={values} columns={2} /></div>
-      </Section>
+      <Section divider><SectionIntro eyebrow="What we stand for" title={<>Four commitments we don&rsquo;t <span className="text-gold-gradient">compromise on.</span></>} description="These shape how projects run and how decisions get made when scope, design and search requirements compete." /><div className="mt-14"><InfoCardGrid items={values} columns={2} /></div></Section>
 
       <Section ambient divider>
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <Reveal><Eyebrow>Process</Eyebrow></Reveal>
-            <Reveal delay={0.08}>
-              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">Four stages, no surprises.</h2>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">Discovery, strategy, build and launch. Each stage has a clear purpose and a clear decision point before the project moves forward.</p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <div className="mt-7"><GoldButton to="/contact/">Start the conversation</GoldButton></div>
-            </Reveal>
-            <Reveal delay={0.24}>
-              <p className="mt-4 flex items-center gap-2 text-xs text-slate-500">
-                <Sparkles className="h-3.5 w-3.5 text-gold-400/80" aria-hidden="true" />
-                {site.responseTime}
-              </p>
-            </Reveal>
-          </div>
-          <ProcessSteps />
-        </div>
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16"><div className="lg:sticky lg:top-28 lg:self-start"><Reveal><Eyebrow>Process</Eyebrow></Reveal><Reveal delay={0.08}><h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">Four stages, no surprises.</h2></Reveal><Reveal delay={0.14}><p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">Discovery, strategy, build and launch. Each stage has a clear purpose and a clear decision point before the project moves forward.</p></Reveal><Reveal delay={0.2}><div className="mt-7"><GoldButton to="/contact/">Start the conversation</GoldButton></div></Reveal><Reveal delay={0.24}><p className="mt-4 flex items-center gap-2 text-xs text-slate-500"><Sparkles className="h-3.5 w-3.5 text-gold-400/80" aria-hidden="true" />{site.responseTime}</p></Reveal></div><ProcessSteps /></div>
       </Section>
 
-      <Section divider>
-        <SectionIntro eyebrow="In their words" title="What clients say after launch" description="Feedback from businesses that needed clearer websites, stronger mobile usability and better enquiry paths." />
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <Reveal key={t.name} delay={0.08 * i}>
-              <figure className="glass flex h-full flex-col rounded-3xl p-8">
-                <blockquote className="flex-1 text-[15px] leading-relaxed text-slate-300">{t.quote}</blockquote>
-                <figcaption className="mt-6">
-                  <p className="text-sm font-semibold text-white">{t.name}</p>
-                  <p className="mt-0.5 text-xs text-slate-500">{t.role} · {t.location}</p>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
+      <Section divider><SectionIntro eyebrow="In their words" title="What clients say after launch" description="Feedback from businesses that needed clearer websites, stronger mobile usability and better enquiry paths." /><div className="mt-14 grid gap-6 lg:grid-cols-3">{testimonials.map((t, i) => <Reveal key={t.name} delay={0.08 * i}><figure className="glass flex h-full flex-col rounded-3xl p-8"><blockquote className="flex-1 text-[15px] leading-relaxed text-slate-300">{t.quote}</blockquote><figcaption className="mt-6"><p className="text-sm font-semibold text-white">{t.name}</p><p className="mt-0.5 text-xs text-slate-500">{t.role} · {t.location}</p></figcaption></figure></Reveal>)}</div></Section>
 
       <CrossLinks eyebrow="Where to next" title="Explore what we do" links={services.slice(0, 6).map((s) => ({ label: s.name, description: s.short, to: `/${s.slug}/`, icon: s.icon }))} />
-
       <CTABand eyebrow="Let's talk" title="Tell us what your website needs to do." intro="A short conversation is usually enough to know whether we're the right studio for your project — and what it would realistically cost." />
     </>
   );
