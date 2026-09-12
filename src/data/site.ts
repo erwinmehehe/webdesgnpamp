@@ -2,7 +2,7 @@ export const site = {
   name: "Web Design Pampanga",
   tagline: "Independent web design studio · Pampanga, Philippines",
   description:
-    "Web Design Pampanga designs polished, easy-to-use websites for businesses in Clark, Angeles City, San Fernando and across Pampanga.",
+    "Web Design Pampanga builds fast, mobile-friendly websites for local businesses that need better design, clearer content and solid SEO foundations.",
   phoneDisplay: "0967 248 8693",
   phoneHref: "tel:+639672488693",
   whatsapp:
@@ -12,56 +12,56 @@ export const site = {
   serviceArea: "Clark · Angeles City · San Fernando · Mabalacat · Guagua · Porac · Mexico · Bacolor",
   mapsUrl:
     "https://www.google.com/maps/place/Web+Design+Pampanga/data=!4m2!3m1!1s0x0:0xa557b482296caeb3",
-  responseTime: "We usually reply within a few hours on business days.",
-  hours: "Mon–Sat · 9:00 AM – 6:00 PM PHT",
+  responseTime: "I usually reply within a few hours on business days.",
+  hours: "Mon-Sat · 9:00 AM - 6:00 PM PHT",
 };
 
 export const stats = [
   { value: 200, suffix: "+", label: "Websites designed & launched", note: "small business to corporate" },
-  { value: 100, suffix: "%", label: "Custom, hand-built work", note: "no off-the-shelf templates" },
-  { value: 90, suffix: "+", label: "PageSpeed targets", note: "fast on local mobile data" },
-  { value: 4, suffix: " wks", label: "Typical project timeline", note: "most builds, start to launch" },
+  { value: 100, suffix: "%", label: "Custom project work", note: "designed for the business" },
+  { value: 90, suffix: "+", label: "PageSpeed target", note: "where the site and stack allow" },
+  { value: 4, suffix: " wks", label: "Typical small business build", note: "scope and content dependent" },
 ];
 
 export const painPoints = [
   {
-    title: "Outdated design",
-    description: "Your business has grown, but your website still looks like it was built years ago — so customers quietly assume the same about your work.",
+    title: "Looks outdated",
+    description: "If the website looks older than the business feels, people notice before they read much else.",
   },
   {
-    title: "No clear next step",
-    description: "Visitors land on your site and don't know what to do next. There's no obvious way to enquire, book, or buy.",
+    title: "Hard to understand",
+    description: "Visitors should quickly know what you do, who you help and how to contact you. If they have to hunt for it, you lose them.",
   },
   {
-    title: "Hard to use on mobile",
-    description: "Most local customers open your site on a phone. If it's cramped, slow, or broken there, they leave in seconds.",
+    title: "Frustrating on mobile",
+    description: "A cramped layout, tiny text or slow pages are enough to make someone leave on a phone.",
   },
   {
-    title: "Doesn't build trust",
-    description: "No clear message, no proof, no structure — and customers start wondering if your business is the right fit.",
+    title: "Not generating enquiries",
+    description: "A website can look good and still fail if the contact options are buried or the page gives people no reason to act.",
   },
 ];
 
 export const process = [
   {
     step: "01",
-    title: "Discovery",
-    description: "We talk about your business, your customers, and what the website actually needs to achieve for you.",
+    title: "Plan",
+    description: "We agree on the pages, content, features and goals before design starts.",
   },
   {
     step: "02",
-    title: "Strategy & design",
-    description: "We plan the page structure and message first, then design the visual direction around your brand.",
+    title: "Design",
+    description: "I design the key pages around your brand, content and the way customers use the site.",
   },
   {
     step: "03",
     title: "Build",
-    description: "We develop the responsive website and test every page, form, and interaction on real devices.",
+    description: "The approved design is built, tested on mobile and checked for forms, links, speed and SEO basics.",
   },
   {
     step: "04",
-    title: "Launch & support",
-    description: "Your site goes live — connected, indexed, and ready for customers. We stay available after launch.",
+    title: "Launch",
+    description: "We do a final review, connect the essentials and put the website live.",
   },
 ];
 
@@ -70,14 +70,14 @@ export const plans = [
     name: "Starter Website",
     price: "₱30,000",
     priceNote: "starting at",
-    tagline: "For a focused small business website with the core pages needed to get found and contacted.",
+    tagline: "A focused website for a small business that needs a professional online presence and a clear way to get enquiries.",
     features: [
-      "Focused core site structure",
-      "Responsive mobile-first design",
-      "Contact and inquiry form",
-      "On-page SEO foundations",
-      "Google Business Profile setup",
-      "Launch QA and walkthrough",
+      "Core business pages",
+      "Responsive mobile design",
+      "Contact or enquiry form",
+      "On-page SEO setup",
+      "Google Business Profile support",
+      "Launch testing and handover",
     ],
     cta: "Request a Quote",
     featured: false,
@@ -86,14 +86,14 @@ export const plans = [
     name: "Business Website",
     price: "₱50,000",
     priceNote: "starting at",
-    tagline: "For established businesses that need more service pages, stronger SEO structure and better conversion coverage.",
+    tagline: "For businesses that need more pages, stronger search structure and more room to explain their services properly.",
     features: [
       "Expanded service pages",
       "Custom visual direction",
-      "Conversion-focused page flow",
-      "SEO and local landing page structure",
+      "Clear enquiry paths",
+      "SEO and local page structure",
       "Analytics and lead tracking setup",
-      "Content assistance and copywriting",
+      "Content and copy support",
     ],
     cta: "Request a Quote",
     featured: true,
@@ -102,14 +102,14 @@ export const plans = [
     name: "Custom Website",
     price: "Custom",
     priceNote: "scoped per project",
-    tagline: "For BPO, ecommerce, recruitment, booking, larger corporate websites and advanced integrations.",
+    tagline: "For larger websites, ecommerce, recruitment, booking systems and projects that need custom integrations.",
     features: [
-      "Corporate service architecture",
-      "Careers and recruitment structure",
-      "CRM, applicant or third-party integrations",
-      "Ecommerce, booking or payment functionality",
-      "Larger SEO and content architecture",
-      "Ongoing growth and support options",
+      "Larger site architecture",
+      "Careers or recruitment sections",
+      "CRM or third-party integrations",
+      "Ecommerce, booking or payment features",
+      "Expanded SEO and content planning",
+      "Ongoing support options",
     ],
     cta: "Talk About My Project",
     featured: false,
@@ -119,23 +119,23 @@ export const plans = [
 export const essentials = [
   {
     title: "Responsive build",
-    description: "Mobile, tablet and desktop layouts designed and tested before launch — not squeezed afterwards.",
+    description: "Mobile, tablet and desktop layouts are designed and tested before launch.",
   },
   {
-    title: "SEO foundations",
-    description: "Page titles, meta descriptions, heading hierarchy, internal links and schema where appropriate.",
+    title: "SEO basics",
+    description: "Page titles, descriptions, headings, internal links and schema where it makes sense.",
   },
   {
-    title: "Lead capture",
-    description: "Working calls to action, forms, and WhatsApp or phone paths shaped around how your customers ask.",
+    title: "Working contact paths",
+    description: "Forms, phone links and WhatsApp are set up around how customers actually get in touch.",
   },
   {
-    title: "Analytics readiness",
-    description: "A clean foundation for analytics, conversion tracking and Search Console from day one.",
+    title: "Analytics setup",
+    description: "The site can be connected to analytics, conversion tracking and Search Console from launch.",
   },
   {
-    title: "Launch QA",
-    description: "Final checks for forms, links, responsiveness, metadata and the visual details people notice.",
+    title: "Launch checks",
+    description: "Forms, links, mobile layouts, metadata and visual details are checked before the site goes live.",
   },
 ];
 
@@ -144,14 +144,14 @@ export const carePlans = [
     name: "Essential Care",
     price: "₱3,500",
     period: "/month",
-    description: "For small business sites that need to stay healthy and current.",
+    description: "For small business sites that need regular updates and basic monitoring.",
     features: ["Managed hosting oversight", "Weekly backups & uptime checks", "Core & plugin security updates", "Up to 1 hour of content edits"],
   },
   {
     name: "Growth Care",
     price: "₱7,500",
     period: "/month",
-    description: "For businesses actively using the site to generate leads.",
+    description: "For businesses that update the website often and want ongoing SEO and performance checks.",
     features: ["Everything in Essential", "Up to 3 hours of edits & new sections", "Monthly performance report", "On-page SEO monitoring & tweaks", "Priority support channel"],
     featured: true,
   },
@@ -159,7 +159,7 @@ export const carePlans = [
     name: "Partner Care",
     price: "₱15,000",
     period: "/month",
-    description: "For brands running campaigns, content and continuous improvement.",
+    description: "For businesses running regular campaigns, publishing content or making frequent site changes.",
     features: ["Everything in Growth", "Quarterly conversion review", "Landing pages for campaigns", "Content & SEO roadmap support", "Direct line to the studio"],
   },
 ];
@@ -168,10 +168,10 @@ export const googleReviewsUrl =
   "https://www.google.com/maps/place/Web+Design+Pampanga/data=!4m2!3m1!1s0x0:0xa557b482296caeb3";
 
 export const trustBar = [
-  { label: "5 ★", note: "Google reviews" },
   { label: "200+", note: "Sites launched" },
-  { label: "98%", note: "Clients stay" },
-  { label: "2 hrs", note: "Avg. reply" },
+  { label: "₱30k", note: "Starter sites from" },
+  { label: "3-4 wks", note: "Typical small build" },
+  { label: "Pampanga", note: "Local studio" },
 ];
 
 export const clientLogos = [
@@ -213,41 +213,41 @@ export const generalFaqs = [
   {
     question: "How much does a website cost?",
     answer:
-      "It depends on scope — how many pages you need, what features are required, and how custom the design should be. Our Starter Website begins at ₱30,000 and the Business Website at ₱50,000; larger custom builds are quoted per project. Send us your details and we'll give you an actual number, not a range.",
+      "Starter websites begin at ₱30,000 and business websites at ₱50,000. The final price depends on the number of pages, content, features and integrations. I confirm the scope and price before work starts.",
   },
   {
     question: "How long does a website take?",
     answer:
-      "Most projects take a few weeks from kickoff to launch. Timelines depend on complexity, how quickly content and feedback come in, and how many revision rounds are needed. A focused business site is usually live in three to four weeks.",
+      "A focused business website usually takes around three to four weeks. Larger sites take longer. Timing also depends on how quickly content and feedback are available.",
   },
   {
     question: "Will my website work on mobile?",
     answer:
-      "Yes. Every website we build is designed responsively, so it works properly on phones, tablets and desktops from day one — checked on real devices before we launch.",
+      "Yes. Mobile layouts are part of the design from the start, not something added after the desktop version is finished.",
   },
   {
     question: "Can you redesign my existing website?",
     answer:
-      "Yes. We rebuild outdated sites into something modern while keeping what already works — your content, your branding, and as much of your existing search visibility as possible.",
+      "Yes. I review what is worth keeping, what needs to change and which URLs or content should be preserved for SEO before the rebuild starts.",
   },
   {
     question: "Do you provide hosting?",
     answer:
-      "We help you set up reliable hosting and walk you through exactly what's included, what it costs, and what you control. The right setup depends on your website type, and we'll go over the options during your quote.",
+      "I can help you choose and set up hosting that fits the website. Your domain and hosting should stay in accounts you can access and control.",
   },
   {
     question: "Do you help with SEO?",
     answer:
-      "Every website includes on-page SEO foundations: clean structure, fast loading, mobile friendliness, metadata and schema where appropriate. Ongoing SEO work — content, local rankings, link building — is scoped separately as a monthly engagement.",
+      "Yes. Website builds include the technical and on-page basics such as titles, headings, internal links, mobile performance and schema where appropriate. Ongoing SEO is quoted separately.",
   },
   {
     question: "Can I update the website myself?",
     answer:
-      "Most sites we build are easy to update yourself, and every launch includes a short walkthrough so you're comfortable making changes. We'll recommend the right setup based on how hands-on you want to be.",
+      "Yes, when the project uses a CMS such as WordPress. I can also handle updates through a care plan if you would rather not manage the site yourself.",
   },
   {
     question: "How do we get started?",
     answer:
-      "Send a message or request a free quote — tell us about your business and what the website needs to do. We'll reply with next steps, a clear scope, and a fixed price.",
+      "Send the project details through the contact form. I will review them, ask any important follow-up questions and send the next steps.",
   },
 ];
