@@ -1,0 +1,49 @@
+<svg width="960" height="1200" viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="900" y2="1160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#171722"/>
+      <stop offset="0.48" stop-color="#0D0D14"/>
+      <stop offset="1" stop-color="#08080D"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="360" y1="250" x2="620" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4C9B5"/>
+      <stop offset="1" stop-color="#A76858"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="300" y1="720" x2="700" y2="1160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22242D"/>
+      <stop offset="1" stop-color="#0A0B10"/>
+    </linearGradient>
+    <radialGradient id="lime" cx="0" cy="0" r="1" gradientTransform="translate(270 250) rotate(40) scale(430 380)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C6F24E" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#C6F24E" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cyan" cx="0" cy="0" r="1" gradientTransform="translate(770 750) rotate(120) scale(480 430)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7DD3FC" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#7DD3FC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-100" y="-100" width="1160" height="1400" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+  </defs>
+  <rect width="960" height="1200" rx="64" fill="url(#bg)"/>
+  <rect width="960" height="1200" rx="64" fill="url(#lime)"/>
+  <rect width="960" height="1200" rx="64" fill="url(#cyan)"/>
+  <circle cx="246" cy="224" r="140" fill="#C6F24E" fill-opacity="0.11" filter="url(#blur)"/>
+  <path d="M204 1200C219 930 318 790 479 790C648 790 746 930 770 1200H204Z" fill="url(#shirt)"/>
+  <path d="M382 723H578L606 852C566 896 519 919 479 919C436 919 392 896 354 852L382 723Z" fill="url(#skin)"/>
+  <ellipse cx="480" cy="509" rx="190" ry="235" fill="url(#skin)"/>
+  <path d="M297 489C286 331 363 230 485 230C619 230 684 333 662 506C614 452 569 416 512 386C456 357 396 346 321 359C305 397 300 439 297 489Z" fill="#111118"/>
+  <path d="M315 346C363 235 470 196 573 237C632 260 678 306 693 372C640 332 584 311 528 306C452 299 381 314 315 346Z" fill="#1B1B23"/>
+  <ellipse cx="408" cy="515" rx="16" ry="11" fill="#17131A"/>
+  <ellipse cx="553" cy="515" rx="16" ry="11" fill="#17131A"/>
+  <path d="M455 620C478 637 507 636 530 618" stroke="#6E3E38" stroke-width="10" stroke-linecap="round"/>
+  <path d="M472 532L456 591H497" stroke="#8E5B4C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M369 471C392 454 421 451 445 462" stroke="#4B302E" stroke-width="11" stroke-linecap="round"/>
+  <path d="M517 462C541 451 571 454 593 471" stroke="#4B302E" stroke-width="11" stroke-linecap="round"/>
+  <rect x="64" y="66" width="176" height="42" rx="21" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.1"/>
+  <circle cx="92" cy="87" r="6" fill="#C6F24E"/>
+  <text x="110" y="93" fill="#F7F8F2" font-family="Arial, sans-serif" font-size="16" letter-spacing="2">PORTRAIT 01</text>
+  <path d="M750 120L896 120" stroke="#FFFFFF" stroke-opacity="0.16"/>
+  <path d="M823 47L823 193" stroke="#FFFFFF" stroke-opacity="0.16"/>
+  <circle cx="823" cy="120" r="44" stroke="#F0ABFC" stroke-opacity="0.28"/>
+</svg>
