@@ -10,6 +10,9 @@ declare global {
 
 const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
 const clarityId = import.meta.env.VITE_CLARITY_PROJECT_ID?.trim();
+const consentKey = "wdp-analytics-consent";
+let analyticsEnabled = false;
+let listenersBound = false;
 
 function injectScript(src: string, id: string) {
   if (document.getElementById(id)) return;
@@ -21,11 +24,13 @@ function injectScript(src: string, id: string) {
 }
 
 export function trackEvent(name: string, params: EventParams = {}) {
+  if (!analyticsEnabled) return;
   window.gtag?.("event", name, params);
   window.clarity?.("event", name);
 }
 
 function trackPageView() {
+  if (!analyticsEnabled) return;
   const pagePath = `${window.location.pathname}${window.location.search}`;
   window.gtag?.("event", "page_view", {
     page_title: document.title,
@@ -59,19 +64,35 @@ function classifyClick(anchor: HTMLAnchorElement) {
   }
 }
 
-function isQuoteForm(form: HTMLFormElement) {
-  return window.location.pathname.replace(/\/+$/, "") === "/contact";
+function bindInteractionTracking() {
+  if (listenersBound) return;
+  listenersBound = true;
+
+  const onNavigation = () => window.setTimeout(trackPageView, 50);
+  window.addEventListener("popstate", onNavigation);
+  window.addEventListener("hashchange", onNavigation);
+
+  document.addEventListener("click", (event) => {
+    const target = event.target as Element | null;
+    const anchor = target?.closest("a");
+    if (anchor instanceof HTMLAnchorElement) classifyClick(anchor);
+  });
+
+  const startedForms = new WeakSet<HTMLFormElement>();
+  document.addEventListener("focusin", (event) => {
+    const target = event.target as Element | null;
+    const form = target?.closest("form");
+    if (!(form instanceof HTMLFormElement)) return;
+    if (window.location.pathname.replace(/\/+$/, "") !== "/contact" || startedForms.has(form)) return;
+    startedForms.add(form);
+    trackEvent("form_start", { form_name: "quote" });
+  });
 }
 
-function quoteFormLooksValid(form: HTMLFormElement) {
-  const name = (form.querySelector<HTMLInputElement>("#name")?.value || "").trim();
-  const email = (form.querySelector<HTMLInputElement>("#email")?.value || "").trim();
-  const message = (form.querySelector<HTMLTextAreaElement>("#message")?.value || "").trim();
-  const hasNeed = Boolean(form.querySelector('button[aria-pressed="true"]'));
-  return Boolean(name && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && message && hasNeed);
-}
+export function enableAnalytics() {
+  if (analyticsEnabled) return;
+  analyticsEnabled = true;
 
-export function initAnalytics() {
   if (gaId) {
     window.dataLayer = window.dataLayer || [];
     window.gtag = (...args: unknown[]) => window.dataLayer?.push(args);
@@ -89,33 +110,14 @@ export function initAnalytics() {
     injectScript(`https://www.clarity.ms/tag/${encodeURIComponent(clarityId)}`, "clarity-script");
   }
 
-  trackPageView();
+  bindInteractionTracking();
+  window.setTimeout(trackPageView, 50);
+}
 
-  const onNavigation = () => window.setTimeout(trackPageView, 50);
-  window.addEventListener("popstate", onNavigation);
-  window.addEventListener("hashchange", onNavigation);
-
-  document.addEventListener("click", (event) => {
-    const target = event.target as Element | null;
-    const anchor = target?.closest("a");
-    if (anchor instanceof HTMLAnchorElement) classifyClick(anchor);
-  });
-
-  const startedForms = new WeakSet<HTMLFormElement>();
-  document.addEventListener("focusin", (event) => {
-    const target = event.target as Element | null;
-    const form = target?.closest("form");
-    if (!(form instanceof HTMLFormElement) || !isQuoteForm(form) || startedForms.has(form)) return;
-    startedForms.add(form);
-    trackEvent("form_start", { form_name: "quote" });
-  });
-
-  document.addEventListener("submit", (event) => {
-    const form = event.target;
-    if (!(form instanceof HTMLFormElement) || !isQuoteForm(form)) return;
-    trackEvent("form_submit_attempt", { form_name: "quote" });
-    if (quoteFormLooksValid(form)) {
-      trackEvent("form_submit", { form_name: "quote" });
-    }
-  });
+export function initAnalytics() {
+  if (window.localStorage.getItem(consentKey) === "granted") {
+    enableAnalytics();
+  } else {
+    bindInteractionTracking();
+  }
 }
