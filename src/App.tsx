@@ -4,10 +4,17 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContact } from "@/components/FloatingContact";
 import { StructuredData } from "@/components/StructuredData";
+import { CookieConsent } from "@/components/CookieConsent";
 import { RouterProvider, matchRoute, useRoute } from "@/router";
 import { HomePage } from "@/pages/Home";
 import { AboutPage } from "@/pages/About";
 import { AuthorPage } from "@/pages/Author";
+import { ServicesPage } from "@/pages/Services";
+import { WhyWebDesignPampangaPage } from "@/pages/WhyWebDesignPampanga";
+import { PrivacyPolicyPage } from "@/pages/PrivacyPolicy";
+import { TermsPage } from "@/pages/Terms";
+import { ThankYouPage } from "@/pages/ThankYou";
+import { CaseStudiesPage } from "@/pages/CaseStudies";
 import { ServicePage } from "@/pages/ServicePage";
 import { IndustriesPage } from "@/pages/Industries";
 import { IndustryPage } from "@/pages/IndustryPage";
@@ -30,6 +37,12 @@ const routes: RouteDefinition[] = [
   { pattern: "/", render: () => <HomePage /> },
   { pattern: "/about", render: () => <AboutPage /> },
   { pattern: "/author/erwin-valles", render: () => <AuthorPage /> },
+  { pattern: "/services", render: () => <ServicesPage /> },
+  { pattern: "/why-web-design-pampanga", render: () => <WhyWebDesignPampangaPage /> },
+  { pattern: "/privacy-policy", render: () => <PrivacyPolicyPage /> },
+  { pattern: "/terms", render: () => <TermsPage /> },
+  { pattern: "/thank-you", render: () => <ThankYouPage /> },
+  { pattern: "/case-studies", render: () => <CaseStudiesPage /> },
   { pattern: "/portfolio", render: () => <PortfolioPage /> },
   { pattern: "/portfolio/:slug", render: (p) => <ProjectSitePage slug={p.slug} /> },
   { pattern: "/pricing", render: () => <PricingPage /> },
@@ -87,6 +100,7 @@ function Shell() {
       </main>
       <Footer />
       <FloatingContact />
+      <CookieConsent />
     </div>
   );
 }
