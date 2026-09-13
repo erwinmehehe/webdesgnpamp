@@ -24,7 +24,7 @@ export function Hero() {
         >
           <span className="glass inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-xs font-medium text-slate-300 sm:text-[13px]">
             <span className="h-2 w-2 rounded-full bg-gold-400" aria-hidden="true" />
-            Web design · Pampanga, Philippines
+            Websites built to win more enquiries
           </span>
         </motion.div>
 
@@ -34,7 +34,7 @@ export function Hero() {
           transition={{ duration: 0.85, delay: 0.08, ease: easeOut }}
           className="mx-auto mt-8 max-w-5xl text-center font-display text-[2.45rem] font-bold leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-[4.5rem]"
         >
-          Web Design Pampanga for businesses that want <span className="text-gold-gradient">more enquiries.</span>
+          Turn more website visitors into <span className="text-gold-gradient">calls, messages and enquiries.</span>
         </motion.h1>
 
         <motion.p
@@ -43,7 +43,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.18, ease: easeOut }}
           className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-slate-400 sm:text-lg"
         >
-          I design fast, mobile-friendly websites for businesses in Pampanga. Clear pages, solid SEO foundations, and an easy way for customers to call, message or enquire.
+          I design clear, credible websites that make it easy for the right customer to understand your offer, trust your business and take the next step.
         </motion.p>
 
         <motion.ul
@@ -52,7 +52,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.28 }}
           className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-slate-400"
         >
-          {["Custom design", "Mobile-first", "SEO foundations"].map((item, index) => (
+          {["Clear offer", "Strong calls to action", "Fast on mobile"].map((item, index) => (
             <li key={item} className="flex items-center gap-2">
               {index > 0 && <span className="h-1 w-1 rounded-full bg-gold-400/70" aria-hidden="true" />}
               {item}
@@ -70,7 +70,7 @@ export function Hero() {
             to="/contact/"
             className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-8 py-4 text-base font-semibold text-ink-950 shadow-[0_8px_40px_-8px_rgba(246,193,74,0.6)] transition-all duration-300 hover:brightness-110 active:scale-[0.98] sm:w-auto"
           >
-            Get a Website Quote
+            Get My Website Quote
             <ArrowRight className="h-[18px] w-[18px] transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
           <a
@@ -80,7 +80,7 @@ export function Hero() {
             className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-8 py-4 text-base font-semibold text-[#04301a] transition-all duration-300 hover:brightness-110 active:scale-[0.98] sm:w-auto"
           >
             <MessageCircle className="h-[18px] w-[18px]" aria-hidden="true" />
-            WhatsApp
+            WhatsApp Me
           </a>
         </motion.div>
 
@@ -90,7 +90,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.42 }}
           className="mt-4 text-center text-[13px] text-slate-500"
         >
-          Starter websites from ₱30,000 · Typical small business build: 3-4 weeks
+          Starter websites from ₱30,000 · Clear scope before work starts
         </motion.p>
 
         <motion.div
@@ -119,20 +119,20 @@ export function Hero() {
             <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-gold-400/[0.09] blur-[90px]" aria-hidden="true" />
             <div className="relative grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[.22em] text-gold-400">What the site should do</p>
+                <p className="font-mono text-[10px] uppercase tracking-[.22em] text-gold-400">What drives enquiries</p>
                 <h2 className="mt-4 font-display text-2xl font-semibold leading-tight text-white sm:text-3xl">
-                  Make it easy to understand your business and easy to contact you.
+                  Your website should answer three questions before a visitor leaves.
                 </h2>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-400">
-                  Good design helps, but the basics matter more: clear services, useful proof, fast mobile pages and visible contact options.
+                  If people have to work out what you do, why they should trust you or how to contact you, you are making the sale harder than it needs to be.
                 </p>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  ["01", "What do you do?", "Say it quickly and in plain English."],
-                  ["02", "Why choose you?", "Show the facts people need before they trust you."],
-                  ["03", "How do I contact you?", "Keep the next step obvious on every key page."],
+                  ["01", "What do you offer?", "Make the service and value clear in seconds."],
+                  ["02", "Why should I trust you?", "Show proof and useful details before asking for the lead."],
+                  ["03", "What should I do next?", "Keep the call, message or enquiry path obvious."],
                 ].map(([number, title, body]) => (
                   <div key={number} className="rounded-2xl border border-white/[0.08] bg-black/10 p-5">
                     <p className="font-mono text-[10px] text-gold-400">{number}</p>
