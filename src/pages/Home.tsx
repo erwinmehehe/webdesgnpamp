@@ -14,13 +14,18 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { IndustryStrip } from "@/components/IndustryStrip";
 import {
   AdvancedStudioCTA,
-  BeforeAfterSection,
   CapabilitySection,
-  PerformanceProofSection,
   ProjectBreakdownsSection,
   StudioLabSection,
 } from "@/components/home/AdvancedStudioSections";
-import { QuoteEstimatorSection, WebsiteRoastSection } from "@/components/home/AdvancedLeadTools";
+import { QuoteEstimatorSection } from "@/components/home/AdvancedLeadTools";
+import {
+  BuildQualitySection,
+  LiveLighthouseSection,
+  ResponsiveInspectorSection,
+  SeoConversionLabsSection,
+  WebsiteAuditSection,
+} from "@/components/home/ProofLabs";
 import {
   CTABand,
   CheckList,
@@ -82,7 +87,7 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 text-base leading-relaxed text-slate-400">
-                Hover a sample on desktop and the page scrolls through the design. Each concept uses a different layout, content structure and visual direction.
+                Hover a sample on desktop and the page scrolls through the design. Open the portfolio to switch between desktop, tablet and mobile views.
               </p>
             </Reveal>
           </div>
@@ -108,11 +113,14 @@ export function HomePage() {
       </Section>
 
       <IndustryStrip />
-      <BeforeAfterSection />
       <ProjectBreakdownsSection />
       <StudioLabSection />
+      <SeoConversionLabsSection />
+      <ResponsiveInspectorSection />
       <CapabilitySection />
-      <PerformanceProofSection />
+      <LiveLighthouseSection />
+      <BuildQualitySection />
+      <WebsiteAuditSection />
 
       <Section id="services" divider>
         <SectionIntro
@@ -190,7 +198,9 @@ export function HomePage() {
         <div className="mt-16"><StatStrip /></div>
       </Section>
 
-      <QuoteEstimatorSection />\n\n      <Section id="pricing" divider>
+      <QuoteEstimatorSection />
+
+      <Section id="pricing" divider>
         <SectionIntro
           eyebrow="Pricing"
           title={<>Clear <span className="text-gold-gradient">starting prices.</span></>}
