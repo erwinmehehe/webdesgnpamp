@@ -11,7 +11,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "framer-motion";
-import { ArrowUpRight, MapPin, Monitor, Smartphone, Tablet } from "lucide-react";
+import { ArrowUpRight, Monitor, Smartphone, Tablet } from "lucide-react";
 import { Link } from "@/router";
 import { SiteEffects } from "@/components/portfolio/SiteEffects";
 import { SITE_WIDTH, SitePreview } from "@/components/portfolio/SitePreview";
@@ -262,10 +262,6 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
             <span style={{ color: accent }}>{projectNumber}</span>
             <span>{project.industry}</span>
-            <span className="inline-flex items-center gap-1.5 normal-case tracking-normal text-white/30">
-              <MapPin className="h-3 w-3" aria-hidden="true" />
-              {project.location}
-            </span>
           </div>
           <h2 className="mt-3 font-display text-[1.55rem] font-semibold leading-none tracking-[-0.035em] text-white sm:text-[1.85rem]">
             {project.name}
