@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link, useRoute } from "@/router";
 import { site } from "@/data/site";
 
 /**
  * Persistent conversion paths on every page.
- * - Mobile: fixed bottom bar with three actions — Call · WhatsApp · Quote.
+ * - Mobile: one focused Get a quote action.
  * - Desktop: WhatsApp bubble once past the hero.
  *
  * Hidden on /contact, where the form is already in front of the visitor.
@@ -32,9 +32,8 @@ export function FloatingContact() {
 
   return (
     <>
-      {/* Desktop WhatsApp bubble */}
       <AnimatePresence>
-        {visible && (
+        {visible && path !== "/contact" && (
           <motion.a
             href={site.whatsapp}
             target="_blank"
@@ -43,8 +42,8 @@ export function FloatingContact() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.6, y: 16 }}
             transition={{ duration, ease: [0.21, 0.65, 0.15, 1] }}
-            aria-label="Chat with us on WhatsApp"
-            title="Chat with us on WhatsApp"
+            aria-label="Chat on WhatsApp"
+            title="Chat on WhatsApp"
             className="group fixed bottom-6 right-6 z-40 hidden items-center rounded-full bg-[#25D366] py-3.5 pl-4 pr-4 text-white shadow-[0_12px_40px_-8px_rgba(37,211,102,0.6)] transition-shadow duration-300 hover:shadow-[0_16px_52px_-8px_rgba(37,211,102,0.8)] md:flex"
           >
             <span className="absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5" aria-hidden="true">
@@ -59,7 +58,6 @@ export function FloatingContact() {
         )}
       </AnimatePresence>
 
-      {/* Mobile: fixed bottom action bar — Call · WhatsApp · Quote */}
       <AnimatePresence>
         {showBar && (
           <motion.div
@@ -69,28 +67,12 @@ export function FloatingContact() {
             transition={{ duration, ease: [0.21, 0.65, 0.15, 1] }}
             className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
           >
-            <div className="grid grid-cols-[1fr_1fr_1.3fr] gap-2 px-3 py-2.5">
-              <a
-                href={site.phoneHref}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.06] px-2 py-2.5 text-[13px] font-semibold text-white active:scale-[0.98]"
-              >
-                <Phone className="h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
-                Call
-              </a>
-              <a
-                href={site.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-1.5 rounded-lg bg-[#25D366] px-2 py-2.5 text-[13px] font-semibold text-[#04301a] active:scale-[0.98]"
-              >
-                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
-                WhatsApp
-              </a>
+            <div className="px-3 py-2.5">
               <Link
                 to="/contact/"
-                className="flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-2 py-2.5 text-[13px] font-semibold text-ink-950 active:scale-[0.98]"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-5 py-3.5 text-sm font-bold text-ink-950 shadow-[0_8px_28px_-12px_rgba(246,193,74,.7)] active:scale-[0.99]"
               >
-                Quote
+                Get a quote
                 <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Link>
             </div>
@@ -98,8 +80,7 @@ export function FloatingContact() {
         )}
       </AnimatePresence>
 
-      {/* Spacer so the bar never covers footer content on mobile */}
-      {showBar && <div className="h-[64px] md:hidden" aria-hidden="true" />}
+      {showBar && <div className="h-[68px] md:hidden" aria-hidden="true" />}
     </>
   );
 }
