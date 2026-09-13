@@ -1,24 +1,29 @@
-import { useEffect, useMemo, useState } from "react";
-import { AlertCircle, ArrowLeft, ArrowRight, Send } from "lucide-react";
-import { FAQAccordion, Eyebrow, PageHero, Section, SectionIntro } from "@/components/blocks";
+import { useEffect, useState } from "react";
+import { AlertCircle, ArrowRight, Send } from "lucide-react";
+import { Eyebrow, PageHero, Section } from "@/components/blocks";
 import { navigate, usePageMeta } from "@/router";
-import { generalFaqs, site } from "@/data/site";
-import { services } from "@/data/services";
 import { cn } from "@/utils/cn";
 import { trackEvent } from "@/utils/analytics";
 
-interface FormState {
+type Estimate = {
+  type?: string;
+  pages?: string;
+  seo?: boolean;
+  copy?: boolean;
+  scope?: string;
+  price?: string;
+};
+
+type FormState = {
   name: string;
   email: string;
   phone: string;
   business: string;
   currentSite: string;
   goal: string;
-  projectDetail: string;
-  budget: string;
-  timeline: string;
-  message: string;
-}
+};
+
+type FormErrors = Partial<Record<keyof FormState | "contact", string>>;
 
 const initialState: FormState = {
   name: "",
@@ -27,166 +32,106 @@ const initialState: FormState = {
   business: "",
   currentSite: "",
   goal: "",
-  projectDetail: "",
-  budget: "",
-  timeline: "",
-  message: "",
 };
-
-const budgets = ["Under ₱30,000", "₱30,000 – ₱50,000", "₱50,000 – ₱120,000", "Above ₱120,000", "Not sure yet"];
-const timelines = ["As soon as possible", "1–2 months", "3–6 months", "Just planning ahead"];
-const goals = ["More enquiries", "Sell online", "More bookings", "Hire people", "Better Google visibility", "Explain the business better", "Something else"];
 
 export function ContactPage() {
   usePageMeta(
-    "Contact Web Design Pampanga | Request a Website Quote",
-    "Tell Web Design Pampanga what you need and request a website quote for design, development, redesign, maintenance or SEO.",
+    "Request a Website Quote | Web Design Pampanga",
+    "Send your project details and request a website quote from Web Design Pampanga.",
   );
 
   const [form, setForm] = useState<FormState>(initialState);
-  const [needs, setNeeds] = useState<string[]>([]);
-  const [step, setStep] = useState(1);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState | "needs", string>>>({});
+  const [estimate, setEstimate] = useState<Estimate | null>(null);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [sending, setSending] = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    const auditUrl = sessionStorage.getItem("wdp_audit_url");
     const estimateRaw = sessionStorage.getItem("wdp_quote_estimate");
-
-    if (auditUrl) {
-      setForm((prev) => ({ ...prev, currentSite: auditUrl }));
-      setNeeds((prev) => prev.length ? prev : ["Website Redesign"]);
-      sessionStorage.removeItem("wdp_audit_url");
-    }
+    const auditUrl = sessionStorage.getItem("wdp_audit_url");
 
     if (estimateRaw) {
       try {
-        const estimate = JSON.parse(estimateRaw) as { type?: string; pages?: string; seo?: boolean; copy?: boolean; scope?: string };
-        const mappedNeed = estimate.type === "Ecommerce"
-          ? "E-commerce Web Design"
-          : estimate.type === "Custom build"
-            ? "Web Development"
-            : "Web Design";
-        setNeeds([mappedNeed]);
-        setForm((prev) => ({
-          ...prev,
-          projectDetail: [estimate.scope, estimate.pages ? `${estimate.pages} pages` : "", estimate.seo ? "SEO structure" : "", estimate.copy ? "Copy support" : ""].filter(Boolean).join(" · "),
-        }));
+        setEstimate(JSON.parse(estimateRaw) as Estimate);
       } catch {
-        // Ignore malformed session data and keep the form usable.
+        setEstimate(null);
       }
-      sessionStorage.removeItem("wdp_quote_estimate");
+    }
+
+    if (auditUrl) {
+      setForm((prev) => ({ ...prev, currentSite: auditUrl }));
     }
   }, []);
 
-  const followUp = useMemo(() => {
-    if (needs.includes("E-commerce Web Design")) {
-      return {
-        label: "How many products are you planning to sell?",
-        placeholder: "For example: around 40 products, with size and colour variants",
-      };
-    }
-    if (needs.includes("SEO Services") || needs.includes("Local SEO")) {
-      return {
-        label: "What do you want to be found for?",
-        placeholder: "Service, location or search terms that matter most",
-      };
-    }
-    if (needs.includes("Website Redesign")) {
-      return {
-        label: "What is the biggest problem with the current website?",
-        placeholder: "Slow, outdated, hard to edit, weak enquiries, poor mobile layout...",
-      };
-    }
-    if (needs.includes("Web Development")) {
-      return {
-        label: "Is the design already prepared?",
-        placeholder: "Tell me what is designed already and what still needs to be built",
-      };
-    }
-    return {
-      label: "What should the website do better?",
-      placeholder: "A short answer is enough",
-    };
-  }, [needs]);
-
-  const whatsappLink = useMemo(() => {
-    const summary = [
-      `Hi ${site.name}, I'd like to ask about a website.`,
-      form.business ? `Business: ${form.business}` : "",
-      needs.length ? `Needs: ${needs.join(", ")}` : "",
-      form.goal ? `Main goal: ${form.goal}` : "",
-      form.projectDetail ? `Project detail: ${form.projectDetail}` : "",
-      form.budget ? `Budget: ${form.budget}` : "",
-      form.timeline ? `Timeline: ${form.timeline}` : "",
-      form.message ? `Details: ${form.message}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    return `https://wa.me/639672488693?text=${encodeURIComponent(summary)}`;
-  }, [form, needs]);
-
   const update = (key: keyof FormState, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
-    setErrors((prev) => ({ ...prev, [key]: undefined }));
+    setErrors((prev) => ({ ...prev, [key]: undefined, contact: undefined }));
   };
 
-  const toggleNeed = (value: string) => {
-    setNeeds((prev) => (prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]));
-    setErrors((prev) => ({ ...prev, needs: undefined }));
-  };
-
-  const continueToContact = () => {
-    const next: Partial<Record<keyof FormState | "needs", string>> = {};
-    if (!needs.length) next.needs = "Choose at least one option.";
-    if (!form.goal) next.goal = "Choose the main result you want from the project.";
-    setErrors((prev) => ({ ...prev, ...next }));
-    if (Object.keys(next).length) return;
-
-    trackEvent("quote_step_complete", { step: 1, goal: form.goal });
-    setStep(2);
+  const markStarted = () => {
+    if (started) return;
+    setStarted(true);
+    trackEvent("contact_started", {
+      source: estimate ? "hero_estimator" : "contact_page",
+      has_estimate: Boolean(estimate),
+    });
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    markStarted();
 
-    const next: Partial<Record<keyof FormState | "needs", string>> = {};
+    const next: FormErrors = {};
     if (!form.name.trim()) next.name = "Please add your name.";
-    if (!form.email.trim()) next.email = "Please add your email.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) next.email = "Please check the email address.";
-    if (!form.message.trim()) next.message = "Add a short note about the project.";
+    if (!form.business.trim()) next.business = "Please add your business name.";
+    if (!form.goal.trim()) next.goal = "Tell me what you want the website to achieve.";
+
+    if (!form.email.trim() && !form.phone.trim()) {
+      next.contact = "Add either an email address or WhatsApp / phone number.";
+    }
+
+    if (form.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) {
+      next.email = "Please check the email address.";
+    }
 
     setErrors(next);
     if (Object.keys(next).length) return;
 
     setSending(true);
     setSendFailed(false);
-    trackEvent("form_submit_attempt", { form_name: "quote", goal: form.goal });
 
     try {
       const response = await fetch("https://formsubmit.co/ajax/erwinvalles20@gmail.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `New website enquiry — ${form.business || form.name}`,
+          _subject: `New website enquiry — ${form.business}`,
           Name: form.name,
-          Email: form.email,
-          Phone: form.phone || "Not provided",
-          Business: form.business || "Not provided",
-          "Current site": form.currentSite || "Not provided",
-          Needs: needs.join(", "),
-          "Main goal": form.goal,
-          "Project detail": form.projectDetail || "Not provided",
-          Budget: form.budget || "Not specified",
-          Timeline: form.timeline || "Not specified",
-          Message: form.message,
+          Email: form.email || "Not provided",
+          "WhatsApp / phone": form.phone || "Not provided",
+          Business: form.business,
+          "Current website": form.currentSite || "Not provided",
+          "What the website should achieve": form.goal,
+          "Estimated project type": estimate?.type || "Not selected",
+          "Estimated pages": estimate?.pages || "Not selected",
+          "Likely scope": estimate?.scope || "Not selected",
+          "Starting point": estimate?.price || "Not selected",
+          "Lead-generation structure": estimate ? (estimate.seo ? "Included" : "Not selected") : "Not selected",
+          "Copy support": estimate ? (estimate.copy ? "Needed" : "Client has copy") : "Not selected",
         }),
       });
 
       if (!response.ok) throw new Error("Form submission failed");
-      trackEvent("form_submit", { form_name: "quote", goal: form.goal });
+
+      trackEvent("contact_submitted", {
+        source: estimate ? "hero_estimator" : "contact_page",
+        project_type: estimate?.type || "not_selected",
+        scope: estimate?.scope || "not_selected",
+      });
+      trackEvent("generate_lead", { form_name: "quote" });
+      sessionStorage.removeItem("wdp_quote_estimate");
+      sessionStorage.removeItem("wdp_audit_url");
       navigate("/thank-you/");
     } catch {
       setSendFailed(true);
@@ -206,163 +151,139 @@ export function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Start a project"
-        title={<>Tell me what the website <span className="text-gold-gradient">needs to do.</span></>}
-        intro="Choose the type of work and the result you want. The form changes the next question based on your project, so you only answer what is useful."
+        eyebrow="Get a quote"
+        title={<>Tell me where the website needs to <span className="text-gold-gradient">take your business.</span></>}
+        intro={estimate
+          ? "Your estimator choices are already carried over. I only need the details required to review the project and reply with the next step."
+          : "Keep it short. Tell me who you are, how to reach you and what you want the website to achieve."}
         crumbs={[{ label: "Contact" }]}
       />
 
       <Section divider>
-        <div className="mx-auto max-w-4xl">
-          <div className="rounded-[2rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.045] to-white/[0.012] p-7 sm:p-9 lg:p-10">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <Eyebrow>{step === 1 ? "Project brief" : "Contact details"}</Eyebrow>
-                <h2 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">
-                  {step === 1 ? "Start with the work, not your contact details." : "Where should I send the reply?"}
-                </h2>
-              </div>
-              <span className="shrink-0 rounded-full border border-white/10 px-3 py-1 text-xs text-slate-500">{step}/2</span>
-            </div>
+        <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[.78fr_1.22fr] lg:items-start lg:gap-10">
+          <div className="rounded-[1.8rem] border border-white/[0.08] bg-white/[0.02] p-6 sm:p-7">
+            <Eyebrow>{estimate ? "Your estimate" : "What happens next"}</Eyebrow>
 
-            <div className="mt-5 h-1 overflow-hidden rounded-full bg-white/[0.06]">
-              <div className={cn("h-full rounded-full bg-gold-400 transition-all", step === 1 ? "w-1/2" : "w-full")} />
-            </div>
-
-            {step === 1 ? (
-              <div className="mt-8">
-                <fieldset>
-                  <legend className="mb-3 block text-xs font-medium uppercase tracking-wider text-slate-400">What do you need help with? *</legend>
-                  <div className="flex flex-wrap gap-2">
-                    {[...services.map((service) => service.name), "Something else"].map((option) => {
-                      const active = needs.includes(option);
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          onClick={() => toggleNeed(option)}
-                          aria-pressed={active}
-                          className={cn(
-                            "rounded-full border px-4 py-2.5 text-xs font-medium transition-all",
-                            active
-                              ? "border-gold-400/50 bg-gold-400/15 text-gold-200"
-                              : "border-white/[0.09] bg-white/[0.03] text-slate-400 hover:border-white/20 hover:text-slate-200",
-                          )}
-                        >
-                          {option}
-                        </button>
-                      );
-                    })}
+            {estimate ? (
+              <div className="mt-5 space-y-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.14em] text-slate-600">Likely scope</p>
+                  <p className="mt-1 font-display text-2xl font-bold text-white">{estimate.scope || estimate.type || "Website project"}</p>
+                  {estimate.price && <p className="mt-1 text-sm text-gold-300">{estimate.price}</p>}
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="rounded-xl border border-white/[0.07] bg-black/10 p-3">
+                    <span className="block text-slate-600">Project</span>
+                    <span className="mt-1 block font-semibold text-slate-300">{estimate.type || "Website"}</span>
                   </div>
-                  {errors.needs && <p className="mt-2 flex items-center gap-1.5 text-xs text-rose-400"><AlertCircle className="h-3.5 w-3.5" />{errors.needs}</p>}
-                </fieldset>
-
-                <fieldset className="mt-7">
-                  <legend className="mb-3 block text-xs font-medium uppercase tracking-wider text-slate-400">What is the main goal? *</legend>
-                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                    {goals.map((goal) => {
-                      const active = form.goal === goal;
-                      return (
-                        <button
-                          key={goal}
-                          type="button"
-                          onClick={() => update("goal", goal)}
-                          aria-pressed={active}
-                          className={cn(
-                            "rounded-2xl border px-4 py-3 text-left text-xs font-semibold transition-all",
-                            active
-                              ? "border-gold-400/50 bg-gold-400/[0.1] text-gold-200"
-                              : "border-white/[0.08] bg-white/[0.025] text-slate-400 hover:border-white/20 hover:text-white",
-                          )}
-                        >
-                          {goal}
-                        </button>
-                      );
-                    })}
+                  <div className="rounded-xl border border-white/[0.07] bg-black/10 p-3">
+                    <span className="block text-slate-600">Pages</span>
+                    <span className="mt-1 block font-semibold text-slate-300">{estimate.pages ? `${estimate.pages} pages` : "To confirm"}</span>
                   </div>
-                  {errors.goal && <p className="mt-2 flex items-center gap-1.5 text-xs text-rose-400"><AlertCircle className="h-3.5 w-3.5" />{errors.goal}</p>}
-                </fieldset>
-
-                <div className="mt-7 grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="business" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Business name</label>
-                    <input id="business" value={form.business} onChange={(event) => update("business", event.target.value)} className={fieldClass()} placeholder="Your business" />
+                  <div className="rounded-xl border border-white/[0.07] bg-black/10 p-3">
+                    <span className="block text-slate-600">Lead-gen structure</span>
+                    <span className="mt-1 block font-semibold text-slate-300">{estimate.seo ? "Included" : "Not selected"}</span>
                   </div>
-                  <div>
-                    <label htmlFor="currentSite" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Current website</label>
-                    <input id="currentSite" value={form.currentSite} onChange={(event) => update("currentSite", event.target.value)} className={fieldClass()} placeholder="Optional" />
-                  </div>
-                  <div className="sm:col-span-2">
-                    <label htmlFor="projectDetail" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">{followUp.label}</label>
-                    <input id="projectDetail" value={form.projectDetail} onChange={(event) => update("projectDetail", event.target.value)} className={fieldClass()} placeholder={followUp.placeholder} />
+                  <div className="rounded-xl border border-white/[0.07] bg-black/10 p-3">
+                    <span className="block text-slate-600">Copy support</span>
+                    <span className="mt-1 block font-semibold text-slate-300">{estimate.copy ? "Needed" : "I have copy"}</span>
                   </div>
                 </div>
-
-                <button type="button" onClick={continueToContact} className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-7 py-4 text-sm font-semibold text-ink-950 sm:w-auto">
-                  Next: contact details <ArrowRight className="h-4 w-4" />
-                </button>
+                <p className="text-xs leading-relaxed text-slate-500">This is a starting point, not a final quote. I confirm the exact scope after reviewing your requirements.</p>
               </div>
             ) : (
-              <form className="mt-8" onSubmit={handleSubmit} noValidate>
-                <div className="mb-7 rounded-2xl border border-gold-400/15 bg-gold-400/[0.05] p-5">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-gold-400">Your brief</p>
-                  <p className="mt-2 text-sm font-semibold text-white">{needs.join(", ")}</p>
-                  <p className="mt-1 text-xs text-slate-400">Main goal: {form.goal}</p>
-                  {form.projectDetail && <p className="mt-1 text-xs text-slate-500">{form.projectDetail}</p>}
-                </div>
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="name" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Your name *</label>
-                    <input id="name" value={form.name} onChange={(event) => update("name", event.target.value)} className={fieldClass(errors.name)} placeholder="Your name" />
-                    {errors.name && <p className="mt-2 text-xs text-rose-400">{errors.name}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Email *</label>
-                    <input id="email" type="email" value={form.email} onChange={(event) => update("email", event.target.value)} className={fieldClass(errors.email)} placeholder="you@business.com" />
-                    {errors.email && <p className="mt-2 text-xs text-rose-400">{errors.email}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="phone" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Phone / Viber</label>
-                    <input id="phone" value={form.phone} onChange={(event) => update("phone", event.target.value)} className={fieldClass()} placeholder="09XX XXX XXXX" />
-                  </div>
-                  <div>
-                    <label htmlFor="budget" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Budget</label>
-                    <select id="budget" value={form.budget} onChange={(event) => update("budget", event.target.value)} className={cn(fieldClass(), "appearance-none bg-ink-900")}>
-                      <option value="">Select one</option>
-                      {budgets.map((budget) => <option key={budget}>{budget}</option>)}
-                    </select>
-                  </div>
-                  <div className="sm:col-span-2">
-                    <label htmlFor="timeline" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">When do you want to start?</label>
-                    <select id="timeline" value={form.timeline} onChange={(event) => update("timeline", event.target.value)} className={cn(fieldClass(), "appearance-none bg-ink-900")}>
-                      <option value="">Select one</option>
-                      {timelines.map((timeline) => <option key={timeline}>{timeline}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <label htmlFor="message" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Anything else I should know? *</label>
-                  <textarea id="message" rows={5} value={form.message} onChange={(event) => update("message", event.target.value)} className={cn(fieldClass(errors.message), "resize-y")} placeholder="Anything that affects the scope, timing or decision." />
-                  {errors.message && <p className="mt-2 text-xs text-rose-400">{errors.message}</p>}
-                </div>
-
-                {sendFailed && <div className="mt-6 rounded-2xl border border-rose-500/30 bg-rose-500/[0.06] px-5 py-4 text-sm text-rose-200">The form did not send. Please try again or <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="font-semibold underline">send it on WhatsApp</a>.</div>}
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <button type="button" onClick={() => setStep(1)} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-white"><ArrowLeft className="h-4 w-4" />Back</button>
-                  <button type="submit" disabled={sending} className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-7 py-3.5 text-sm font-semibold text-ink-950 disabled:opacity-60"><Send className="h-4 w-4" />{sending ? "Sending…" : "Send project brief"}</button>
-                </div>
-              </form>
+              <div className="mt-5 space-y-5 text-sm leading-relaxed text-slate-400">
+                <div><span className="font-semibold text-white">1. I review the project.</span><br />I look at the goal, current website and what needs to be built.</div>
+                <div><span className="font-semibold text-white">2. I reply with the next step.</span><br />If I need anything else to price it properly, I will ask only for what matters.</div>
+                <div><span className="font-semibold text-white">3. Scope before work starts.</span><br />Pages, functionality, timeline and price are confirmed before the build begins.</div>
+              </div>
             )}
           </div>
-        </div>
-      </Section>
 
-      <Section ambient divider className="pb-28 sm:pb-32">
-        <SectionIntro eyebrow="Before you send" title="A few useful answers" description="Pricing, timelines, mobile support and redesigns, without the sales pitch." />
-        <div className="mx-auto mt-12 max-w-3xl"><FAQAccordion items={generalFaqs.slice(0, 4)} /></div>
+          <form
+            className="rounded-[2rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.045] to-white/[0.012] p-7 sm:p-9"
+            onSubmit={handleSubmit}
+            onFocusCapture={markStarted}
+            noValidate
+          >
+            <div className="flex items-end justify-between gap-4 border-b border-white/[0.07] pb-5">
+              <div>
+                <Eyebrow>Project details</Eyebrow>
+                <h2 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">Where should I send the next step?</h2>
+              </div>
+              <span className="hidden text-xs text-slate-600 sm:block">About 1 minute</span>
+            </div>
+
+            <div className="mt-7 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="name" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Your name *</label>
+                <input id="name" autoComplete="name" value={form.name} onChange={(event) => update("name", event.target.value)} className={fieldClass(errors.name)} placeholder="Your name" />
+                {errors.name && <p className="mt-2 text-xs text-rose-400">{errors.name}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="business" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Business name *</label>
+                <input id="business" autoComplete="organization" value={form.business} onChange={(event) => update("business", event.target.value)} className={fieldClass(errors.business)} placeholder="Your business" />
+                {errors.business && <p className="mt-2 text-xs text-rose-400">{errors.business}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="email" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Email</label>
+                <input id="email" type="email" autoComplete="email" value={form.email} onChange={(event) => update("email", event.target.value)} className={fieldClass(errors.email)} placeholder="you@business.com" />
+                {errors.email && <p className="mt-2 text-xs text-rose-400">{errors.email}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">WhatsApp / phone</label>
+                <input id="phone" type="tel" autoComplete="tel" value={form.phone} onChange={(event) => update("phone", event.target.value)} className={fieldClass()} placeholder="09XX XXX XXXX" />
+              </div>
+
+              {errors.contact && (
+                <p className="sm:col-span-2 flex items-center gap-2 text-xs text-rose-400">
+                  <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                  {errors.contact}
+                </p>
+              )}
+
+              <div className="sm:col-span-2">
+                <label htmlFor="currentSite" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Current website <span className="normal-case tracking-normal text-slate-600">optional</span></label>
+                <input id="currentSite" inputMode="url" value={form.currentSite} onChange={(event) => update("currentSite", event.target.value)} className={fieldClass()} placeholder="https://yourwebsite.com" />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label htmlFor="goal" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">What do you want the website to achieve? *</label>
+                <textarea
+                  id="goal"
+                  rows={5}
+                  value={form.goal}
+                  onChange={(event) => update("goal", event.target.value)}
+                  className={cn(fieldClass(errors.goal), "resize-y")}
+                  placeholder="For example: bring in more qualified enquiries, explain our services clearly and make it easier for customers to request a quote."
+                />
+                {errors.goal && <p className="mt-2 text-xs text-rose-400">{errors.goal}</p>}
+              </div>
+            </div>
+
+            {sendFailed && (
+              <div className="mt-5 flex items-start gap-3 rounded-2xl border border-rose-500/25 bg-rose-500/[0.07] p-4 text-sm text-rose-200">
+                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                The form could not send right now. Please try again in a moment.
+              </div>
+            )}
+
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <button
+                type="submit"
+                disabled={sending}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-7 py-4 text-sm font-bold text-ink-950 shadow-[0_8px_36px_-12px_rgba(246,193,74,.7)] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              >
+                {sending ? "Sending…" : "Send my project details"}
+                {sending ? <Send className="h-4 w-4 animate-pulse" /> : <ArrowRight className="h-4 w-4" />}
+              </button>
+              <p className="text-xs leading-relaxed text-slate-600">No obligation. I will review the project before recommending the next step.</p>
+            </div>
+          </form>
+        </div>
       </Section>
     </>
   );
