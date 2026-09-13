@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
-  MessageCircle,
-  Phone,
   Smartphone,
   Target,
   TrendingUp,
@@ -11,7 +9,6 @@ import {
 } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { ProjectCard } from "@/components/ProjectCard";
-import { IndustryStrip } from "@/components/IndustryStrip";
 import {
   CTABand,
   CheckList,
@@ -46,7 +43,7 @@ const whyUs = [
   {
     icon: Smartphone,
     title: "Easy to act on mobile",
-    description: "Calls, WhatsApp and enquiry forms stay obvious on the device many customers will use first.",
+    description: "Calls, messages and enquiry forms stay obvious on the device many customers will use first.",
   },
   {
     icon: TrendingUp,
@@ -54,6 +51,12 @@ const whyUs = [
     description: "Visitors should understand what you offer, why they should choose you and what to do next within seconds.",
   },
 ];
+
+const conversionNotes: Record<string, string> = {
+  "coreaxis-bpo": "Separates client services from careers so each audience reaches the right next step faster.",
+  "sizzle-house": "Puts menu, opening information and the reservation path where mobile visitors can act quickly.",
+  "skyline-hotel": "Makes room details and the direct enquiry path clear before a guest leaves for a booking platform.",
+};
 
 export function HomePage() {
   usePageMeta("Web Design Pampanga | Professional Business Websites in Pampanga", site.description);
@@ -68,12 +71,12 @@ export function HomePage() {
             <Reveal><Eyebrow>Website examples</Eyebrow></Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
-                See how your next website could <span className="text-gold-gradient">generate more enquiries.</span>
+                See how the right page structure makes it easier to <span className="text-gold-gradient">enquire.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 text-base leading-relaxed text-slate-400">
-                Each sample is built to make the offer clear, build trust quickly and make the next step obvious. Hover to move through the page.
+                These are concept examples, but the conversion decisions are practical: make the offer clear, answer the biggest hesitation and keep the next action obvious.
               </p>
             </Reveal>
           </div>
@@ -90,15 +93,18 @@ export function HomePage() {
           whileInView="show"
           viewport={{ once: true, margin: "-64px" }}
           transition={{ staggerChildren: 0.1, delayChildren: 0.1 }}
-          className="mt-12 grid gap-10 md:grid-cols-2"
+          className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-3"
         >
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+          {featuredProjects.slice(0, 3).map((project) => (
+            <motion.div key={project.slug} variants={staggerItem} className="min-w-0">
+              <ProjectCard project={project} />
+              <p className="mx-2 mt-4 text-sm leading-relaxed text-slate-500">
+                <span className="font-semibold text-slate-300">Conversion decision:</span> {conversionNotes[project.slug] || project.approach}
+              </p>
+            </motion.div>
           ))}
         </motion.div>
       </Section>
-
-      <IndustryStrip />
 
       <Section id="services" divider>
         <SectionIntro
@@ -137,7 +143,7 @@ export function HomePage() {
       <Section id="why-us" ambient divider>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <Reveal><Eyebrow>Built for conversion</Eyebrow></Reveal>
+            <Reveal><Eyebrow>Why work with me</Eyebrow></Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.7rem]">
                 Every page should move the visitor closer to <span className="text-gold-gradient">contacting you.</span>
@@ -150,27 +156,14 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-7">
-                <CheckList items={["Clear offer above the fold", "Proof before asking for the lead", "Call, WhatsApp and form paths that are easy to find", "No unnecessary sections that distract from the next step"]} />
+                <CheckList items={["Clear offer above the fold", "Proof before asking for the lead", "Contact paths that are easy to find", "No unnecessary sections that distract from the next step"]} />
               </div>
             </Reveal>
             <Reveal delay={0.26}>
-              <div className="mt-8"><GoldButton to="/contact/">Talk about my website</GoldButton></div>
+              <div className="mt-8"><GoldButton to="/contact/">Get a quote</GoldButton></div>
             </Reveal>
           </div>
           <InfoCardGrid items={whyUs} columns={2} />
-        </div>
-
-        <div className="mt-20">
-          <Reveal>
-            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-              <div>
-                <Eyebrow>Process</Eyebrow>
-                <h3 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">From first brief to a website ready to win enquiries.</h3>
-              </div>
-              <p className="max-w-sm text-sm leading-relaxed text-slate-500">You always know what is being built, what I need from you and what happens next.</p>
-            </div>
-          </Reveal>
-          <ProcessSteps />
         </div>
 
         <div className="mt-16"><StatStrip /></div>
@@ -194,6 +187,21 @@ export function HomePage() {
       </Section>
 
       <Section ambient divider>
+        <Reveal>
+          <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-end">
+            <div>
+              <Eyebrow>Process</Eyebrow>
+              <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold leading-[1.08] text-white sm:text-4xl">
+                From first brief to a website ready to <span className="text-gold-gradient">win enquiries.</span>
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm leading-relaxed text-slate-500">You always know what is being built, what I need from you and what happens next.</p>
+          </div>
+        </Reveal>
+        <ProcessSteps />
+      </Section>
+
+      <Section ambient divider>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <Reveal><Eyebrow>FAQ</Eyebrow></Reveal>
@@ -204,64 +212,14 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">
-                Cost, timing, redesigns, content and what I need from you. If your question is not here, send it through the contact page.
+                Cost, timing, redesigns, content and what I need from you. If your question is not here, send it through the quote form.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
-              <div className="mt-7 flex flex-wrap gap-3"><GoldButton to="/contact/">Ask a question</GoldButton></div>
+              <div className="mt-7 flex flex-wrap gap-3"><GoldButton to="/contact/">Get a quote</GoldButton></div>
             </Reveal>
           </div>
           <FAQAccordion items={generalFaqs.slice(0, 5)} />
-        </div>
-      </Section>
-
-      <Section id="contact" ambient divider>
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
-          <div>
-            <Reveal><Eyebrow>Get in touch</Eyebrow></Reveal>
-            <Reveal delay={0.08}>
-              <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.7rem]">
-                Want your website to bring in <span className="text-gold-gradient">more enquiries?</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-400">
-                Send me your current website or a short description of what you want to build. I will tell you the clearest next step and what I would prioritise first.
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <div className="mt-8 space-y-3">
-                <a href={site.phoneHref} className="flex items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-400/30 hover:bg-white/[0.05]">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold-400/15"><Phone className="h-5 w-5 text-gold-400" aria-hidden="true" /></span>
-                  <span><span className="block text-sm font-semibold text-white">{site.phoneDisplay}</span><span className="mt-0.5 block text-xs text-slate-500">Call or text · {site.hours}</span></span>
-                </a>
-                <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:bg-white/[0.05]">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-400/15"><MessageCircle className="h-5 w-5 text-emerald-400" aria-hidden="true" /></span>
-                  <span><span className="block text-sm font-semibold text-white">WhatsApp</span><span className="mt-0.5 block text-xs text-slate-500">Send your business name and website link if you have one.</span></span>
-                </a>
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal delay={0.15}>
-            <div className="glass rounded-[2rem] p-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold-400">Start with the lead goal</p>
-              <h3 className="mt-4 font-display text-xl font-semibold text-white">I only need enough detail to understand what should make someone contact you.</h3>
-              <ol className="mt-6 space-y-6">
-                {[
-                  { title: "What do you offer?", body: "Tell me the main service, product or offer the website needs to support." },
-                  { title: "What should visitors do next?", body: "Call, WhatsApp, request a quote, book, buy or send an enquiry." },
-                  { title: "What do you already have?", body: "Your current site, brand assets, content, photos or even just the idea." },
-                ].map((item, index) => (
-                  <li key={item.title} className="flex gap-4">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-400/25 bg-gold-400/10 font-display text-xs font-bold text-gold-400">0{index + 1}</span>
-                    <span><span className="block text-sm font-semibold text-white">{item.title}</span><span className="mt-1 block text-sm leading-relaxed text-slate-400">{item.body}</span></span>
-                  </li>
-                ))}
-              </ol>
-              <div className="mt-8"><GoldButton to="/contact/" className="w-full">Send my project details</GoldButton></div>
-            </div>
-          </Reveal>
         </div>
       </Section>
 
