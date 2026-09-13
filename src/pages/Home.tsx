@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { ProjectCard } from "@/components/ProjectCard";
+import { RecognitionSection } from "@/components/RecognitionSection";
 import {
   CTABand,
   CheckList,
@@ -105,6 +106,8 @@ export function HomePage() {
           ))}
         </motion.div>
       </Section>
+
+      <RecognitionSection />
 
       <Section id="services" divider>
         <SectionIntro
