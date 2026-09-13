@@ -1,0 +1,132 @@
+name: Apply Cloudflare country block
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/cloudflare-country-block.yml
+
+permissions:
+  contents: read
+
+jobs:
+  apply-country-block:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      ZONE_NAME: webdesignpampanga.com
+      RULE_REF: block-country-in-pk-bd
+      RULE_DESCRIPTION: Block traffic from India, Pakistan and Bangladesh
+      RULE_EXPRESSION: '(ip.src.country in {"IN" "PK" "BD"})'
+    steps:
+      - name: Check Cloudflare token
+        shell: bash
+        run: |
+          if [ -z "$CF_API_TOKEN" ]; then
+            echo "::error::Missing GitHub Actions secret CLOUDFLARE_API_TOKEN."
+            exit 1
+          fi
+
+      - name: Resolve Cloudflare zone
+        id: zone
+        shell: bash
+        run: |
+          set -euo pipefail
+          RESPONSE=$(curl -fsS \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}")
+
+          SUCCESS=$(jq -r '.success' <<<"$RESPONSE")
+          ZONE_ID=$(jq -r '.result[0].id // empty' <<<"$RESPONSE")
+          if [ "$SUCCESS" != "true" ] || [ -z "$ZONE_ID" ]; then
+            echo "$RESPONSE" | jq .
+            echo "::error::Could not resolve Cloudflare zone for ${ZONE_NAME}. The token needs Zone Read access."
+            exit 1
+          fi
+
+          echo "zone_id=$ZONE_ID" >> "$GITHUB_OUTPUT"
+          echo "Resolved ${ZONE_NAME}."
+
+      - name: Create or verify country block rule
+        shell: bash
+        env:
+          ZONE_ID: ${{ steps.zone.outputs.zone_id }}
+        run: |
+          set -euo pipefail
+          API="https://api.cloudflare.com/client/v4/zones/${ZONE_ID}"
+          AUTH=(-H "Authorization: Bearer $CF_API_TOKEN" -H "Content-Type: application/json")
+
+          HTTP_CODE=$(curl -sS -o /tmp/entrypoint.json -w '%{http_code}' \
+            "${AUTH[@]}" \
+            "$API/rulesets/phases/http_request_firewall_custom/entrypoint")
+
+          RULE=$(jq -n \
+            --arg action "block" \
+            --arg expression "$RULE_EXPRESSION" \
+            --arg description "$RULE_DESCRIPTION" \
+            --arg ref "$RULE_REF" \
+            '{action:$action,expression:$expression,description:$description,enabled:true,ref:$ref}')
+
+          if [ "$HTTP_CODE" = "404" ]; then
+            BODY=$(jq -n \
+              --arg name "zone" \
+              --arg description "Zone-level phase entry point" \
+              --arg kind "zone" \
+              --arg phase "http_request_firewall_custom" \
+              --argjson rule "$RULE" \
+              '{name:$name,description:$description,kind:$kind,phase:$phase,rules:[$rule]}')
+
+            RESPONSE=$(curl -fsS -X POST \
+              "${AUTH[@]}" \
+              --data "$BODY" \
+              "$API/rulesets")
+
+            if [ "$(jq -r '.success' <<<"$RESPONSE")" != "true" ]; then
+              echo "$RESPONSE" | jq .
+              echo "::error::Cloudflare rejected creation of the firewall ruleset. Token needs Zone WAF Write access."
+              exit 1
+            fi
+
+            echo "Created country block rule for IN, PK and BD."
+            exit 0
+          fi
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            cat /tmp/entrypoint.json || true
+            echo "::error::Could not read Cloudflare firewall ruleset (HTTP $HTTP_CODE)."
+            exit 1
+          fi
+
+          RULESET_ID=$(jq -r '.result.id // empty' /tmp/entrypoint.json)
+          if [ -z "$RULESET_ID" ]; then
+            cat /tmp/entrypoint.json
+            echo "::error::Cloudflare did not return a ruleset ID."
+            exit 1
+          fi
+
+          EXISTING_RULE_ID=$(jq -r --arg ref "$RULE_REF" '.result.rules[]? | select(.ref == $ref) | .id' /tmp/entrypoint.json | head -n1)
+          if [ -n "$EXISTING_RULE_ID" ]; then
+            echo "Country block rule already exists: $EXISTING_RULE_ID"
+            exit 0
+          fi
+
+          RESPONSE=$(curl -fsS -X POST \
+            "${AUTH[@]}" \
+            --data "$RULE" \
+            "$API/rulesets/$RULESET_ID/rules")
+
+          if [ "$(jq -r '.success' <<<"$RESPONSE")" != "true" ]; then
+            echo "$RESPONSE" | jq .
+            echo "::error::Cloudflare rejected the country block rule. Token needs Zone WAF Write access."
+            exit 1
+          fi
+
+          echo "Added country block rule for IN, PK and BD."
+
+      - name: Summary
+        run: |
+          echo "### Cloudflare country block" >> "$GITHUB_STEP_SUMMARY"
+          echo "Blocked countries: India (IN), Pakistan (PK), Bangladesh (BD)." >> "$GITHUB_STEP_SUMMARY"
+          echo "Zone: webdesignpampanga.com" >> "$GITHUB_STEP_SUMMARY"
