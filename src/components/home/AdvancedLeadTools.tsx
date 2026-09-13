@@ -180,7 +180,7 @@ export function WebsiteRoastSection() {
 
 const projectTypes = [
   { id: "starter", label: "Starter website", detail: "Focused small-business site", icon: Smartphone },
-  { id: "business", label: "Business website", detail: "More pages and stronger search structure", icon: FileText },
+  { id: "business", label: "Business website", detail: "More pages and stronger enquiry paths", icon: FileText },
   { id: "ecommerce", label: "Ecommerce", detail: "Products, payments or catalogue", icon: ShoppingCart },
   { id: "custom", label: "Custom build", detail: "Booking, recruitment or integrations", icon: Search },
 ] as const;
@@ -218,8 +218,8 @@ export function QuoteEstimatorSection() {
       <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-start lg:gap-16">
         <div>
           <Reveal><Eyebrow>Project scope estimator</Eyebrow></Reveal>
-          <Reveal delay={0.08}><h2 className="mt-5 font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl">Work out the likely scope <span className="text-gold-gradient">before you enquire.</span></h2></Reveal>
-          <Reveal delay={0.14}><p className="mt-5 max-w-lg text-base leading-relaxed text-slate-400">This is not an instant quote. It maps your requirements to the public starting packages. Ecommerce and custom functionality still need a proper scope.</p></Reveal>
+          <Reveal delay={0.08}><h2 className="mt-5 font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl">Get a realistic starting point <span className="text-gold-gradient">before you enquire.</span></h2></Reveal>
+          <Reveal delay={0.14}><p className="mt-5 max-w-lg text-base leading-relaxed text-slate-400">Choose the type of website, rough page count and the support you need. I will carry those choices into the project brief so you do not have to repeat yourself.</p></Reveal>
         </div>
 
         <Reveal delay={0.08}>
@@ -243,7 +243,7 @@ export function QuoteEstimatorSection() {
             </div>
 
             <div className="mt-6 grid gap-2 sm:grid-cols-2">
-              <button type="button" onClick={() => setSeo((value) => !value)} aria-pressed={seo} className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${seo ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}><span>SEO structure</span><span>{seo ? "Included" : "Not needed"}</span></button>
+              <button type="button" onClick={() => setSeo((value) => !value)} aria-pressed={seo} className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${seo ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}><span>Lead-generation structure</span><span>{seo ? "Included" : "Not needed"}</span></button>
               <button type="button" onClick={() => setCopy((value) => !value)} aria-pressed={copy} className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${copy ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}><span>Copy support</span><span>{copy ? "Needed" : "I have copy"}</span></button>
             </div>
 
