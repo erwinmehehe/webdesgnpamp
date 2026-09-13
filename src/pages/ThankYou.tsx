@@ -14,7 +14,12 @@ export function ThankYouPage() {
     const robots = document.querySelector('meta[name="robots"]');
     const previous = robots?.getAttribute("content") || "";
     robots?.setAttribute("content", "noindex,follow");
-    trackEvent("generate_lead", { form_name: "quote" });
+
+    if (sessionStorage.getItem("wdp_lead_submitted") === "1") {
+      trackEvent("generate_lead", { form_name: "quote" });
+      sessionStorage.removeItem("wdp_lead_submitted");
+    }
+
     return () => {
       if (previous) robots?.setAttribute("content", previous);
     };
