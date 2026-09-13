@@ -26,7 +26,6 @@ type ProjectType = typeof projectTypes[number]["id"];
 export function Hero() {
   const [type, setType] = useState<ProjectType>("business");
   const [pages, setPages] = useState("6-10");
-  const [leadStructure, setLeadStructure] = useState(true);
   const [copy, setCopy] = useState(false);
   const [estimatorStarted, setEstimatorStarted] = useState(false);
 
@@ -58,7 +57,7 @@ export function Hero() {
     const payload = {
       type: selected?.label ?? "Website",
       pages,
-      seo: leadStructure,
+      seo: true,
       copy,
       scope: scope.name,
       price: scope.price,
@@ -69,7 +68,7 @@ export function Hero() {
       placement: "hero",
       project_type: payload.type,
       pages,
-      lead_structure: leadStructure,
+      lead_structure: true,
       copy_support: copy,
       scope: scope.name,
     });
@@ -179,30 +178,19 @@ export function Hero() {
               ))}
             </div>
 
-            <div className="mt-5 grid gap-2 sm:grid-cols-2">
-              <button
-                type="button"
-                onClick={() => {
-                  markEstimatorStarted();
-                  setLeadStructure((value) => !value);
-                }}
-                aria-pressed={leadStructure}
-                className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${leadStructure ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}
-              >
-                <span>Lead-gen structure</span><span>{leadStructure ? "Included" : "Not needed"}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  markEstimatorStarted();
-                  setCopy((value) => !value);
-                }}
-                aria-pressed={copy}
-                className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${copy ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}
-              >
-                <span>Copy support</span><span>{copy ? "Needed" : "I have copy"}</span>
-              </button>
-            </div>
+            <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">3. Do you need copy support?</p>
+            <button
+              type="button"
+              onClick={() => {
+                markEstimatorStarted();
+                setCopy((value) => !value);
+              }}
+              aria-pressed={copy}
+              className={`mt-3 flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${copy ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}
+            >
+              <span>Copywriting / content help</span><span>{copy ? "Needed" : "I have copy"}</span>
+            </button>
+            <p className="mt-3 text-[11px] leading-relaxed text-slate-600">Lead-generation structure is included in every website build.</p>
 
             <div className="mt-6 rounded-2xl border border-gold-400/20 bg-gold-400/[0.055] p-5 sm:flex sm:items-center sm:justify-between sm:gap-5">
               <div>
@@ -215,7 +203,7 @@ export function Hero() {
                 onClick={startBrief}
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-5 py-3 text-sm font-bold text-ink-950 shadow-[0_8px_32px_-12px_rgba(246,193,74,.75)] transition-all hover:brightness-110 sm:mt-0 sm:w-auto"
               >
-                Get my project estimate <ArrowRight className="h-4 w-4" />
+                Get a quote for this scope <ArrowRight className="h-4 w-4" />
               </button>
             </div>
             <p className="mt-3 text-[11px] leading-relaxed text-slate-600">No obligation. Final pricing is confirmed after the exact pages, content and functionality are reviewed.</p>
