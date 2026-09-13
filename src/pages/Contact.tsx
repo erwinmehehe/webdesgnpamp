@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { AlertCircle, ArrowRight, Send } from "lucide-react";
+import { AlertCircle, ArrowRight, Mail, MessageCircle, Send } from "lucide-react";
 import { Eyebrow, PageHero, Section } from "@/components/blocks";
 import { navigate, usePageMeta } from "@/router";
+import { site } from "@/data/site";
 import { cn } from "@/utils/cn";
 import { trackEvent } from "@/utils/analytics";
 
@@ -49,18 +50,12 @@ export function ContactPage() {
 
   useEffect(() => {
     const estimateRaw = sessionStorage.getItem("wdp_quote_estimate");
-    const auditUrl = sessionStorage.getItem("wdp_audit_url");
+    if (!estimateRaw) return;
 
-    if (estimateRaw) {
-      try {
-        setEstimate(JSON.parse(estimateRaw) as Estimate);
-      } catch {
-        setEstimate(null);
-      }
-    }
-
-    if (auditUrl) {
-      setForm((prev) => ({ ...prev, currentSite: auditUrl }));
+    try {
+      setEstimate(JSON.parse(estimateRaw) as Estimate);
+    } catch {
+      setEstimate(null);
     }
   }, []);
 
@@ -84,7 +79,6 @@ export function ContactPage() {
 
     const next: FormErrors = {};
     if (!form.name.trim()) next.name = "Please add your name.";
-    if (!form.business.trim()) next.business = "Please add your business name.";
     if (!form.goal.trim()) next.goal = "Tell me what you want the website to achieve.";
 
     if (!form.email.trim() && !form.phone.trim()) {
@@ -106,18 +100,18 @@ export function ContactPage() {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `New website enquiry — ${form.business}`,
+          _subject: `New website enquiry — ${form.business.trim() || form.name}`,
           Name: form.name,
           Email: form.email || "Not provided",
           "WhatsApp / phone": form.phone || "Not provided",
-          Business: form.business,
+          "Business / project": form.business || "Not provided",
           "Current website": form.currentSite || "Not provided",
           "What the website should achieve": form.goal,
           "Estimated project type": estimate?.type || "Not selected",
           "Estimated pages": estimate?.pages || "Not selected",
           "Likely scope": estimate?.scope || "Not selected",
           "Starting point": estimate?.price || "Not selected",
-          "Lead-generation structure": estimate ? (estimate.seo ? "Included" : "Not selected") : "Not selected",
+          "Lead-generation structure": "Included",
           "Copy support": estimate ? (estimate.copy ? "Needed" : "Client has copy") : "Not selected",
         }),
       });
@@ -129,8 +123,8 @@ export function ContactPage() {
         project_type: estimate?.type || "not_selected",
         scope: estimate?.scope || "not_selected",
       });
+      sessionStorage.setItem("wdp_lead_submitted", "1");
       sessionStorage.removeItem("wdp_quote_estimate");
-      sessionStorage.removeItem("wdp_audit_url");
       navigate("/thank-you/");
     } catch {
       setSendFailed(true);
@@ -146,6 +140,8 @@ export function ContactPage() {
         ? "border-rose-500/60 focus:border-rose-400"
         : "border-white/[0.09] hover:border-white/[0.16] focus:border-gold-400/60",
     );
+
+  const emailFallback = `mailto:${site.email}?subject=${encodeURIComponent("Website quote request")}`;
 
   return (
     <>
@@ -181,7 +177,7 @@ export function ContactPage() {
                   </div>
                   <div className="rounded-xl border border-white/[0.07] bg-black/10 p-3">
                     <span className="block text-slate-600">Lead-gen structure</span>
-                    <span className="mt-1 block font-semibold text-slate-300">{estimate.seo ? "Included" : "Not selected"}</span>
+                    <span className="mt-1 block font-semibold text-slate-300">Included</span>
                   </div>
                   <div className="rounded-xl border border-white/[0.07] bg-black/10 p-3">
                     <span className="block text-slate-600">Copy support</span>
@@ -221,9 +217,8 @@ export function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="business" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Business name *</label>
-                <input id="business" autoComplete="organization" value={form.business} onChange={(event) => update("business", event.target.value)} className={fieldClass(errors.business)} placeholder="Your business" />
-                {errors.business && <p className="mt-2 text-xs text-rose-400">{errors.business}</p>}
+                <label htmlFor="business" className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400">Business / project name <span className="normal-case tracking-normal text-slate-600">optional</span></label>
+                <input id="business" autoComplete="organization" value={form.business} onChange={(event) => update("business", event.target.value)} className={fieldClass()} placeholder="Business or project name" />
               </div>
 
               <div>
@@ -264,9 +259,22 @@ export function ContactPage() {
             </div>
 
             {sendFailed && (
-              <div className="mt-5 flex items-start gap-3 rounded-2xl border border-rose-500/25 bg-rose-500/[0.07] p-4 text-sm text-rose-200">
-                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                The form could not send right now. Please try again in a moment.
+              <div className="mt-5 rounded-2xl border border-rose-500/25 bg-rose-500/[0.07] p-4 text-sm text-rose-100">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                  <div>
+                    <p className="font-semibold">The form could not send right now.</p>
+                    <p className="mt-1 text-rose-200/80">You can still send the enquiry directly instead of losing your progress.</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                  <a href={emailFallback} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2.5 text-xs font-semibold text-white hover:bg-white/[0.08]">
+                    <Mail className="h-4 w-4" aria-hidden="true" /> Email me
+                  </a>
+                  <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-xs font-semibold text-[#04301a] hover:brightness-110">
+                    <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp me
+                  </a>
+                </div>
               </div>
             )}
 
