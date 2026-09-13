@@ -15,17 +15,9 @@ import { IndustryStrip } from "@/components/IndustryStrip";
 import {
   AdvancedStudioCTA,
   CapabilitySection,
-  ProjectBreakdownsSection,
-  StudioLabSection,
 } from "@/components/home/AdvancedStudioSections";
 import { QuoteEstimatorSection } from "@/components/home/AdvancedLeadTools";
-import {
-  BuildQualitySection,
-  LiveLighthouseSection,
-  ResponsiveInspectorSection,
-  SeoConversionLabsSection,
-  WebsiteAuditSection,
-} from "@/components/home/ProofLabs";
+import { BuildQualitySection } from "@/components/home/ProofLabs";
 import {
   CTABand,
   CheckList,
@@ -113,14 +105,8 @@ export function HomePage() {
       </Section>
 
       <IndustryStrip />
-      <ProjectBreakdownsSection />
-      <StudioLabSection />
-      <SeoConversionLabsSection />
-      <ResponsiveInspectorSection />
       <CapabilitySection />
-      <LiveLighthouseSection />
       <BuildQualitySection />
-      <WebsiteAuditSection />
 
       <Section id="services" divider>
         <SectionIntro
