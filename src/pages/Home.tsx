@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { ProjectCard } from "@/components/ProjectCard";
-import { RecognitionSection } from "@/components/RecognitionSection";
 import {
   CTABand,
   CheckList,
@@ -65,7 +64,6 @@ export function HomePage() {
   return (
     <>
       <Hero />
-      <RecognitionSection />
 
       <Section id="work" divider>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
