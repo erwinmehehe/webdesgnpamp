@@ -65,6 +65,7 @@ export function HomePage() {
   return (
     <>
       <Hero />
+      <RecognitionSection />
 
       <Section id="work" divider>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
@@ -106,8 +107,6 @@ export function HomePage() {
           ))}
         </motion.div>
       </Section>
-
-      <RecognitionSection />
 
       <Section id="services" divider>
         <SectionIntro
