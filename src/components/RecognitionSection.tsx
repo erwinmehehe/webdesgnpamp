@@ -1,5 +1,4 @@
 import { ArrowUpRight } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
 
 const recognition = [
   { name: "Awwwards", href: "https://www.awwwards.com/", type: "Design awards" },
@@ -16,43 +15,40 @@ const recognition = [
 
 export function RecognitionSection() {
   return (
-    <section className="border-y border-white/[0.07] bg-white/[0.018] py-16 sm:py-20" aria-labelledby="recognition-heading">
+    <section
+      id="recognition"
+      className="border-y border-white/[0.08] bg-[#080a10] py-10 sm:py-12"
+      aria-labelledby="recognition-heading"
+    >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <Reveal>
-          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-end lg:gap-16">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold-400">Awards &amp; recognition</p>
-              <h2 id="recognition-heading" className="mt-4 max-w-xl font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl">
-                Recognized across design and agency platforms.
-              </h2>
-            </div>
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-400 lg:justify-self-end">
-              Web Design Pampanga has profiles, listings and recognition across established design award sites and agency directories.
-            </p>
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold-400">Awards &amp; recognition</p>
+            <h2 id="recognition-heading" className="mt-3 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Featured and listed across leading design and agency platforms.
+            </h2>
           </div>
-        </Reveal>
+          <p className="max-w-xl text-sm leading-relaxed text-slate-400">
+            Direct links to the platforms where Web Design Pampanga maintains listings, profiles or recognition.
+          </p>
+        </div>
 
-        <div className="mt-10 grid grid-cols-2 border-l border-t border-white/[0.08] sm:grid-cols-3 lg:grid-cols-5">
-          {recognition.map((item, index) => (
-            <Reveal key={item.name} delay={Math.min(index * 0.035, 0.25)}>
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex min-h-32 flex-col justify-between border-b border-r border-white/[0.08] bg-[#080a10]/60 p-5 transition-colors duration-300 hover:bg-white/[0.045] sm:min-h-36 sm:p-6"
-                aria-label={`${item.name} - ${item.type}`}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <span className="font-display text-lg font-semibold tracking-[-0.02em] text-white/90 transition-colors group-hover:text-gold-300 sm:text-xl">
-                    {item.name}
-                  </span>
-                  <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-700 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold-400" aria-hidden="true" />
-                </div>
-                <span className="mt-8 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-600">
-                  {item.type}
-                </span>
-              </a>
-            </Reveal>
+        <div className="mt-7 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          {recognition.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex min-h-24 flex-col justify-between border border-white/[0.09] bg-white/[0.025] p-4 transition hover:border-gold-400/30 hover:bg-white/[0.05]"
+              aria-label={`${item.name} - ${item.type}`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <span className="font-display text-base font-semibold text-white sm:text-lg">{item.name}</span>
+                <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-600 transition group-hover:text-gold-400" aria-hidden="true" />
+              </div>
+              <span className="mt-4 font-mono text-[9px] uppercase tracking-[0.16em] text-slate-600">{item.type}</span>
+            </a>
           ))}
         </div>
       </div>
