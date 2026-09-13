@@ -12,12 +12,7 @@ import {
 import { Hero } from "@/components/Hero";
 import { ProjectCard } from "@/components/ProjectCard";
 import { IndustryStrip } from "@/components/IndustryStrip";
-import {
-  AdvancedStudioCTA,
-  CapabilitySection,
-} from "@/components/home/AdvancedStudioSections";
 import { QuoteEstimatorSection } from "@/components/home/AdvancedLeadTools";
-import { BuildQualitySection } from "@/components/home/ProofLabs";
 import {
   CTABand,
   CheckList,
@@ -42,22 +37,22 @@ const whyUs = [
   {
     icon: Users,
     title: "You deal with me directly",
-    description: "No account manager or handoff. I handle the planning, design and SEO work and stay involved through launch.",
+    description: "No account-manager handoff. I stay responsible for the website from the first conversation through launch.",
   },
   {
     icon: Target,
-    title: "Scope before build",
-    description: "Pages, features, timeline and price are agreed before the project starts, so there is less room for surprises later.",
+    title: "Built around enquiries",
+    description: "The message, proof and calls to action are planned around what helps a serious visitor contact you.",
   },
   {
     icon: Smartphone,
-    title: "Mobile is part of the design",
-    description: "The phone layout is planned from the start because that is where many local customers will see the site first.",
+    title: "Easy to act on mobile",
+    description: "Calls, WhatsApp and enquiry forms stay obvious on the device many customers will use first.",
   },
   {
     icon: TrendingUp,
-    title: "SEO is considered early",
-    description: "Page structure, headings, metadata, internal links and local search needs are planned during the build, not after it.",
+    title: "Clarity before cleverness",
+    description: "Visitors should understand what you offer, why they should choose you and what to do next within seconds.",
   },
 ];
 
@@ -71,21 +66,21 @@ export function HomePage() {
       <Section id="work" divider>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
-            <Reveal><Eyebrow>Interactive sample work</Eyebrow></Reveal>
+            <Reveal><Eyebrow>Website examples</Eyebrow></Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
-                Move through the websites, not just <span className="text-gold-gradient">screenshots.</span>
+                See how your next website could <span className="text-gold-gradient">generate more enquiries.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 text-base leading-relaxed text-slate-400">
-                Hover a sample on desktop and the page scrolls through the design. Open the portfolio to switch between desktop, tablet and mobile views.
+                Each sample is built to make the offer clear, build trust quickly and make the next step obvious. Hover to move through the page.
               </p>
             </Reveal>
           </div>
           <Reveal delay={0.2}>
             <Link to="/portfolio/" className="group inline-flex items-center gap-2 text-sm font-semibold text-gold-400 transition-colors hover:text-gold-300">
-              View all samples
+              View all website samples
               <span className="h-px w-8 bg-current transition-all duration-300 group-hover:w-12" aria-hidden="true" />
             </Link>
           </Reveal>
@@ -105,14 +100,12 @@ export function HomePage() {
       </Section>
 
       <IndustryStrip />
-      <CapabilitySection />
-      <BuildQualitySection />
 
       <Section id="services" divider>
         <SectionIntro
-          eyebrow="Services"
-          title={<>Design, code and SEO under <span className="text-gold-gradient">one roof.</span></>}
-          description="I can handle the visual design, frontend build, WordPress, ecommerce, redesign work, maintenance and search structure without handing the project between different suppliers."
+          eyebrow="What I can build"
+          title={<>Everything your website needs to turn visits into <span className="text-gold-gradient">enquiries.</span></>}
+          description="From a new business website to ecommerce or a redesign, the goal is the same: make it easier for the right customer to understand you, trust you and contact you."
         />
         <motion.div
           initial="hidden"
@@ -133,7 +126,7 @@ export function HomePage() {
                 <h3 className="mt-5 font-display text-base font-semibold text-white">{service.name}</h3>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-400">{service.short}</p>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-gold-400/90">
-                  Learn more
+                  See what is included
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </span>
               </Link>
@@ -145,24 +138,24 @@ export function HomePage() {
       <Section id="why-us" ambient divider>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <Reveal><Eyebrow>How I work</Eyebrow></Reveal>
+            <Reveal><Eyebrow>Built for conversion</Eyebrow></Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.7rem]">
-                Advanced when useful. <span className="text-gold-gradient">Simple when better.</span>
+                Every page should move the visitor closer to <span className="text-gold-gradient">contacting you.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">
-                Motion, 3D and custom interaction are tools, not decoration. I use them when they improve the experience and keep the core site fast, readable and easy to maintain.
+                I start with the decision you want the visitor to make, then shape the page around the message, proof and next step that make that decision easier.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-7">
-                <CheckList items={["Price and scope agreed before work starts", "You keep control of your domain, hosting and files", "Design and SEO planned together", "No unnecessary tech added for show"]} />
+                <CheckList items={["Clear offer above the fold", "Proof before asking for the lead", "Call, WhatsApp and form paths that are easy to find", "No unnecessary sections that distract from the next step"]} />
               </div>
             </Reveal>
             <Reveal delay={0.26}>
-              <div className="mt-8"><GoldButton to="/about/">About the studio</GoldButton></div>
+              <div className="mt-8"><GoldButton to="/contact/">Talk about my website</GoldButton></div>
             </Reveal>
           </div>
           <InfoCardGrid items={whyUs} columns={2} />
@@ -173,9 +166,9 @@ export function HomePage() {
             <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
               <div>
                 <Eyebrow>Process</Eyebrow>
-                <h3 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">Four steps from brief to launch.</h3>
+                <h3 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">From first brief to a website ready to win enquiries.</h3>
               </div>
-              <p className="max-w-sm text-sm leading-relaxed text-slate-500">You know what is being worked on, what I need from you and what happens next.</p>
+              <p className="max-w-sm text-sm leading-relaxed text-slate-500">You always know what is being built, what I need from you and what happens next.</p>
             </div>
           </Reveal>
           <ProcessSteps />
@@ -189,8 +182,8 @@ export function HomePage() {
       <Section id="pricing" divider>
         <SectionIntro
           eyebrow="Pricing"
-          title={<>Clear <span className="text-gold-gradient">starting prices.</span></>}
-          description="The final quote depends on page count, content, features and integrations. These are the starting points I use for most projects."
+          title={<>Know the starting point <span className="text-gold-gradient">before we talk.</span></>}
+          description="Choose the closest package, then I will confirm the scope based on the pages, content and functionality you actually need."
         />
         <div className="mt-14"><PricingCards /></div>
         <Reveal delay={0.15}>
@@ -209,12 +202,12 @@ export function HomePage() {
             <Reveal><Eyebrow>FAQ</Eyebrow></Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl">
-                Questions I get <span className="text-gold-gradient">all the time.</span>
+                Questions to answer before you <span className="text-gold-gradient">get started.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">
-                Cost, timing, mobile, redesigns and SEO. If your question is not here, send it through the contact page.
+                Cost, timing, redesigns, content and what I need from you. If your question is not here, send it through the contact page.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
@@ -225,20 +218,18 @@ export function HomePage() {
         </div>
       </Section>
 
-      <AdvancedStudioCTA />
-
       <Section id="contact" ambient divider>
         <div className="grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
           <div>
             <Reveal><Eyebrow>Get in touch</Eyebrow></Reveal>
             <Reveal delay={0.08}>
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-[2.7rem]">
-                Have a website project <span className="text-gold-gradient">in mind?</span>
+                Want your website to bring in <span className="text-gold-gradient">more enquiries?</span>
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-400">
-                Send the basics. I will review what you need, what can wait and what I would recommend building first.
+                Send me your current website or a short description of what you want to build. I will tell you the clearest next step and what I would prioritise first.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
@@ -257,13 +248,13 @@ export function HomePage() {
 
           <Reveal delay={0.15}>
             <div className="glass rounded-[2rem] p-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold-400">Start with the project</p>
-              <h3 className="mt-4 font-display text-xl font-semibold text-white">I only need enough detail to scope the next step.</h3>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold-400">Start with the lead goal</p>
+              <h3 className="mt-4 font-display text-xl font-semibold text-white">I only need enough detail to understand what should make someone contact you.</h3>
               <ol className="mt-6 space-y-6">
                 {[
-                  { title: "What are you building?", body: "New website, redesign, ecommerce, SEO or something custom." },
-                  { title: "What matters most?", body: "More enquiries, clearer information, better search visibility, hiring, bookings or sales." },
-                  { title: "What already exists?", body: "A current website, brand assets, content, integrations or just the idea." },
+                  { title: "What do you offer?", body: "Tell me the main service, product or offer the website needs to support." },
+                  { title: "What should visitors do next?", body: "Call, WhatsApp, request a quote, book, buy or send an enquiry." },
+                  { title: "What do you already have?", body: "Your current site, brand assets, content, photos or even just the idea." },
                 ].map((item, index) => (
                   <li key={item.title} className="flex gap-4">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-400/25 bg-gold-400/10 font-display text-xs font-bold text-gold-400">0{index + 1}</span>
@@ -271,16 +262,16 @@ export function HomePage() {
                   </li>
                 ))}
               </ol>
-              <div className="mt-8"><GoldButton to="/contact/" className="w-full">Start the project brief</GoldButton></div>
+              <div className="mt-8"><GoldButton to="/contact/" className="w-full">Send my project details</GoldButton></div>
             </div>
           </Reveal>
         </div>
       </Section>
 
       <CTABand
-        eyebrow="Need a better website?"
-        title="Show me what you are working with."
-        intro="I can look at the current site, a new project or even a rough idea and tell you what I would recommend next."
+        eyebrow="Ready for more enquiries?"
+        title="Turn your website into a stronger lead-generation tool."
+        intro="Tell me what you offer and what you want visitors to do. I will help you build the clearest path from first visit to enquiry."
       />
     </>
   );
