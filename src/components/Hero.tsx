@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, FileText, MessageCircle, Search, ShoppingCart, Smartphone } from "lucide-react";
 import { navigate } from "@/router";
 import { site, trustBar } from "@/data/site";
+import { trackEvent } from "@/utils/analytics";
 
 const easeOut = [0.21, 0.65, 0.15, 1] as const;
 
@@ -13,6 +14,13 @@ const projectTypes = [
   { id: "custom", label: "Custom build", detail: "Booking, recruitment or integrations", icon: Search },
 ] as const;
 
+const trustPoints = [
+  "Direct with Erwin",
+  "Clear scope before work starts",
+  "You control your domain, hosting and files",
+  "No account-manager handoff",
+] as const;
+
 type ProjectType = typeof projectTypes[number]["id"];
 
 export function Hero() {
@@ -20,6 +28,7 @@ export function Hero() {
   const [pages, setPages] = useState("6-10");
   const [leadStructure, setLeadStructure] = useState(true);
   const [copy, setCopy] = useState(false);
+  const [estimatorStarted, setEstimatorStarted] = useState(false);
 
   const scope = useMemo(() => {
     if (type === "starter" && pages === "1-5") return { name: "Starter Website", price: "Starting at ₱30,000" };
@@ -27,16 +36,43 @@ export function Hero() {
     return { name: type === "ecommerce" ? "Ecommerce / Custom Website" : "Custom Website", price: "Needs a project scope" };
   }, [type, pages]);
 
+  const markEstimatorStarted = () => {
+    if (estimatorStarted) return;
+    setEstimatorStarted(true);
+    trackEvent("estimator_started", { placement: "hero" });
+  };
+
+  const chooseType = (nextType: ProjectType) => {
+    markEstimatorStarted();
+    setType(nextType);
+  };
+
+  const choosePages = (value: string) => {
+    markEstimatorStarted();
+    setPages(value);
+  };
+
   const startBrief = () => {
+    markEstimatorStarted();
     const selected = projectTypes.find((item) => item.id === type);
-    sessionStorage.setItem("wdp_quote_estimate", JSON.stringify({
+    const payload = {
       type: selected?.label ?? "Website",
       pages,
       seo: leadStructure,
       copy,
       scope: scope.name,
       price: scope.price,
-    }));
+    };
+
+    sessionStorage.setItem("wdp_quote_estimate", JSON.stringify(payload));
+    trackEvent("estimator_completed", {
+      placement: "hero",
+      project_type: payload.type,
+      pages,
+      lead_structure: leadStructure,
+      copy_support: copy,
+      scope: scope.name,
+    });
     navigate("/contact/");
   };
 
@@ -69,14 +105,14 @@ export function Hero() {
               I build clear, credible websites that make it easier for the right customer to understand your offer, trust your business and contact you.
             </p>
 
-            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-400">
-              {["Clear offer", "Strong calls to action", "Fast on mobile"].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-gold-400/80" aria-hidden="true" />
-                  {item}
-                </li>
+            <div className="mt-7 grid gap-2 sm:grid-cols-2">
+              {trustPoints.map((item) => (
+                <div key={item} className="flex items-start gap-2 text-sm text-slate-400">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400/80" aria-hidden="true" />
+                  <span>{item}</span>
+                </div>
               ))}
-            </ul>
+            </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
@@ -88,7 +124,7 @@ export function Hero() {
                 <MessageCircle className="h-[17px] w-[17px]" aria-hidden="true" />
                 WhatsApp me
               </a>
-              <span className="text-sm text-slate-500">Or use the quick estimator.</span>
+              <span className="text-sm text-slate-500">Or get your starting estimate now.</span>
             </div>
           </motion.div>
 
@@ -114,7 +150,7 @@ export function Hero() {
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => setType(item.id)}
+                    onClick={() => chooseType(item.id)}
                     aria-pressed={active}
                     className={`flex items-start gap-3 rounded-2xl border p-3.5 text-left transition-all ${active ? "border-gold-400/45 bg-gold-400/[0.09]" : "border-white/[0.08] bg-white/[0.02] hover:border-white/15"}`}
                   >
@@ -134,7 +170,7 @@ export function Hero() {
                 <button
                   key={value}
                   type="button"
-                  onClick={() => setPages(value)}
+                  onClick={() => choosePages(value)}
                   aria-pressed={pages === value}
                   className={`rounded-xl border px-3 py-2.5 text-xs font-semibold transition-all ${pages === value ? "border-gold-400/45 bg-gold-400/[0.09] text-gold-200" : "border-white/[0.08] text-slate-400 hover:text-white"}`}
                 >
@@ -146,7 +182,10 @@ export function Hero() {
             <div className="mt-5 grid gap-2 sm:grid-cols-2">
               <button
                 type="button"
-                onClick={() => setLeadStructure((value) => !value)}
+                onClick={() => {
+                  markEstimatorStarted();
+                  setLeadStructure((value) => !value);
+                }}
                 aria-pressed={leadStructure}
                 className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${leadStructure ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}
               >
@@ -154,7 +193,10 @@ export function Hero() {
               </button>
               <button
                 type="button"
-                onClick={() => setCopy((value) => !value)}
+                onClick={() => {
+                  markEstimatorStarted();
+                  setCopy((value) => !value);
+                }}
                 aria-pressed={copy}
                 className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left text-xs font-semibold ${copy ? "border-gold-400/30 bg-gold-400/[0.06] text-white" : "border-white/[0.08] text-slate-400"}`}
               >
@@ -173,7 +215,7 @@ export function Hero() {
                 onClick={startBrief}
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-5 py-3 text-sm font-bold text-ink-950 shadow-[0_8px_32px_-12px_rgba(246,193,74,.75)] transition-all hover:brightness-110 sm:mt-0 sm:w-auto"
               >
-                Continue to brief <ArrowRight className="h-4 w-4" />
+                Get my project estimate <ArrowRight className="h-4 w-4" />
               </button>
             </div>
             <p className="mt-3 text-[11px] leading-relaxed text-slate-600">No obligation. Final pricing is confirmed after the exact pages, content and functionality are reviewed.</p>
