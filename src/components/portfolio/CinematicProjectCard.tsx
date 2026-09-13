@@ -11,7 +11,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "framer-motion";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowUpRight, MapPin, Monitor, Smartphone, Tablet } from "lucide-react";
 import { Link } from "@/router";
 import { SiteEffects } from "@/components/portfolio/SiteEffects";
 import { SITE_WIDTH, SitePreview } from "@/components/portfolio/SitePreview";
@@ -148,24 +148,48 @@ function LiveWalkthrough({ project, active }: { project: Project; active: boolea
   );
 }
 
-function BrowserChrome() {
+type DeviceMode = "desktop" | "tablet" | "mobile";
+
+function BrowserChrome({ device, onDeviceChange }: { device: DeviceMode; onDeviceChange: (device: DeviceMode) => void }) {
+  const devices = [
+    { id: "desktop" as const, label: "Desktop", icon: Monitor },
+    { id: "tablet" as const, label: "Tablet", icon: Tablet },
+    { id: "mobile" as const, label: "Mobile", icon: Smartphone },
+  ];
+
   return (
-    <div className="flex h-11 items-center gap-3 border-b border-white/[0.08] bg-[#090b11]/95 px-4 sm:px-5">
-      <div className="flex gap-1.5" aria-hidden="true">
+    <div className="flex min-h-11 items-center gap-2 border-b border-white/[0.08] bg-[#090b11]/95 px-3 py-2 sm:px-4">
+      <div className="hidden gap-1.5 sm:flex" aria-hidden="true">
         <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/12" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/[0.07]" />
       </div>
-      <div className="mx-auto rounded-full border border-white/[0.06] bg-white/[0.035] px-4 py-1.5 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-white/30 sm:text-[10px]">
-        Interactive preview
+      <div className="mx-auto flex items-center gap-1 rounded-full border border-white/[0.07] bg-white/[0.035] p-1" role="group" aria-label="Preview device">
+        {devices.map((item) => {
+          const active = device === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => onDeviceChange(item.id)}
+              aria-pressed={active}
+              title={item.label}
+              className={`flex h-7 w-8 items-center justify-center rounded-full transition-all duration-300 ${active ? "bg-white/12 text-white" : "text-white/30 hover:bg-white/[0.06] hover:text-white/70"}`}
+            >
+              <item.icon className="h-3.5 w-3.5" aria-hidden="true" />
+              <span className="sr-only">{item.label}</span>
+            </button>
+          );
+        })}
       </div>
-      <span className="w-[43px]" aria-hidden="true" />
+      <span className="hidden w-[43px] sm:block" aria-hidden="true" />
     </div>
   );
 }
 
 export function CinematicProjectCard({ project, index }: { project: Project; index: number }) {
   const [active, setActive] = useState(false);
+  const [device, setDevice] = useState<DeviceMode>("desktop");
   const reduceMotion = useReducedMotion();
   const px = useMotionValue(0);
   const py = useMotionValue(0);
@@ -175,6 +199,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
   const frameShape = frameShapes[index % frameShapes.length];
   const projectNumber = String(index + 1).padStart(2, "0");
   const accent = project.accent ?? "#f6c14a";
+  const deviceWidth = device === "desktop" ? "100%" : device === "tablet" ? "76%" : "46%";
 
   const style = {
     "--project-accent": accent,
@@ -213,15 +238,22 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
       <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-0 blur-[100px] transition-opacity duration-1000 group-hover:opacity-30" style={{ background: accent }} />
 
       <motion.div style={{ x, y }} className="relative p-3 sm:p-4 lg:p-5">
-        <div className={`${frameShape} overflow-hidden border border-white/[0.1] bg-[#090b11] shadow-[0_30px_80px_-34px_rgba(0,0,0,.95)]`}>
-          <BrowserChrome />
-          <div className="h-[230px] sm:h-[310px] lg:h-[360px]">
-            {project.image ? (
-              <ScreenshotWalkthrough project={project} active={active} />
-            ) : (
-              <LiveWalkthrough project={project} active={active} />
-            )}
-          </div>
+        <div className="flex justify-center">
+          <motion.div
+            layout
+            animate={{ width: deviceWidth }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className={`${frameShape} min-w-[42%] overflow-hidden border border-white/[0.1] bg-[#090b11] shadow-[0_30px_80px_-34px_rgba(0,0,0,.95)]`}
+          >
+            <BrowserChrome device={device} onDeviceChange={setDevice} />
+            <div className="h-[230px] sm:h-[310px] lg:h-[360px]">
+              {project.image ? (
+                <ScreenshotWalkthrough project={project} active={active} />
+              ) : (
+                <LiveWalkthrough project={project} active={active} />
+              )}
+            </div>
+          </motion.div>
         </div>
       </motion.div>
 
