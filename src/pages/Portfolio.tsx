@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { CinematicProjectCard } from "@/components/portfolio/CinematicProjectCard";
@@ -5,8 +6,32 @@ import { Link, usePageMeta } from "@/router";
 import { projects } from "@/data/portfolio";
 
 const easeOut = [0.21, 0.65, 0.15, 1] as const;
+const filters = ["All", "Website", "Ecommerce", "SEO", "Local Business", "Corporate"] as const;
+type ProjectFilter = (typeof filters)[number];
+
+const localBusinessSlugs = new Set([
+  "sizzle-house",
+  "skyline-hotel",
+  "goldenfield-estates",
+  "brightsmile-dental",
+  "northvale-clinic",
+  "verdant-property",
+]);
+const corporateSlugs = new Set(["coreaxis-bpo", "starlane-logistics", "ironpeak-builders", "tradeline-supply"]);
+const ecommerceSlugs = new Set(["tradeline-supply"]);
+
+function matchesFilter(slug: string, filter: ProjectFilter) {
+  if (filter === "All" || filter === "Website" || filter === "SEO") return true;
+  if (filter === "Ecommerce") return ecommerceSlugs.has(slug);
+  if (filter === "Local Business") return localBusinessSlugs.has(slug);
+  if (filter === "Corporate") return corporateSlugs.has(slug);
+  return true;
+}
 
 export function PortfolioPage() {
+  const [filter, setFilter] = useState<ProjectFilter>("All");
+  const visibleProjects = useMemo(() => projects.filter((project) => matchesFilter(project.slug, filter)), [filter]);
+
   usePageMeta(
     "Web Design Portfolio | Web Design Pampanga",
     "Explore 10 website designs by Web Design Pampanga across BPO, hospitality, restaurants, property, healthcare, logistics, construction and industrial supply.",
@@ -23,54 +48,33 @@ export function PortfolioPage() {
         </div>
 
         <div className="relative mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-10">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOut }}
-            className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.28em] text-gold-400"
-          >
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: easeOut }} className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.28em] text-gold-400">
             <span className="h-px w-10 bg-gold-400/70" />
             Selected websites · 01–10
           </motion.div>
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end lg:gap-20">
             <div>
-              <motion.h1
-                initial={{ opacity: 0, y: 34 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.08, ease: easeOut }}
-                className="max-w-5xl font-display text-[3rem] font-semibold leading-[0.96] tracking-[-0.055em] text-white sm:text-6xl lg:text-[5.7rem] xl:text-[6.6rem]"
-              >
+              <motion.h1 initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.08, ease: easeOut }} className="max-w-5xl font-display text-[3rem] font-semibold leading-[0.96] tracking-[-0.055em] text-white sm:text-6xl lg:text-[5.7rem] xl:text-[6.6rem]">
                 Ten websites.
                 <br />
                 <span className="text-white/32">Explore them.</span>
               </motion.h1>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: easeOut }}
-              className="lg:pb-2"
-            >
+            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2, ease: easeOut }} className="lg:pb-2">
               <p className="max-w-md text-base leading-relaxed text-slate-400">
-                Different industries, different visual languages, one standard of craft. Hover a project to move through the website.
+                Different industries, different visual languages, one standard of craft. Hover to move through a page, then switch Desktop, Tablet or Mobile inside each card.
               </p>
               <div className="mt-7 flex items-center gap-3 text-xs text-slate-600">
                 <span className="hidden h-2 w-2 rounded-full bg-gold-400 sm:block" />
-                <span className="hidden sm:inline">Move through each site with your cursor</span>
+                <span className="hidden sm:inline">Use the device controls inside every project</span>
                 <span className="sm:hidden">Tap a project to explore</span>
               </div>
             </motion.div>
           </div>
 
-          <motion.a
-            href="#projects"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.55 }}
-            className="mt-16 inline-flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-slate-600 transition-colors hover:text-gold-300 lg:mt-20"
-          >
+          <motion.a href="#projects" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.55 }} className="mt-16 inline-flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-slate-600 transition-colors hover:text-gold-300 lg:mt-20">
             View the work
             <ArrowDown className="h-4 w-4 animate-scroll-hint" aria-hidden="true" />
           </motion.a>
@@ -84,11 +88,28 @@ export function PortfolioPage() {
         </div>
 
         <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10">
-          <div className="grid gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-4 xl:gap-x-14">
-            {projects.map((project, index) => (
+          <div className="mb-12 flex flex-col gap-5 border-b border-white/[0.06] pb-8 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold-400">Filter the work</p>
+              <p className="mt-2 text-sm text-slate-500">{visibleProjects.length} project{visibleProjects.length === 1 ? "" : "s"} shown</p>
+            </div>
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Portfolio filters">
+              {filters.map((item) => {
+                const active = filter === item;
+                return (
+                  <button key={item} type="button" onClick={() => setFilter(item)} aria-pressed={active} className={`rounded-full border px-4 py-2 text-xs font-semibold transition-all ${active ? "border-gold-400/40 bg-gold-400/[0.10] text-gold-200" : "border-white/[0.08] bg-white/[0.02] text-slate-500 hover:border-white/15 hover:text-white"}`}>
+                    {item}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <motion.div layout className="grid gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-4 xl:gap-x-14">
+            {visibleProjects.map((project, index) => (
               <CinematicProjectCard key={project.slug} project={project} index={index} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -97,35 +118,14 @@ export function PortfolioPage() {
           <div className="absolute left-1/2 top-1/2 h-[460px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold-500/[0.07] blur-[150px]" />
         </div>
         <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: easeOut }}
-            className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold-400"
-          >
+          <motion.p initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: easeOut }} className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold-400">
             Project 11 could be yours
           </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.08, ease: easeOut }}
-            className="mx-auto mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-[-0.045em] text-white sm:text-5xl lg:text-6xl"
-          >
+          <motion.h2 initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.08, ease: easeOut }} className="mx-auto mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-[-0.045em] text-white sm:text-5xl lg:text-6xl">
             Let&rsquo;s build something worth showing off.
           </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
-            className="mt-9 flex justify-center"
-          >
-            <Link
-              to="/contact/"
-              className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-8 py-4 text-sm font-semibold text-ink-950 shadow-[0_16px_60px_-18px_rgba(246,193,74,.7)] transition-all duration-500 hover:scale-[1.025] hover:brightness-110"
-            >
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.18, ease: easeOut }} className="mt-9 flex justify-center">
+            <Link to="/contact/" className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 px-8 py-4 text-sm font-semibold text-ink-950 shadow-[0_16px_60px_-18px_rgba(246,193,74,.7)] transition-all duration-500 hover:scale-[1.025] hover:brightness-110">
               Start your project
               <ArrowRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" aria-hidden="true" />
             </Link>
