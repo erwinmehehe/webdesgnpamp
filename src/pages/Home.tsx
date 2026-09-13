@@ -20,7 +20,7 @@ import {
   ProjectBreakdownsSection,
   SiteAuditSection,
   StudioLabSection,
-} from "@/components/home/AdvancedStudioSections";
+} from "@/components/home/AdvancedStudioSections";\nimport { QuoteEstimatorSection, WebsiteRoastSection } from "@/components/home/AdvancedLeadTools";
 import {
   CTABand,
   CheckList,
@@ -191,7 +191,7 @@ export function HomePage() {
         <div className="mt-16"><StatStrip /></div>
       </Section>
 
-      <Section id="pricing" divider>
+      <QuoteEstimatorSection />\n\n      <Section id="pricing" divider>
         <SectionIntro
           eyebrow="Pricing"
           title={<>Clear <span className="text-gold-gradient">starting prices.</span></>}
