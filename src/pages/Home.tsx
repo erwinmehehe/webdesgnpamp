@@ -18,9 +18,9 @@ import {
   CapabilitySection,
   PerformanceProofSection,
   ProjectBreakdownsSection,
-  SiteAuditSection,
   StudioLabSection,
-} from "@/components/home/AdvancedStudioSections";\nimport { QuoteEstimatorSection, WebsiteRoastSection } from "@/components/home/AdvancedLeadTools";
+} from "@/components/home/AdvancedStudioSections";
+import { QuoteEstimatorSection, WebsiteRoastSection } from "@/components/home/AdvancedLeadTools";
 import {
   CTABand,
   CheckList,
@@ -113,7 +113,6 @@ export function HomePage() {
       <StudioLabSection />
       <CapabilitySection />
       <PerformanceProofSection />
-      <SiteAuditSection />
 
       <Section id="services" divider>
         <SectionIntro
