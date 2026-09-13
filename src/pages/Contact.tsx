@@ -129,7 +129,6 @@ export function ContactPage() {
         project_type: estimate?.type || "not_selected",
         scope: estimate?.scope || "not_selected",
       });
-      trackEvent("generate_lead", { form_name: "quote" });
       sessionStorage.removeItem("wdp_quote_estimate");
       sessionStorage.removeItem("wdp_audit_url");
       navigate("/thank-you/");
