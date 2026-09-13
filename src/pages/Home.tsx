@@ -12,7 +12,6 @@ import {
 import { Hero } from "@/components/Hero";
 import { ProjectCard } from "@/components/ProjectCard";
 import { IndustryStrip } from "@/components/IndustryStrip";
-import { QuoteEstimatorSection } from "@/components/home/AdvancedLeadTools";
 import {
   CTABand,
   CheckList,
@@ -176,8 +175,6 @@ export function HomePage() {
 
         <div className="mt-16"><StatStrip /></div>
       </Section>
-
-      <QuoteEstimatorSection />
 
       <Section id="pricing" divider>
         <SectionIntro
