@@ -29,12 +29,11 @@ const menu: MenuGroup[] = [
     footer: { label: "View all services →", href: "/services/" },
   },
   { label: "Work", href: "/portfolio/", section: "work" },
-  { label: "Lab", href: "/#lab", section: "lab" },
   { label: "Pricing", href: "/pricing/", section: "pricing" },
   { label: "Why Us", href: "/why-web-design-pampanga/" },
   { label: "About", href: "/about/" },
   { label: "Blog", href: "/blog/" },
-  { label: "Contact", href: "/#contact", section: "contact" },
+  { label: "Contact", href: "/contact/" },
 ];
 
 function DesktopGroup({ group, active }: { group: MenuGroup; active: boolean }) {
@@ -94,8 +93,7 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
   const actions: PaletteAction[] = [
     { label: "View work", hint: "Portfolio and responsive previews", target: "/portfolio/" },
     { label: "Get a quote", hint: "Start a project brief", target: "/contact/" },
-    { label: "Run website audit", hint: "Roast my website", target: "/#website-audit" },
-    { label: "See pricing", hint: "Packages and estimator", target: "/#pricing" },
+    { label: "See pricing", hint: "Packages and starting prices", target: "/pricing/" },
     { label: "Call", hint: site.phoneDisplay, target: site.phoneHref, external: true },
     { label: "WhatsApp", hint: "Send a message", target: site.whatsapp, external: true },
   ];
@@ -171,7 +169,7 @@ export function Header() {
 
   useEffect(() => {
     if (path !== "/") return;
-    const ids = ["work", "lab", "services", "pricing", "contact"];
+    const ids = ["work", "services", "pricing"];
     const nodes = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
     if (!nodes.length) return;
     const observer = new IntersectionObserver(
