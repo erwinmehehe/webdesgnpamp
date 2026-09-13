@@ -44,23 +44,23 @@ function classifyClick(anchor: HTMLAnchorElement) {
   const path = anchor.pathname.replace(/\/+$/, "") || "/";
 
   if (href.startsWith("tel:")) {
-    trackEvent("phone_click", { link_url: href });
+    trackEvent("phone_clicked", { link_url: href });
     return;
   }
   if (/wa\.me|whatsapp\.com/i.test(href)) {
-    trackEvent("whatsapp_click", { link_url: href });
+    trackEvent("whatsapp_clicked", { link_url: href });
     return;
   }
   if (path === "/contact") {
-    trackEvent("quote_click", { link_url: href });
+    trackEvent("quote_clicked", { link_url: href });
     return;
   }
   if (path === "/pricing") {
-    trackEvent("pricing_click", { link_url: href });
+    trackEvent("pricing_opened", { link_url: href });
     return;
   }
   if (path.startsWith("/portfolio")) {
-    trackEvent("portfolio_click", { link_url: href });
+    trackEvent("portfolio_opened", { link_url: href });
   }
 }
 
@@ -76,16 +76,6 @@ function bindInteractionTracking() {
     const target = event.target as Element | null;
     const anchor = target?.closest("a");
     if (anchor instanceof HTMLAnchorElement) classifyClick(anchor);
-  });
-
-  const startedForms = new WeakSet<HTMLFormElement>();
-  document.addEventListener("focusin", (event) => {
-    const target = event.target as Element | null;
-    const form = target?.closest("form");
-    if (!(form instanceof HTMLFormElement)) return;
-    if (window.location.pathname.replace(/\/+$/, "") !== "/contact" || startedForms.has(form)) return;
-    startedForms.add(form);
-    trackEvent("form_start", { form_name: "quote" });
   });
 }
 
