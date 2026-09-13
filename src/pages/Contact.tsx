@@ -47,6 +47,7 @@ export function ContactPage() {
   const [sending, setSending] = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
   const [started, setStarted] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
     const estimateRaw = sessionStorage.getItem("wdp_quote_estimate");
@@ -77,6 +78,11 @@ export function ContactPage() {
     event.preventDefault();
     markStarted();
 
+    if (honeypot.trim()) {
+      navigate("/thank-you/");
+      return;
+    }
+
     const next: FormErrors = {};
     if (!form.name.trim()) next.name = "Please add your name.";
     if (!form.goal.trim()) next.goal = "Tell me what you want the website to achieve.";
@@ -101,6 +107,7 @@ export function ContactPage() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           _subject: `New website enquiry — ${form.business.trim() || form.name}`,
+          _honey: honeypot,
           Name: form.name,
           Email: form.email || "Not provided",
           "WhatsApp / phone": form.phone || "Not provided",
@@ -201,6 +208,11 @@ export function ContactPage() {
             onFocusCapture={markStarted}
             noValidate
           >
+            <div className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+              <label htmlFor="company-url">Company URL</label>
+              <input id="company-url" name="company_url" value={honeypot} onChange={(event) => setHoneypot(event.target.value)} tabIndex={-1} autoComplete="off" />
+            </div>
+
             <div className="flex items-end justify-between gap-4 border-b border-white/[0.07] pb-5">
               <div>
                 <Eyebrow>Project details</Eyebrow>
