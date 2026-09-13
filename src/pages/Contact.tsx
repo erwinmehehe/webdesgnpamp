@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AlertCircle, ArrowLeft, ArrowRight, Send } from "lucide-react";
 import { FAQAccordion, Eyebrow, PageHero, Section, SectionIntro } from "@/components/blocks";
 import { navigate, usePageMeta } from "@/router";
@@ -49,6 +49,36 @@ export function ContactPage() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState | "needs", string>>>({});
   const [sending, setSending] = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
+
+  useEffect(() => {
+    const auditUrl = sessionStorage.getItem("wdp_audit_url");
+    const estimateRaw = sessionStorage.getItem("wdp_quote_estimate");
+
+    if (auditUrl) {
+      setForm((prev) => ({ ...prev, currentSite: auditUrl }));
+      setNeeds((prev) => prev.length ? prev : ["Website Redesign"]);
+      sessionStorage.removeItem("wdp_audit_url");
+    }
+
+    if (estimateRaw) {
+      try {
+        const estimate = JSON.parse(estimateRaw) as { type?: string; pages?: string; seo?: boolean; copy?: boolean; scope?: string };
+        const mappedNeed = estimate.type === "Ecommerce"
+          ? "E-commerce Web Design"
+          : estimate.type === "Custom build"
+            ? "Web Development"
+            : "Web Design";
+        setNeeds([mappedNeed]);
+        setForm((prev) => ({
+          ...prev,
+          projectDetail: [estimate.scope, estimate.pages ? `${estimate.pages} pages` : "", estimate.seo ? "SEO structure" : "", estimate.copy ? "Copy support" : ""].filter(Boolean).join(" · "),
+        }));
+      } catch {
+        // Ignore malformed session data and keep the form usable.
+      }
+      sessionStorage.removeItem("wdp_quote_estimate");
+    }
+  }, []);
 
   const followUp = useMemo(() => {
     if (needs.includes("E-commerce Web Design")) {
