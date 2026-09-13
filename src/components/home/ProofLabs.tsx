@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { Accessibility, Activity, Braces, CheckCircle2, ExternalLink, Gauge, Heading1, Keyboard, Link2, Monitor, RefreshCw, Search, ShieldCheck, Smartphone, Tablet } from "lucide-react";
+import { Accessibility, Activity, CheckCircle2, ExternalLink, Gauge, Heading1, Keyboard, Monitor, RefreshCw, ShieldCheck, Smartphone, Tablet } from "lucide-react";
 import { Eyebrow, Section, SectionIntro } from "@/components/blocks";
 import { Reveal } from "@/components/Reveal";
 import { navigate } from "@/router";
