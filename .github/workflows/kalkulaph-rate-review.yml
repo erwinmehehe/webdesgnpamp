@@ -1,0 +1,61 @@
+name: KalkulaPH annual contribution-rate review
+
+on:
+  schedule:
+    - cron: '15 1 15 12 *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  validate-and-remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate KalkulaPH rate manifest
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const p = 'kalkulaph/rates.json';
+          const m = JSON.parse(fs.readFileSync(p, 'utf8'));
+          const fail = (msg) => { console.error(msg); process.exit(1); };
+          const num = (v, min, max) => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
+          if (!m.id || !/^\d{4}-\d{2}-\d{2}$/.test(m.verifiedOn || '') || !/^\d{4}-\d{2}-\d{2}$/.test(m.effectiveOn || '')) fail('Invalid id/date fields');
+          if (!m.sss || !num(m.sss.totalRate, .01, .5) || Math.abs((m.sss.eeRate + m.sss.erRate) - m.sss.totalRate) > .001) fail('Invalid SSS rates');
+          if (!m.philhealth || !num(m.philhealth.totalRate, .01, .5) || Math.abs((m.philhealth.eeRate + m.philhealth.erRate) - m.philhealth.totalRate) > .001) fail('Invalid PhilHealth rates');
+          if (!m.pagibig || !num(m.pagibig.maxCompensation, 1500, 1000000)) fail('Invalid Pag-IBIG fields');
+          console.log(`KalkulaPH rate manifest ${m.id} validated; last verified ${m.verifiedOn}.`);
+          NODE
+
+      - name: Open yearly official-rate review reminder
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          NEXT_YEAR=$((10#$(date -u +%Y) + 1))
+          TITLE="KalkulaPH contribution rate review ${NEXT_YEAR}"
+          EXISTING=$(gh issue list --state all --search "$TITLE in:title" --json title --jq '.[].title' | grep -Fxc "$TITLE" || true)
+          if [ "$EXISTING" -gt 0 ]; then
+            echo "Review issue already exists: $TITLE"
+            exit 0
+          fi
+          cat > /tmp/kalkulaph-rate-review.md <<EOF
+          Review KalkulaPH's SSS, PhilHealth and Pag-IBIG contribution parameters before the ${NEXT_YEAR} app/rate refresh.
+
+          Checklist:
+          - Verify the latest SSS contribution schedule at https://www.sss.gov.ph/pay-contribution/
+          - Verify the latest PhilHealth premium schedule at https://www.philhealth.gov.ph/
+          - Verify the latest Pag-IBIG mandatory savings contribution guidance at https://www.pagibigfund.gov.ph/
+          - Update kalkulaph/rates.json only when an official issuance changes a supported numeric parameter.
+          - Update verifiedOn after all three systems have been checked.
+          - Do not remotely change BIR tax formulas, labor-law formulas or complex benefit rules; those require an app-reviewed release and regression tests.
+          - Run the KalkulaPH app regression suite before publishing any formula changes.
+
+          Current public manifest: https://erwinmehehe.github.io/webdesgnpamp/kalkulaph/rates.json
+          EOF
+          gh issue create --title "$TITLE" --body-file /tmp/kalkulaph-rate-review.md
