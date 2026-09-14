@@ -1,9 +1,9 @@
 {
   "id": "PH-2026-09",
   "version": "PH-2026-09",
-  "verifiedOn": "2026-09-12",
+  "verifiedOn": "2026-09-14",
   "effectiveOn": "2025-01-01",
-  "notes": "Reviewed contribution parameters used by KalkulaPH. Complex tax and benefit formulas remain app-reviewed and are not remotely changed.",
+  "notes": "Contribution parameters re-verified for KalkulaPH on 2026-09-14 against current official SSS, PhilHealth and Pag-IBIG guidance. Complex tax and benefit formulas remain app-reviewed and are not remotely changed.",
   "sss": {
     "totalRate": 0.15,
     "eeRate": 0.05,
