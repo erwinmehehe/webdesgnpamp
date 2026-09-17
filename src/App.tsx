@@ -4,7 +4,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContact } from "@/components/FloatingContact";
 import { StructuredData } from "@/components/StructuredData";
-import { CookieConsent } from "@/components/CookieConsent";
 import { RouterProvider, matchRoute, useRoute } from "@/router";
 import { HomePage } from "@/pages/Home";
 import { AboutPage } from "@/pages/About";
@@ -110,7 +109,6 @@ function Shell() {
       </main>
       <Footer />
       <FloatingContact />
-      <CookieConsent />
     </div>
   );
 }
