@@ -10,7 +10,6 @@ declare global {
 
 const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
 const clarityId = import.meta.env.VITE_CLARITY_PROJECT_ID?.trim();
-const consentKey = "wdp-analytics-consent";
 let analyticsEnabled = false;
 let listenersBound = false;
 
@@ -83,7 +82,9 @@ export function enableAnalytics() {
   if (analyticsEnabled) return;
   analyticsEnabled = true;
 
-  if (gaId) {
+  const gaAlreadyLoaded = typeof window.gtag === "function";
+
+  if (gaId && !gaAlreadyLoaded) {
     window.dataLayer = window.dataLayer || [];
     window.gtag = (...args: unknown[]) => window.dataLayer?.push(args);
     window.gtag("js", new Date());
@@ -101,13 +102,12 @@ export function enableAnalytics() {
   }
 
   bindInteractionTracking();
-  window.setTimeout(trackPageView, 50);
+
+  if (!gaAlreadyLoaded && gaId) {
+    window.setTimeout(trackPageView, 50);
+  }
 }
 
 export function initAnalytics() {
-  if (window.localStorage.getItem(consentKey) === "granted") {
-    enableAnalytics();
-  } else {
-    bindInteractionTracking();
-  }
+  enableAnalytics();
 }
