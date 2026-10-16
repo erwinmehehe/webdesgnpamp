@@ -153,14 +153,8 @@ export function usePageMeta(title: string, description?: string) {
   const { path } = useRoute();
 
   useEffect(() => {
-    const resolvedTitle =
-      path === "/" && title === "Web Design Pampanga | Professional Business Websites in Pampanga"
-        ? "Web Design Pampanga | Custom Websites for Local Businesses"
-        : title;
-    const resolvedDescription =
-      path === "/" && description
-        ? "Custom web design for Pampanga businesses. Mobile-first websites built for credibility, local SEO and more calls, messages and enquiries."
-        : description;
+    const resolvedTitle = title;
+    const resolvedDescription = description;
 
     document.title = resolvedTitle;
     if (resolvedDescription) {

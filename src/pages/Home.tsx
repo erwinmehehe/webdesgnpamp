@@ -27,7 +27,7 @@ import { Reveal, staggerItem } from "@/components/Reveal";
 import { Link, usePageMeta } from "@/router";
 import { featuredProjects } from "@/data/portfolio";
 import { services } from "@/data/services";
-import { generalFaqs, site } from "@/data/site";
+import { generalFaqs } from "@/data/site";
 
 const whyUs = [
   {
@@ -59,7 +59,7 @@ const conversionNotes: Record<string, string> = {
 };
 
 export function HomePage() {
-  usePageMeta("Web Design Pampanga | Professional Business Websites in Pampanga", site.description);
+  usePageMeta("Custom Websites & Local SEO | Web Design Pampanga", "Web design in Pampanga for local businesses. Get a mobile-friendly, SEO-ready website built around enquiries. Serving Angeles City, Clark and San Fernando.");
 
   return (
     <>
