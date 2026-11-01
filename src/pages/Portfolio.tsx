@@ -3,38 +3,23 @@ import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { CinematicProjectCard } from "@/components/portfolio/CinematicProjectCard";
 import { Link, usePageMeta } from "@/router";
-import { projects } from "@/data/portfolio";
+import { projects, type Project } from "@/data/portfolio";
 
 const easeOut = [0.21, 0.65, 0.15, 1] as const;
-const filters = ["All", "Website", "Ecommerce", "SEO", "Local Business", "Corporate"] as const;
+const filters = ["All", "Website", "SEO Structure", "Local Business", "Corporate", "Catalog"] as const;
 type ProjectFilter = (typeof filters)[number];
 
-const localBusinessSlugs = new Set([
-  "sizzle-house",
-  "skyline-hotel",
-  "goldenfield-estates",
-  "brightsmile-dental",
-  "northvale-clinic",
-  "verdant-property",
-]);
-const corporateSlugs = new Set(["coreaxis-bpo", "starlane-logistics", "ironpeak-builders", "tradeline-supply"]);
-const ecommerceSlugs = new Set(["tradeline-supply"]);
-
-function matchesFilter(slug: string, filter: ProjectFilter) {
-  if (filter === "All" || filter === "Website" || filter === "SEO") return true;
-  if (filter === "Ecommerce") return ecommerceSlugs.has(slug);
-  if (filter === "Local Business") return localBusinessSlugs.has(slug);
-  if (filter === "Corporate") return corporateSlugs.has(slug);
-  return true;
+function matchesFilter(project: Project, filter: ProjectFilter) {
+  return filter === "All" || project.categories.includes(filter);
 }
 
 export function PortfolioPage() {
   const [filter, setFilter] = useState<ProjectFilter>("All");
-  const visibleProjects = useMemo(() => projects.filter((project) => matchesFilter(project.slug, filter)), [filter]);
+  const visibleProjects = useMemo(() => projects.filter((project) => matchesFilter(project, filter)), [filter]);
 
   usePageMeta(
     "Web Design Portfolio | Web Design Pampanga",
-    "Explore 10 website designs by Web Design Pampanga across BPO, hospitality, restaurants, property, healthcare, logistics, construction and industrial supply.",
+    "Explore 10 website design concepts by Web Design Pampanga across BPO, hospitality, restaurants, property, healthcare, logistics, construction and industrial supply.",
   );
 
   return (
@@ -50,13 +35,13 @@ export function PortfolioPage() {
         <div className="relative mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: easeOut }} className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.28em] text-gold-400">
             <span className="h-px w-10 bg-gold-400/70" />
-            Selected websites · 01–10
+            Design concepts · 01–10
           </motion.div>
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end lg:gap-20">
             <div>
               <motion.h1 initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.08, ease: easeOut }} className="max-w-5xl font-display text-[3rem] font-semibold leading-[0.96] tracking-[-0.055em] text-white sm:text-6xl lg:text-[5.7rem] xl:text-[6.6rem]">
-                Ten websites.
+                Ten concepts.
                 <br />
                 <span className="text-white/32">Explore them.</span>
               </motion.h1>
@@ -64,11 +49,11 @@ export function PortfolioPage() {
 
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2, ease: easeOut }} className="lg:pb-2">
               <p className="max-w-md text-base leading-relaxed text-slate-400">
-                Different industries, different visual languages, one standard of craft. Hover to move through a page, then switch Desktop, Tablet or Mobile inside each card.
+                Ten original industry-focused website design studies. Explore the layouts and decisions, then open a project walkthrough. All are examples, not published client projects or evidence of rankings.
               </p>
               <div className="mt-7 flex items-center gap-3 text-xs text-slate-600">
                 <span className="hidden h-2 w-2 rounded-full bg-gold-400 sm:block" />
-                <span className="hidden sm:inline">Use the device controls inside every project</span>
+                <span className="hidden sm:inline">Device controls change the preview frame size; they do not simulate separate responsive layouts</span>
                 <span className="sm:hidden">Tap a project to explore</span>
               </div>
             </motion.div>
@@ -119,7 +104,7 @@ export function PortfolioPage() {
         </div>
         <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
           <motion.p initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: easeOut }} className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold-400">
-            Project 11 could be yours
+            Your website could be next
           </motion.p>
           <motion.h2 initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.08, ease: easeOut }} className="mx-auto mt-6 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-[-0.045em] text-white sm:text-5xl lg:text-6xl">
             Let&rsquo;s build something worth showing off.
