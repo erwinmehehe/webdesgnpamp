@@ -43,11 +43,23 @@ export function ContactPage() {
 
   const [form, setForm] = useState<FormState>(initialState);
   const [estimate, setEstimate] = useState<Estimate | null>(null);
+  const [portfolioInterest, setPortfolioInterest] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [sending, setSending] = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
   const [started, setStarted] = useState(false);
   const [honeypot, setHoneypot] = useState("");
+
+  useEffect(() => {
+    const interest = sessionStorage.getItem("wdp_portfolio_interest");
+    if (!interest) return;
+    setPortfolioInterest(interest);
+    setForm((previous) => ({
+      ...previous,
+      goal: previous.goal || "I would like to discuss a website with a similar approach to the " + interest + " design concept.",
+    }));
+    sessionStorage.removeItem("wdp_portfolio_interest");
+  }, []);
 
   useEffect(() => {
     const estimateRaw = sessionStorage.getItem("wdp_quote_estimate");
@@ -114,6 +126,7 @@ export function ContactPage() {
           "Business / project": form.business || "Not provided",
           "Current website": form.currentSite || "Not provided",
           "What the website should achieve": form.goal,
+          "Portfolio concept that prompted inquiry": portfolioInterest || "Not selected",
           "Estimated project type": estimate?.type || "Not selected",
           "Estimated pages": estimate?.pages || "Not selected",
           "Likely scope": estimate?.scope || "Not selected",
@@ -123,10 +136,18 @@ export function ContactPage() {
         }),
       });
 
-      if (!response.ok) throw new Error("Form submission failed");
+      // An HTTP 200 alone is not a confirmed submission. Validate the provider's
+      // acknowledgement before showing the success page or firing generate_lead.
+      const receipt: unknown = await response.json().catch(() => null);
+      const success = Boolean(
+        receipt && typeof receipt === "object" && "success" in receipt &&
+        ((receipt as { success?: string | boolean }).success === true ||
+         (receipt as { success?: string | boolean }).success === "true")
+      );
+      if (!response.ok || !success) throw new Error("Form provider did not confirm submission");
 
       trackEvent("contact_submitted", {
-        source: estimate ? "hero_estimator" : "contact_page",
+        source: portfolioInterest ? "portfolio_case_study" : estimate ? "hero_estimator" : "contact_page",
         project_type: estimate?.type || "not_selected",
         scope: estimate?.scope || "not_selected",
       });
