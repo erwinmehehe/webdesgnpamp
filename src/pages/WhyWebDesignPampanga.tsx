@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { usePageMeta } from "@/router";
 
 const reasons = [
-  ["200+ sites launched", "Experience across small business, service and corporate website projects."],
+  ["10 design concepts to explore", "View original industry-specific website examples and the design thinking behind each one."],
   ["Scope before work starts", "You know the pages, features, timeline and price before the build begins."],
   ["SEO planned during the build", "Titles, headings, URLs, internal links and schema are handled as part of the website work."],
   ["Mobile included from day one", "The phone layout is planned alongside desktop instead of being squeezed in at the end."],
@@ -14,8 +14,8 @@ const reasons = [
 
 export function WhyWebDesignPampangaPage() {
   usePageMeta(
-    "Why Choose Web Design Pampanga | 200+ Sites Launched",
-    "Why businesses choose Web Design Pampanga: direct contact with Erwin Valles, clear scopes, mobile-first design and SEO foundations.",
+    "Why Choose Web Design Pampanga | Founder and Process",
+    "Meet the designer behind Web Design Pampanga and explore the website design process, project scope and technical foundations.",
   );
 
   return (
@@ -25,7 +25,7 @@ export function WhyWebDesignPampangaPage() {
         title={<>A straightforward way to build a <span className="text-gold-gradient">better website.</span></>}
         intro="You deal directly with me. The scope, price and timeline are written down before work starts, and the SEO and mobile details are handled during the build."
         crumbs={[{ label: "Why Web Design Pampanga" }]}
-        chips={["200+ sites launched", "Fixed project scopes", "SEO included", "Direct contact with Erwin"]}
+        chips={["10 original design concepts", "Fixed project scopes", "SEO included", "Direct contact with Erwin"]}
       >
         <GoldButton to="/contact/">Request a quote</GoldButton>
       </PageHero>
