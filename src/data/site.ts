@@ -17,10 +17,10 @@ export const site = {
 };
 
 export const stats = [
-  { value: 200, suffix: "+", label: "Websites designed & launched", note: "small business to corporate" },
-  { value: 100, suffix: "%", label: "Custom project work", note: "designed for the business" },
-  { value: 90, suffix: "+", label: "PageSpeed target", note: "where the site and stack allow" },
-  { value: 4, suffix: " wks", label: "Typical small business build", note: "scope and content dependent" },
+  { value: 10, suffix: "", label: "Industry design concepts", note: "Clearly labeled sample work" },
+  { value: 3, suffix: "", label: "Preview sizes", note: "Interactive device-frame controls" },
+  { value: 4, suffix: "", label: "Project stages", note: "Scope to final handover" },
+  { value: 1, suffix: "", label: "Direct project contact", note: "Erwin is identified on the About page" },
 ];
 
 export const painPoints = [
@@ -168,46 +168,15 @@ export const googleReviewsUrl =
   "https://www.google.com/maps/place/Web+Design+Pampanga/data=!4m2!3m1!1s0x0:0xa557b482296caeb3";
 
 export const trustBar = [
-  { label: "200+", note: "Sites launched" },
+  { label: "10", note: "Design concepts" },
   { label: "₱30k", note: "Starter sites from" },
-  { label: "3-4 wks", note: "Typical small build" },
+  { label: "4", note: "Project stages" },
   { label: "Pampanga", note: "Local studio" },
 ];
 
-export const clientLogos = [
-  "COREAXIS",
-  "SKYLINE CLARK",
-  "GOLDENFIELD",
-  "NORTHVALE",
-];
+// Only publish client logos, testimonials and performance figures after obtaining
+// attributable source evidence and permission. Design concepts are not client proof.
 
-export const testimonials = [
-  {
-    quote:
-      "Our old site looked ten years behind the business. We now send customers a link we're genuinely proud of, and enquiries come through the form and WhatsApp every week.",
-    name: "Maria Capili",
-    role: "Owner, Sizzle House Kitchen",
-    location: "Angeles City",
-    initials: "MC",
-  },
-  {
-    quote:
-      "Clear, calm and practical from start to finish. They asked better questions about our services than we did, and the new structure finally explains what we actually offer.",
-    name: "David Reyes",
-    role: "Operations Director, CoreAxis BPO",
-    location: "Clark Freeport Zone",
-    initials: "DR",
-    featured: true,
-  },
-  {
-    quote:
-      "The site is fast, works properly on phones, and looks credible next to much bigger competitors. Our recruitment enquiries alone have more than doubled.",
-    name: "Jennifer Lim",
-    role: "HR Lead, Northvale Medical",
-    location: "San Fernando",
-    initials: "JL",
-  },
-];
 
 export const generalFaqs = [
   {
