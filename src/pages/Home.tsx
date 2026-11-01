@@ -26,6 +26,7 @@ import {
 import { Reveal, staggerItem } from "@/components/Reveal";
 import { Link, usePageMeta } from "@/router";
 import { featuredProjects } from "@/data/portfolio";
+import { site } from "@/data/site";
 import { services } from "@/data/services";
 import { generalFaqs } from "@/data/site";
 
@@ -104,6 +105,31 @@ export function HomePage() {
             </motion.div>
           ))}
         </motion.div>
+      </Section>
+
+      <Section id="studio" divider>
+        <div className="grid items-center gap-8 rounded-[2rem] border border-white/[0.08] bg-gradient-to-r from-white/[0.045] to-white/[0.012] p-6 sm:p-9 lg:grid-cols-[160px_1fr] lg:gap-10">
+          <img
+            src="https://avatars.githubusercontent.com/u/20321511?v=4"
+            alt="Profile photo used on Erwin Valles's studio About page"
+            loading="lazy"
+            decoding="async"
+            className="h-32 w-32 rounded-[1.5rem] border border-white/10 object-cover sm:h-40 sm:w-40"
+          />
+          <div>
+            <Eyebrow>Who is responsible for your website?</Eyebrow>
+            <h2 className="mt-4 font-display text-2xl font-bold text-white sm:text-3xl">Meet Erwin Valles.</h2>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-400">
+              The site's named web designer and SEO specialist. Explore his background, development work and how the project process is handled before deciding to get in touch.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link to="/about/" className="rounded-full bg-gold-400 px-5 py-3 text-sm font-bold text-ink-950 hover:bg-gold-300">Meet Erwin and the studio</Link>
+              <a href="https://github.com/erwinmehehe" target="_blank" rel="noopener noreferrer"
+                className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white hover:border-gold-400/50">View GitHub work</a>
+              <a href={"mailto:" + site.email} className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white hover:border-gold-400/50">Email the studio</a>
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section id="services" divider>
