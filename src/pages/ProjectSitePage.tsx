@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CheckCircle2, Code2, Layers3, MousePointerClick, Search, Smartphone } from "lucide-react";
 import { SiteEffects } from "@/components/portfolio/SiteEffects";
 import { SiteFrame, SitePreview } from "@/components/portfolio/SitePreview";
+import { ProjectInteractions } from "@/components/portfolio/ProjectInteractions";
 import { Link, usePageMeta } from "@/router";
 import { projects } from "@/data/portfolio";
 import { NotFoundPage } from "@/pages/NotFound";
@@ -76,7 +77,7 @@ export function ProjectSitePage({ slug }: { slug: string }) {
             <div className="mt-7 flex flex-wrap gap-2 text-xs text-slate-500">
               <span className="rounded-full border border-white/10 px-3 py-2">{project.industry}</span>
               <span className="rounded-full border border-white/10 px-3 py-2">{project.location}</span>
-              <span className="rounded-full border border-white/10 px-3 py-2">Responsive concept</span>
+              <span className="rounded-full border border-white/10 px-3 py-2">Design concept · not delivered client work</span>
             </div>
           </motion.div>
 
@@ -86,6 +87,12 @@ export function ProjectSitePage({ slug }: { slug: string }) {
           </motion.div>
         </div>
       </section>
+
+      {project.status === "concept" && (
+        <div className="mx-auto max-w-[1450px] px-5 pb-14 sm:px-8">
+          <ProjectInteractions slug={project.slug} />
+        </div>
+      )}
 
       <section id="walkthrough-services" className="scroll-mt-20 border-b border-white/[0.06] px-5 py-20 sm:px-8 lg:py-28">
         <div className="mx-auto max-w-6xl">
