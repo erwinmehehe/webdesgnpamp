@@ -64,7 +64,7 @@ export function ProjectSitePage({ slug }: { slug: string }) {
               </a>
             ))}
           </div>
-          <Link to="/contact/" className="hidden shrink-0 rounded-full bg-gold-400 px-4 py-2 text-xs font-bold text-ink-950 sm:inline-flex">Build something like this</Link>
+          <Link to="/contact/" onClick={() => sessionStorage.setItem("wdp_portfolio_interest", project.name)} className="hidden shrink-0 rounded-full bg-gold-400 px-4 py-2 text-xs font-bold text-ink-950 sm:inline-flex">Discuss a similar website</Link>
         </div>
       </div>
 
@@ -191,7 +191,7 @@ export function ProjectSitePage({ slug }: { slug: string }) {
         <div className="mx-auto mt-20 max-w-5xl rounded-[2.2rem] border border-gold-400/20 bg-gradient-to-br from-gold-500/[0.10] via-white/[0.025] to-transparent px-7 py-10 text-center sm:px-10 sm:py-12">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold-400">End of walkthrough</p>
           <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl font-semibold text-white sm:text-4xl">Want this level of thinking applied to your own website?</h2>
-          <div className="mt-7"><Link to="/contact/" className="inline-flex items-center gap-2 rounded-full bg-gold-400 px-6 py-3 text-sm font-bold text-ink-950">Start a project brief <ArrowRight className="h-4 w-4" /></Link></div>
+          <div className="mt-7"><Link to="/contact/" onClick={() => sessionStorage.setItem("wdp_portfolio_interest", project.name)} className="inline-flex items-center gap-2 rounded-full bg-gold-400 px-6 py-3 text-sm font-bold text-ink-950">Discuss a similar website <ArrowRight className="h-4 w-4" /></Link></div>
         </div>
       </section>
     </div>
