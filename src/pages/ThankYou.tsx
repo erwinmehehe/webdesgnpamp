@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { GoldButton, GhostButton, Section } from "@/components/blocks";
 import { usePageMeta } from "@/router";
 import { trackEvent } from "@/utils/analytics";
 
 export function ThankYouPage() {
+  const [confirmed, setConfirmed] = useState(false);
   usePageMeta(
     "Thank You | Web Design Pampanga",
     "Your website enquiry has been sent to Web Design Pampanga.",
@@ -16,6 +17,7 @@ export function ThankYouPage() {
     robots?.setAttribute("content", "noindex,follow");
 
     if (sessionStorage.getItem("wdp_lead_submitted") === "1") {
+      setConfirmed(true);
       trackEvent("generate_lead", { form_name: "quote" });
       sessionStorage.removeItem("wdp_lead_submitted");
     }
@@ -31,9 +33,13 @@ export function ThankYouPage() {
         <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-400/15">
           <CheckCircle2 className="h-8 w-8 text-emerald-400" aria-hidden="true" />
         </span>
-        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-gold-400">Project received</p>
-        <h1 className="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">Got it. I’ll review this and reply with the next step.</h1>
-        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-400">I’ll review your goal, current website and estimator choices if you used them. If anything important is missing, I’ll ask only for the details needed to confirm scope, timeline and price.</p>
+        <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-gold-400">{confirmed ? "Request accepted by form provider" : "Submission not confirmed"}</p>
+        <h1 className="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">{confirmed ? "Your project details were submitted." : "We can't confirm an inquiry from this visit."}</h1>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-400">
+          {confirmed
+            ? "The form provider accepted your request. The studio can now review the details and contact you about next steps."
+            : "This page can also be opened directly. If you submitted an inquiry, please contact the studio to verify receipt; otherwise return to the form."}
+        </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <GoldButton to="/">Back to homepage</GoldButton>
           <GhostButton to="/portfolio/">View website samples</GhostButton>
