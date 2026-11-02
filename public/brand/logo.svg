@@ -1,17 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
-  <title id="title">Web Design Pampanga</title>
-  <desc id="desc">Web Design Pampanga wordmark</desc>
-  <defs>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fbe6ad"/>
-      <stop offset="0.5" stop-color="#f6c14a"/>
-      <stop offset="1" stop-color="#e0761a"/>
-    </linearGradient>
-  </defs>
-  <rect width="180" height="180" rx="42" fill="url(#gold)"/>
-  <path d="M42 50h26l22 78 22-78h25l-34 101H77z" fill="#05060c"/>
-  <g fill="#ffffff" font-family="Arial,Helvetica,sans-serif">
-    <text x="220" y="83" font-size="46" font-weight="800" letter-spacing="-1">Web Design</text>
-    <text x="220" y="133" font-size="46" font-weight="800" letter-spacing="-1">Pampanga</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="530" height="122" viewBox="0 0 530 122" role="img" aria-labelledby="logoTitle logoDesc">
+<title id="logoTitle">WDP — Web Design Pampanga</title>
+<desc id="logoDesc">Bold WDP monogram with blue D, green accent and white Web Design Pampanga wordmark</desc>
+<defs>
+<linearGradient id="wdp-blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1da7ff"/><stop offset=".48" stop-color="#087be8"/><stop offset="1" stop-color="#1554d7"/></linearGradient>
+<linearGradient id="wdp-white" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#c4d0db"/></linearGradient>
+</defs>
+<g font-family="Arial,Helvetica,sans-serif" font-size="113" font-style="italic" font-weight="900" letter-spacing="-11">
+<text x="0" y="95" fill="url(#wdp-white)">W</text>
+<text x="77" y="95" fill="url(#wdp-blue)">D</text>
+<text x="153" y="95" fill="url(#wdp-white)">P</text>
+</g>
+<path d="M79 88L98 88 93 106 75 106Z" fill="#19be81"/>
+<g fill="#f5f8fc" font-family="Arial,Helvetica,sans-serif" font-weight="800" letter-spacing=".8">
+<text x="270" y="57" font-size="35">WEB DESIGN</text>
+<text x="270" y="100" font-size="35">PAMPANGA</text>
+</g>
 </svg>
