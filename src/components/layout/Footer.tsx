@@ -1,6 +1,5 @@
-import { ArrowUp, Mail, MessageCircle, Phone, Sunrise } from "lucide-react";
+import { ArrowUp, Mail, MessageCircle, Phone } from "lucide-react";
 import { Link } from "@/router";
-import { services } from "@/data/services";
 import { site } from "@/data/site";
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; to: string }[] }) {
@@ -32,12 +31,7 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.5fr_.8fr_.8fr] lg:gap-16">
           <div>
             <Link to="/" className="group inline-flex items-center gap-3" aria-label={`${site.name} home`}>
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-gold-300 via-gold-500 to-orange-600 shadow-[0_4px_24px_-4px_rgba(246,193,74,0.4)] transition-transform duration-500 group-hover:rotate-[10deg]">
-                <Sunrise className="h-5 w-5 text-ink-950" strokeWidth={2.4} aria-hidden="true" />
-              </span>
-              <span className="font-display text-base font-bold tracking-tight text-white">
-                Web Design <span className="text-gold-400">Pampanga</span>
-              </span>
+              <img src="/brand/logo.svg" width={208} height={48} alt="" className="h-12 w-auto max-w-[208px] object-contain transition-opacity duration-300 group-hover:opacity-85" />
             </Link>
 
             <p className="mt-5 max-w-md text-sm leading-relaxed text-slate-400">

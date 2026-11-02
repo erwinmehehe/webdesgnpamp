@@ -154,8 +154,8 @@ export function ScrollThreeScene({ root }: { root: HTMLElement | null }) {
         const id = window.requestIdleCallback(() => void start(), { timeout: 700 });
         cleanup = () => window.cancelIdleCallback(id);
       } else {
-        const id = window.setTimeout(() => void start(), 120);
-        cleanup = () => window.clearTimeout(id);
+        const id = setTimeout(() => void start(), 120);
+        cleanup = () => clearTimeout(id);
       }
     };
 

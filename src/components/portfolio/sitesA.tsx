@@ -46,9 +46,9 @@ export function SiteCoreAxis() {
     <div className="w-full bg-white font-['IBM_Plex_Sans',sans-serif] text-[#0B1B33]">
       {/* utility bar */}
       <div className="flex items-center justify-between border-b border-[#E2E6EB] px-8 py-2 text-[9px] tracking-[0.12em] text-[#5A6B82]">
-        <span>ISO 27001 CERTIFIED · SINCE 2011</span>
+        <span>CORPORATE WEBSITE CONCEPT · SAMPLE CONTENT</span>
         <span className="flex gap-5">
-          <span>+63 45 499 8200</span>
+          <span>BUSINESS WEBSITE SAMPLE</span>
           <span className="text-[#1D4ED8]">CLIENT PORTAL</span>
         </span>
       </div>
@@ -77,8 +77,8 @@ export function SiteCoreAxis() {
             Outsourcing operations built on measurable accountability.
           </p>
           <p className="mt-3 max-w-[260px] text-[10px] leading-relaxed text-white/70">
-            640 seats across three Clark facilities. Healthcare, finance and retail accounts
-            with 99.4% SLA attainment.
+            Sample BPO capability layout illustrating services, workforce planning,
+            operational standards and buyer-facing information.
           </p>
           <div className="mt-5 flex gap-3">
             <span className="bg-[#1D4ED8] px-5 py-2 text-[9px] font-semibold uppercase tracking-[0.14em] text-white">
@@ -94,10 +94,10 @@ export function SiteCoreAxis() {
       {/* stat strip */}
       <div className="grid grid-cols-4 divide-x divide-[#E2E6EB] border-b border-[#E2E6EB]">
         {[
-          ["640", "Seats in operation"],
-          ["99.4%", "SLA attainment, FY25"],
-          ["11 yrs", "Average client tenure"],
-          ["3", "Clark facilities"],
+          ["Team", "People and careers"],
+          ["Process", "Reporting structure"],
+          ["Services", "Capabilities"],
+          ["Contact", "Request information"],
         ].map(([n, l]) => (
           <div key={l} className="px-6 py-5">
             <div className="text-[20px] font-light tracking-[-0.02em]">{n}</div>
@@ -170,7 +170,7 @@ export function SiteSizzleHouse() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#141010] via-[#141010]/45 to-[#141010]/25" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
           <p className="font-['Playfair_Display',serif] text-[11px] italic text-[#C9A227]">
-            est. 2016 · Kapampangan kitchen
+            A Pampanga-inspired design concept
           </p>
           <h2 className="mt-2 max-w-[420px] font-['Playfair_Display',serif] text-[30px] font-normal leading-[1.1]">
             Fire, acid and patience — the whole animal, respected.
@@ -216,7 +216,7 @@ export function SiteSizzleHouse() {
             BOOK ONLINE
           </span>
           <span className="border border-[#F3EDE4]/25 px-6 py-2.5 text-[9px] tracking-[0.14em]">
-            0917 244 0188
+            SAMPLE CONTACT
           </span>
         </div>
       </div>
@@ -413,17 +413,17 @@ export function SiteBrightSmile() {
       <div className="grid grid-cols-2">
         <div className="flex flex-col justify-center bg-[#EAF5F4] px-8 py-12">
           <span className="w-fit rounded-full bg-[#0E7C7B]/10 px-3 py-1 text-[9px] font-medium text-[#0E7C7B]">
-            Now accepting new patients
+            DENTAL WEBSITE DESIGN CONCEPT
           </span>
           <h2 className="mt-4 text-[26px] font-bold leading-[1.15] tracking-[-0.02em]">
             Dentistry that explains itself first.
           </h2>
           <p className="mt-3 max-w-[250px] text-[10.5px] leading-relaxed text-[#4A5A66]">
-            Every treatment plan comes with the price, the sequence and the reason —
-            before we begin. Interest-free instalments available.
+            A sample treatment page showing how a dental practice could explain
+            service options, appointment steps and patient questions clearly.
           </p>
           <div className="mt-6 flex gap-6">
-            {[["4.9★", "612 reviews"], ["15 min", "Avg. wait"]].map(([n, l]) => (
+            {[["Services", "Treatment overview"], ["Booking", "Appointment path"]].map(([n, l]) => (
               <div key={l}>
                 <div className="text-[15px] font-bold text-[#0E7C7B]">{n}</div>
                 <div className="text-[8.5px] text-[#7A8899]">{l}</div>

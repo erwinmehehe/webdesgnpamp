@@ -1,0 +1,33 @@
+name: Verify portfolio and trust changes
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: TypeScript checks
+        run: npx tsc --noEmit
+      - name: Build production pages
+        run: npm run build
+      - name: Verify portfolio demos and direct routes
+        run: node scripts/verify-portfolio.mjs
+      - name: Save built preview for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-design-pampanga-pr-preview
+          path: dist
+          retention-days: 7

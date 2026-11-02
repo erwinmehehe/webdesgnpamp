@@ -9,12 +9,12 @@ import {
   Gauge,
   Layers3,
   LayoutDashboard,
-  MousePointer2,
+
   Search,
   ShieldCheck,
   Smartphone,
-  Sparkles,
-  WandSparkles,
+
+
 } from "lucide-react";
 import { Eyebrow, GoldButton, Section, SectionIntro } from "@/components/blocks";
 import { Reveal } from "@/components/Reveal";

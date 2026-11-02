@@ -110,6 +110,12 @@ export function AboutPage() {
                 <Link to="/author/erwin-valles/" className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300">
                   <Search className="h-4 w-4" aria-hidden="true" />Articles by Erwin
                 </Link>
+                <a href={"mailto:" + site.email} className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300">
+                  Email: {site.email}
+                </a>
+                <a href={site.phoneHref} className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-gold-400/30 hover:text-gold-300">
+                  Phone: {site.phoneDisplay}
+                </a>
               </div>
             </Reveal>
           </div>

@@ -11,11 +11,13 @@ import {
   useReducedMotion,
   useSpring,
 } from "framer-motion";
-import { ArrowUpRight, Monitor, Smartphone, Tablet } from "lucide-react";
+import { ArrowUpRight, Monitor, MousePointerClick, Smartphone, Tablet } from "lucide-react";
 import { Link } from "@/router";
 import { SiteEffects } from "@/components/portfolio/SiteEffects";
 import { SITE_WIDTH, SitePreview } from "@/components/portfolio/SitePreview";
 import type { Project } from "@/data/portfolio";
+import { isDemoSlug } from "@/data/portfolioShowcase";
+import { trackEvent } from "@/utils/analytics";
 
 const cardShapes = [
   "rounded-[2.4rem]",
@@ -262,6 +264,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
             <span style={{ color: accent }}>{projectNumber}</span>
             <span>{project.industry}</span>
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 font-sans text-[10px] font-medium tracking-normal text-slate-300">Concept</span>
           </div>
           <h2 className="mt-3 font-display text-[1.55rem] font-semibold leading-none tracking-[-0.035em] text-white sm:text-[1.85rem]">
             {project.name}
@@ -269,6 +272,20 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-500 transition-colors duration-500 group-hover:text-slate-400">
             {project.summary}
           </p>
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <Link to={"/portfolio/" + project.slug + "/"} className="inline-flex min-h-10 items-center gap-1.5 text-xs font-semibold text-slate-200 underline-offset-4 hover:text-white hover:underline">
+              Read case study <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+            {isDemoSlug(project.slug) && (
+              <Link
+                to={"/portfolio/" + project.slug + "/demo/"}
+                onClick={() => trackEvent("portfolio_demo_opened", { project_slug: project.slug, source: "gallery" })}
+                className="inline-flex min-h-10 items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/[0.10] px-4 py-2 text-xs font-bold text-gold-200 transition-colors hover:border-gold-400 hover:bg-gold-400/[0.20]"
+              >
+                <MousePointerClick className="h-3.5 w-3.5" /> Try the live concept
+              </Link>
+            )}
+          </div>
         </div>
 
         <Link
@@ -280,15 +297,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
         </Link>
       </div>
 
-      <div className="px-6 pb-7 sm:hidden">
-        <Link
-          to={`/portfolio/${project.slug}/`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-white"
-        >
-          Explore website
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </div>
+
     </motion.article>
   );
 }

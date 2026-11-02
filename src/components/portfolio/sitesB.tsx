@@ -159,9 +159,9 @@ export function SiteStarlane() {
  * ------------------------------------------------------------------ */
 export function SiteIronpeak() {
   const projects = [
-    ["NORTHGATE LOGISTICS HUB", "Industrial · 18,400 sqm · 2025"],
-    ["CASA MIRADOR", "Residential · 42 units · 2024"],
-    ["SAN FERNANDO RETAIL ROW", "Commercial · 3,200 sqm · 2024"],
+    ["INDUSTRIAL HUB CONCEPT", "Industrial · Sample project"],
+    ["RESIDENTIAL BUILD CONCEPT", "Residential · Sample project"],
+    ["RETAIL FIT-OUT CONCEPT", "Commercial · Sample project"],
   ];
   return (
     <div className="w-full bg-[#0E0E10] font-['Archivo',sans-serif] text-white">
@@ -190,8 +190,8 @@ export function SiteIronpeak() {
             <span className="text-[#FFC800]">heavy.</span>
           </h2>
           <p className="mt-3 max-w-[300px] text-[10px] leading-relaxed text-white/65">
-            General contracting and design-build across Central Luzon. ₱1.4B delivered,
-            zero lost-time incidents in 2025.
+            General contracting and design-build website concept for Central Luzon.
+            All project examples are illustrative.
           </p>
         </div>
       </div>
@@ -242,8 +242,8 @@ export function SiteIronpeak() {
       {/* safety band */}
       <div className="flex items-center justify-between bg-[#FFC800] px-8 py-5 text-[#0E0E10]">
         <p className="text-[13px] font-black uppercase leading-tight">
-          Zero lost-time incidents.
-          <span className="ml-2 font-medium normal-case opacity-70">Audited quarterly, documented always.</span>
+          Safety planning belongs in the brief.
+          <span className="ml-2 font-medium normal-case opacity-70">Show verified policies and evidence on a real contractor website.</span>
         </p>
         <span className="border-2 border-[#0E0E10] px-5 py-2 text-[9px] font-extrabold uppercase tracking-[0.1em]">
           Safety Record
@@ -313,10 +313,10 @@ export function SiteNorthvale() {
       <div className="border-y border-[#12355B]/10 bg-white px-8 py-4">
         <div className="flex items-center justify-between">
           <span className="text-[8px] uppercase tracking-[0.22em] text-[#12355B]/45">
-            Accredited HMO provider
+            Sample HMO information section
           </span>
           <div className="flex gap-7 text-[10px] font-medium tracking-[0.06em] text-[#12355B]/35">
-            <span>MAXICARE</span><span>Intellicare</span><span>MEDICARD</span><span>Cardinal</span>
+            <span>Coverage details</span><span>Eligibility</span><span>Contact to verify</span>
           </div>
         </div>
       </div>
@@ -329,10 +329,10 @@ export function SiteNorthvale() {
             <div className="text-[8px] uppercase tracking-[0.22em] text-[#12355B]/50">
               Internal Medicine
             </div>
-            <h3 className="mt-1.5 text-[14px] font-semibold">Dr. Amelita R. Navarro</h3>
+            <h3 className="mt-1.5 text-[14px] font-semibold">Sample physician profile</h3>
             <p className="mt-1 text-[9.5px] leading-relaxed text-[#12355B]/60">
-              Fellow, Philippine College of Physicians. Practising since 2009. Consults
-              Mondays, Wednesdays and Fridays, 9am–4pm.
+              Use a real clinician name, validated credentials and confirmed consultation
+              hours before publishing a production practice website.
             </p>
           </div>
         </div>
@@ -369,7 +369,7 @@ export function SiteVerdant() {
     <div className="w-full bg-[#F5F2EC] font-['Libre_Franklin',sans-serif] text-[#2F3A2E]">
       {/* masthead */}
       <div className="flex items-center justify-between px-8 py-5">
-        <span className="text-[9px] tracking-[0.2em] text-[#2F3A2E]/50">EST. 1998</span>
+        <span className="text-[9px] tracking-[0.2em] text-[#2F3A2E]/50">CONCEPT STUDY</span>
         <div className="text-center">
           <div className="font-['Cormorant_Garamond',serif] text-[20px] tracking-[0.2em]">VERDANT</div>
           <div className="text-[6.5px] uppercase tracking-[0.44em] text-[#8C6E4A]">
@@ -386,11 +386,11 @@ export function SiteVerdant() {
           Land, held and developed
         </p>
         <h2 className="mx-auto mt-4 max-w-[440px] font-['Cormorant_Garamond',serif] text-[32px] font-light leading-[1.15] tracking-[0.01em]">
-          Four hundred hectares in Pampanga, and no intention of rushing it.
+          A clearer way to present property plans and availability.
         </h2>
         <p className="mx-auto mt-4 max-w-[380px] text-[10.5px] leading-relaxed text-[#2F3A2E]/65">
-          We acquire contiguous farmland, secure titling, then develop in phases —
-          selling only what is finished and documented.
+          A sample property website showing how buyers could explore a masterplan,
+          understand release stages and request verified availability details.
         </p>
       </div>
 
@@ -403,10 +403,10 @@ export function SiteVerdant() {
       {/* editorial stat row */}
       <div className="grid grid-cols-4 divide-x divide-[#2F3A2E]/12 border-b border-[#2F3A2E]/12">
         {[
-          ["412", "Hectares held"],
-          ["2,860", "Lots titled"],
-          ["6", "Phases delivered"],
-          ["27 yrs", "Operating"],
+          ["Land", "Site masterplan"],
+          ["Lots", "Availability"],
+          ["Phases", "Release stages"],
+          ["Terms", "Buyer information"],
         ].map(([n, l]) => (
           <div key={l} className="px-6 py-7 text-center">
             <div className="font-['Cormorant_Garamond',serif] text-[27px] font-light leading-none">{n}</div>
@@ -423,8 +423,8 @@ export function SiteVerdant() {
             Hacienda Verde, Phase VI
           </h3>
           <p className="mt-3 max-w-[280px] text-[10px] leading-relaxed text-[#2F3A2E]/65">
-            320 titled lots from 240 sqm. Roadworks complete, drainage certified,
-            96 lots remaining at release pricing.
+            Illustrative project detail. Actual land titles, site works,
+            availability, prices and development permissions require verification.
           </p>
           <span className="mt-6 inline-block border-b border-[#8C6E4A] pb-1 text-[9.5px] tracking-[0.16em] text-[#8C6E4A]">
             DOWNLOAD MASTERPLAN
@@ -434,10 +434,10 @@ export function SiteVerdant() {
           <img src={P.aerialField} alt="" className="h-[190px] w-full object-cover" />
           <div className="mt-4 grid grid-cols-2 gap-5">
             {[
-              ["Lot sizes", "240 – 480 sqm"],
-              ["Release price", "₱8,500 / sqm"],
-              ["Title status", "Clean, individually titled"],
-              ["Turnover", "Immediate on 60%"],
+              ["Lot sizes", "Confirm ranges"],
+              ["Release price", "Request current quote"],
+              ["Title status", "Verify documentation"],
+              ["Turnover", "Confirm project terms"],
             ].map(([l, v]) => (
               <div key={l} className="border-t border-[#2F3A2E]/15 pt-3">
                 <div className="text-[8px] uppercase tracking-[0.18em] text-[#2F3A2E]/45">{l}</div>

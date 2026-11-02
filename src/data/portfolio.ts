@@ -14,6 +14,8 @@ import {
 
 export interface Project {
   slug: string;
+  status: "concept" | "client";
+  categories: Array<"Hospitality" | "Corporate" | "Property" | "Healthcare" | "Industrial" | "Construction">;
   name: string;
   industry: string;
   industrySlug?: string;
@@ -43,30 +45,36 @@ const img = {
 export const projects: Project[] = [
   {
     slug: "coreaxis-bpo",
+    status: "concept",
+    categories: ["Corporate"],
     name: "CoreAxis BPO Solutions",
     industry: "BPO & Outsourcing",
     industrySlug: "bpo-web-design-clark",
     location: "Clark Freeport Zone",
     summary: "A corporate outsourcing site balancing two audiences: enterprise clients evaluating capability, and local talent applying for seats.",
-    approach: "We separated the journey early — client services on one path, careers and recruitment on the other — with a consistent, confident visual language for both.",
-    features: ["Corporate service architecture", "Recruitment & careers hub", "Capability and process content", "Applicant enquiry flow"],
+    approach: "The demo separates buyer evaluation from sample careers browsing. Neither path claims a real BPO customer or a live job vacancy.",
+    features: ["Corporate service architecture", "Sample careers pathway", "Capability detail tabs", "Local buyer enquiry preview"],
     image: img.corporate,
     accent: "#38bdf8",
   },
   {
     slug: "sizzle-house",
+    status: "concept",
+    categories: ["Hospitality"],
     name: "Sizzle House Kitchen",
     industry: "Restaurants & Cafés",
     industrySlug: "restaurant-web-design",
     location: "Angeles City",
     summary: "A restaurant site built around the three questions every hungry visitor asks: what's on the menu, are you open, and how do I book.",
-    approach: "Structured HTML menus instead of photographed price lists, reservation requests that reach the front desk, and a mobile-first layout for customers deciding where to eat.",
-    features: ["Structured menu & prices", "Reservation requests", "Event & catering pages", "Restaurant schema markup"],
+    approach: "Structured HTML menus instead of photographed price lists, a simulated reservation request, and a mobile-first layout for restaurant customers.",
+    features: ["Filterable menu and sample prices", "Reservation request preview", "Responsive food gallery", "Restaurant information architecture"],
     image: img.restaurant,
     accent: "#fbbf24",
   },
   {
     slug: "skyline-hotel",
+    status: "concept",
+    categories: ["Hospitality"],
     name: "Skyline Clark Hotel",
     industry: "Hotels & Resorts",
     industrySlug: "hotel-web-design",
@@ -79,6 +87,8 @@ export const projects: Project[] = [
   },
   {
     slug: "goldenfield-estates",
+    status: "concept",
+    categories: ["Property"],
     name: "Goldenfield Estates",
     industry: "Real Estate",
     industrySlug: "real-estate-web-design",
@@ -91,6 +101,8 @@ export const projects: Project[] = [
   },
   {
     slug: "brightsmile-dental",
+    status: "concept",
+    categories: ["Healthcare"],
     name: "BrightSmile Dental Studio",
     industry: "Dental & Orthodontics",
     industrySlug: "dental-web-design",
@@ -104,6 +116,8 @@ export const projects: Project[] = [
   },
   {
     slug: "starlane-logistics",
+    status: "concept",
+    categories: ["Industrial"],
     name: "Starlane Logistics",
     industry: "Logistics & Trucking",
     industrySlug: "logistics-web-design",
@@ -117,19 +131,23 @@ export const projects: Project[] = [
   },
   {
     slug: "ironpeak-builders",
+    status: "concept",
+    categories: ["Construction"],
     name: "Ironpeak Builders",
     industry: "Construction",
     industrySlug: "construction-web-design",
     location: "Pampanga",
     summary: "A contractor presence built on evidence — projects, capacity, compliance and a quotation flow that filters enquiries.",
-    approach: "Project portfolio organised by category, licensing and safety content for corporate buyers, and a scope-aware quotation form.",
-    features: ["Project portfolio", "Licenses & compliance", "RFQ form", "Careers for skilled trades"],
+    approach: "A category-filtered conceptual project gallery, a clear way to present verified qualifications when available, and a scope-aware quotation worksheet.",
+    features: ["Filterable example project gallery", "Sample scope detail views", "Three-step quotation worksheet", "Capability explanations"],
     image: img.construction,
     accent: "#facc15",
     icon: ClipboardList,
   },
   {
     slug: "northvale-clinic",
+    status: "concept",
+    categories: ["Healthcare"],
     name: "Northvale Medical Clinic",
     industry: "Clinics & Medical",
     industrySlug: "clinic-web-design",
@@ -143,6 +161,8 @@ export const projects: Project[] = [
   },
   {
     slug: "verdant-property",
+    status: "concept",
+    categories: ["Property"],
     name: "Verdant Property Group",
     industry: "Real Estate",
     industrySlug: "real-estate-web-design",
@@ -156,6 +176,8 @@ export const projects: Project[] = [
   },
   {
     slug: "tradeline-supply",
+    status: "concept",
+    categories: ["Industrial"],
     name: "Tradeline Industrial Supply",
     industry: "Manufacturing & Supply",
     industrySlug: "manufacturing-web-design",

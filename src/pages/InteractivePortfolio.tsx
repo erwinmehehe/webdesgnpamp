@@ -537,8 +537,8 @@ export function InteractivePortfolioPage() {
 
               <div className="relative mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-[22px] bg-white/[0.08]">
                 <div className="bg-[#0c0c12] p-5">
-                  <div className="text-[clamp(28px,4vw,46px)] font-semibold leading-none tracking-[-.05em] text-white">200+</div>
-                  <div className="mt-2 text-xs leading-5 text-white/35">websites designed & launched</div>
+                  <div className="text-[clamp(28px,4vw,46px)] font-semibold leading-none tracking-[-.05em] text-white">10</div>
+                  <div className="mt-2 text-xs leading-5 text-white/35">original website design concepts</div>
                 </div>
                 <div className="bg-[#0c0c12] p-5">
                   <div className="text-[clamp(28px,4vw,46px)] font-semibold leading-none tracking-[-.05em] text-[#c6f24e]">3</div>
