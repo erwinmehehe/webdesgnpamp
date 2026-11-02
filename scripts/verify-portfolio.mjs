@@ -23,7 +23,7 @@ for (const slug of demos) {
   assert.ok(!sitemap.includes("/portfolio/" + slug + "/demo/"), "Fictional demo must not appear in sitemap");
 }
 
-const allConcepts = [...portfolio.matchAll(/status: "concept"/g)].length;
+const allConcepts = [...portfolio.matchAll(/status: "concept",/g)].length;
 assert.equal(allConcepts, 10, "Expected 10 clearly labeled concept projects");
 
 console.log("Portfolio checks passed: 3 standalone demos, 3 direct-link case studies, 10 labeled concepts, noindex and sitemap safeguards.");
