@@ -262,7 +262,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
             <span style={{ color: accent }}>{projectNumber}</span>
             <span>{project.industry}</span>
-            <span className="rounded-full border border-gold-400/30 bg-gold-400/[0.07] px-2 py-1 font-sans text-[10px] font-semibold tracking-normal text-gold-300">Design concept · not a client project</span>
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 font-sans text-[10px] font-medium tracking-normal text-slate-300">Concept</span>
           </div>
           <h2 className="mt-3 font-display text-[1.55rem] font-semibold leading-none tracking-[-0.035em] text-white sm:text-[1.85rem]">
             {project.name}
