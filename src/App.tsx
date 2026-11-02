@@ -26,6 +26,7 @@ import { BlogPage, BlogPostPage } from "@/pages/Blog";
 import { ContactPage } from "@/pages/Contact";
 import { NotFoundPage } from "@/pages/NotFound";
 import { ProjectSitePage } from "@/pages/ProjectSitePage";
+import { ProjectDemoPage } from "@/pages/ProjectDemoPage";
 import { services } from "@/data/services";
 
 interface RouteDefinition {
@@ -45,6 +46,7 @@ const routes: RouteDefinition[] = [
   { pattern: "/case-studies", render: () => <CaseStudiesPage /> },
   { pattern: "/portfolio", render: () => <PortfolioPage /> },
   { pattern: "/interactive-portfolio", render: () => <InteractivePortfolioPage /> },
+  { pattern: "/portfolio/:slug/demo", render: (p) => <ProjectDemoPage slug={p.slug} /> },
   { pattern: "/portfolio/:slug", render: (p) => <ProjectSitePage slug={p.slug} /> },
   { pattern: "/pricing", render: () => <PricingPage /> },
   { pattern: "/contact", render: () => <ContactPage /> },
@@ -85,7 +87,8 @@ function ScrollProgress() {
 function Shell() {
   const { path } = useRoute();
 
-  if (path === "/interactive-portfolio") {
+  const isStandaloneDemo = /^\/portfolio\/(?:sizzle-house|coreaxis-bpo|ironpeak-builders)\/demo$/.test(path);
+  if (path === "/interactive-portfolio" || isStandaloneDemo) {
     return (
       <main id="main-content" key={path}>
         <Routes />
