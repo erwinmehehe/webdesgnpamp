@@ -159,9 +159,9 @@ export function SiteStarlane() {
  * ------------------------------------------------------------------ */
 export function SiteIronpeak() {
   const projects = [
-    ["NORTHGATE LOGISTICS HUB", "Industrial · 18,400 sqm · 2025"],
-    ["CASA MIRADOR", "Residential · 42 units · 2024"],
-    ["SAN FERNANDO RETAIL ROW", "Commercial · 3,200 sqm · 2024"],
+    ["INDUSTRIAL HUB CONCEPT", "Industrial · Sample project"],
+    ["RESIDENTIAL BUILD CONCEPT", "Residential · Sample project"],
+    ["RETAIL FIT-OUT CONCEPT", "Commercial · Sample project"],
   ];
   return (
     <div className="w-full bg-[#0E0E10] font-['Archivo',sans-serif] text-white">
@@ -190,8 +190,8 @@ export function SiteIronpeak() {
             <span className="text-[#FFC800]">heavy.</span>
           </h2>
           <p className="mt-3 max-w-[300px] text-[10px] leading-relaxed text-white/65">
-            General contracting and design-build across Central Luzon. ₱1.4B delivered,
-            zero lost-time incidents in 2025.
+            General contracting and design-build website concept for Central Luzon.
+            All project examples are illustrative.
           </p>
         </div>
       </div>
@@ -242,8 +242,8 @@ export function SiteIronpeak() {
       {/* safety band */}
       <div className="flex items-center justify-between bg-[#FFC800] px-8 py-5 text-[#0E0E10]">
         <p className="text-[13px] font-black uppercase leading-tight">
-          Zero lost-time incidents.
-          <span className="ml-2 font-medium normal-case opacity-70">Audited quarterly, documented always.</span>
+          Safety planning belongs in the brief.
+          <span className="ml-2 font-medium normal-case opacity-70">Show verified policies and evidence on a real contractor website.</span>
         </p>
         <span className="border-2 border-[#0E0E10] px-5 py-2 text-[9px] font-extrabold uppercase tracking-[0.1em]">
           Safety Record
