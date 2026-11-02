@@ -3,7 +3,6 @@ import { ArrowRight, ArrowUpRight, Check, ChevronLeft, ChevronRight, HardHat, Me
 
 type View = "home" | "projects" | "capabilities" | "quote";
 type Category = "All" | "Industrial" | "Commercial" | "Residential" | "Civic";
-const yellow = "#FFC800";
 const photos = {
   cranes: "https://images.pexels.com/photos/14486702/pexels-photo-14486702.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1500",
   plan: "https://images.pexels.com/photos/8482551/pexels-photo-8482551.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=950&w=1500",
