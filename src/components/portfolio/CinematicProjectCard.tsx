@@ -297,15 +297,7 @@ export function CinematicProjectCard({ project, index }: { project: Project; ind
         </Link>
       </div>
 
-      <div className="px-6 pb-7 sm:hidden">
-        <Link
-          to={`/portfolio/${project.slug}/`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-white"
-        >
-          Explore website
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </div>
+
     </motion.article>
   );
 }
