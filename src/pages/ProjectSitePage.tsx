@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CheckCircle2, Code2, Layers3, MousePointerClick, Search, Smartphone } from "lucide-react";
 import { SiteEffects } from "@/components/portfolio/SiteEffects";
 import { SiteFrame, SitePreview } from "@/components/portfolio/SitePreview";
-import { ProjectInteractions } from "@/components/portfolio/ProjectInteractions";
+import { FlagshipCaseStudy } from "@/components/portfolio/FlagshipCaseStudy";
+import { isDemoSlug } from "@/data/portfolioShowcase";
 import { Link, usePageMeta } from "@/router";
 import { projects } from "@/data/portfolio";
 import { NotFoundPage } from "@/pages/NotFound";
@@ -40,6 +41,7 @@ export function ProjectSitePage({ slug }: { slug: string }) {
   }, [project?.slug]);
 
   if (!project) return <NotFoundPage />;
+  if (isDemoSlug(project.slug)) return <FlagshipCaseStudy project={project} slug={project.slug} />;
 
   const accent = project.accent ?? "#f6c14a";
   const seoCards = [
@@ -87,12 +89,6 @@ export function ProjectSitePage({ slug }: { slug: string }) {
           </motion.div>
         </div>
       </section>
-
-      {project.status === "concept" && (
-        <div className="mx-auto max-w-[1450px] px-5 pb-14 sm:px-8">
-          <ProjectInteractions slug={project.slug} />
-        </div>
-      )}
 
       <section id="walkthrough-services" className="scroll-mt-20 border-b border-white/[0.06] px-5 py-20 sm:px-8 lg:py-28">
         <div className="mx-auto max-w-6xl">
