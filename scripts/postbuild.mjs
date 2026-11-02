@@ -32,6 +32,7 @@ const industryEntries = await entriesFrom("src/data/industries.ts");
 const locationEntries = await entriesFrom("src/data/locations.ts");
 const blogEntries = await entriesFrom("src/data/blog.ts");
 const portfolioSlugs = await slugsFrom("src/data/portfolio.ts");
+const portfolioDemoSlugs = ["sizzle-house", "coreaxis-bpo", "ironpeak-builders"];
 
 const routeMeta = new Map([
   ["/about/", { title: "About Erwin Valles | Web Design Pampanga", description: "Meet Erwin Valles, the person behind Web Design Pampanga. Web design, technical SEO, local SEO and conversion-focused websites for Pampanga businesses." }],
@@ -58,7 +59,17 @@ for (const entry of industryEntries) { const route = `/industries/${entry.slug}/
 for (const entry of locationEntries) { const route = `/locations/${entry.slug}/`; routeMeta.set(route, entry); routeKind.set(route, { kind: "location", entry }); }
 for (const entry of blogEntries) { const route = `/blog/${entry.slug}/`; routeMeta.set(route, entry); routeKind.set(route, { kind: "article", entry }); }
 
-const routes = new Set(["/", ...routeMeta.keys(), ...portfolioSlugs.map((slug) => `/portfolio/${slug}/`)]);
+for (const slug of portfolioDemoSlugs) {
+  routeMeta.set(`/portfolio/${slug}/demo/`, {
+    title: `Interactive Website Concept | Web Design Pampanga`,
+    description: "Explore a responsive, interactive fictional website design. This is a portfolio demo, not a commissioned client project.",
+  });
+}
+const routes = new Set([
+  "/", ...routeMeta.keys(),
+  ...portfolioSlugs.map((slug) => `/portfolio/${slug}/`),
+  ...portfolioDemoSlugs.map((slug) => `/portfolio/${slug}/demo/`),
+]);
 
 function titleBeforePipe(title) { return title.split("|")[0].trim(); }
 function humanizeSlug(slug) {
