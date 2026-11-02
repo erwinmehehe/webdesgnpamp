@@ -197,8 +197,7 @@ export function Header() {
       <motion.header initial={{ y: -72, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7 }} className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-500", scrolled || mobileOpen ? "border-b border-white/[0.06] bg-ink-950/85 shadow-[0_8px_40px_-16px_rgba(0,0,0,0.8)] backdrop-blur-xl" : "border-b border-transparent")}>
         <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-5 sm:px-8" aria-label="Main">
           <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label={`${site.name} — home`}>
-            <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-gold-300 via-gold-500 to-orange-600 shadow-[0_4px_24px_-4px_rgba(246,193,74,0.5)] transition-transform duration-500 group-hover:rotate-[10deg] group-hover:scale-105"><Sunrise className="h-5 w-5 text-ink-950" strokeWidth={2.4} aria-hidden="true" /></span>
-            <span className="font-display text-[15px] font-bold tracking-tight text-white">Web Design <span className="text-gold-400">Pampanga</span></span>
+            <img src="/brand/logo.svg" width={184} height={42} alt="" className="h-[42px] w-auto max-w-[184px] object-contain transition-opacity duration-300 group-hover:opacity-85" />
           </Link>
 
           <ul className="hidden items-center gap-0 xl:flex">{menu.map((group) => <DesktopGroup key={group.label} group={group} active={isActive(group)} />)}</ul>
