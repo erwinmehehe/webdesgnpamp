@@ -15,7 +15,7 @@ import {
 export interface Project {
   slug: string;
   status: "concept" | "client";
-  categories: Array<"Website" | "SEO Structure" | "Local Business" | "Corporate" | "Catalog">;
+  categories: Array<"Hospitality" | "Corporate" | "Property" | "Healthcare" | "Industrial" | "Construction">;
   name: string;
   industry: string;
   industrySlug?: string;
@@ -46,7 +46,7 @@ export const projects: Project[] = [
   {
     slug: "coreaxis-bpo",
     status: "concept",
-    categories: ["Website","Corporate"],
+    categories: ["Corporate"],
     name: "CoreAxis BPO Solutions",
     industry: "BPO & Outsourcing",
     industrySlug: "bpo-web-design-clark",
@@ -60,7 +60,7 @@ export const projects: Project[] = [
   {
     slug: "sizzle-house",
     status: "concept",
-    categories: ["Website","SEO Structure","Local Business"],
+    categories: ["Hospitality"],
     name: "Sizzle House Kitchen",
     industry: "Restaurants & Cafés",
     industrySlug: "restaurant-web-design",
@@ -74,7 +74,7 @@ export const projects: Project[] = [
   {
     slug: "skyline-hotel",
     status: "concept",
-    categories: ["Website","Local Business"],
+    categories: ["Hospitality"],
     name: "Skyline Clark Hotel",
     industry: "Hotels & Resorts",
     industrySlug: "hotel-web-design",
@@ -88,7 +88,7 @@ export const projects: Project[] = [
   {
     slug: "goldenfield-estates",
     status: "concept",
-    categories: ["Website","Local Business"],
+    categories: ["Property"],
     name: "Goldenfield Estates",
     industry: "Real Estate",
     industrySlug: "real-estate-web-design",
@@ -102,7 +102,7 @@ export const projects: Project[] = [
   {
     slug: "brightsmile-dental",
     status: "concept",
-    categories: ["Website","SEO Structure","Local Business"],
+    categories: ["Healthcare"],
     name: "BrightSmile Dental Studio",
     industry: "Dental & Orthodontics",
     industrySlug: "dental-web-design",
@@ -117,7 +117,7 @@ export const projects: Project[] = [
   {
     slug: "starlane-logistics",
     status: "concept",
-    categories: ["Website","Corporate"],
+    categories: ["Industrial"],
     name: "Starlane Logistics",
     industry: "Logistics & Trucking",
     industrySlug: "logistics-web-design",
@@ -132,7 +132,7 @@ export const projects: Project[] = [
   {
     slug: "ironpeak-builders",
     status: "concept",
-    categories: ["Website","SEO Structure","Corporate"],
+    categories: ["Construction"],
     name: "Ironpeak Builders",
     industry: "Construction",
     industrySlug: "construction-web-design",
@@ -147,7 +147,7 @@ export const projects: Project[] = [
   {
     slug: "northvale-clinic",
     status: "concept",
-    categories: ["Website","Local Business"],
+    categories: ["Healthcare"],
     name: "Northvale Medical Clinic",
     industry: "Clinics & Medical",
     industrySlug: "clinic-web-design",
@@ -162,7 +162,7 @@ export const projects: Project[] = [
   {
     slug: "verdant-property",
     status: "concept",
-    categories: ["Website","Local Business"],
+    categories: ["Property"],
     name: "Verdant Property Group",
     industry: "Real Estate",
     industrySlug: "real-estate-web-design",
@@ -177,7 +177,7 @@ export const projects: Project[] = [
   {
     slug: "tradeline-supply",
     status: "concept",
-    categories: ["Website","Corporate","Catalog"],
+    categories: ["Industrial"],
     name: "Tradeline Industrial Supply",
     industry: "Manufacturing & Supply",
     industrySlug: "manufacturing-web-design",
