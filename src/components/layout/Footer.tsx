@@ -1,6 +1,5 @@
 import { ArrowUp, Mail, MessageCircle, Phone } from "lucide-react";
 import { Link } from "@/router";
-import { services } from "@/data/services";
 import { site } from "@/data/site";
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; to: string }[] }) {
