@@ -48,7 +48,7 @@ export function SiteCoreAxis() {
       <div className="flex items-center justify-between border-b border-[#E2E6EB] px-8 py-2 text-[9px] tracking-[0.12em] text-[#5A6B82]">
         <span>CORPORATE WEBSITE CONCEPT · SAMPLE CONTENT</span>
         <span className="flex gap-5">
-          <span>+63 45 499 8200</span>
+          <span>BUSINESS WEBSITE SAMPLE</span>
           <span className="text-[#1D4ED8]">CLIENT PORTAL</span>
         </span>
       </div>
@@ -170,7 +170,7 @@ export function SiteSizzleHouse() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#141010] via-[#141010]/45 to-[#141010]/25" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
           <p className="font-['Playfair_Display',serif] text-[11px] italic text-[#C9A227]">
-            est. 2016 · Kapampangan kitchen
+            A Pampanga-inspired design concept
           </p>
           <h2 className="mt-2 max-w-[420px] font-['Playfair_Display',serif] text-[30px] font-normal leading-[1.1]">
             Fire, acid and patience — the whole animal, respected.
@@ -216,7 +216,7 @@ export function SiteSizzleHouse() {
             BOOK ONLINE
           </span>
           <span className="border border-[#F3EDE4]/25 px-6 py-2.5 text-[9px] tracking-[0.14em]">
-            0917 244 0188
+            SAMPLE CONTACT
           </span>
         </div>
       </div>
