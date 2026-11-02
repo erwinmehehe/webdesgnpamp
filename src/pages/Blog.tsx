@@ -3,7 +3,6 @@ import { CTABand, Eyebrow, GhostButton, GoldButton, PageHero, Section, SectionIn
 import { Reveal } from "@/components/Reveal";
 import { Link, usePageMeta } from "@/router";
 import { getPost, posts, type Post } from "@/data/blog";
-import { site } from "@/data/site";
 import { NotFoundPage } from "@/pages/NotFound";
 
 export function BlogPage() {
