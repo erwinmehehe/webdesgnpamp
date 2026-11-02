@@ -51,6 +51,19 @@ export function PortfolioPage() {
               <p className="max-w-md text-base leading-relaxed text-slate-400">
                 Different industries, different visual languages, one standard of craft. Browse the gallery, then open any project for a closer look at the design decisions and working examples.
               </p>
+              <div className="mt-7 flex flex-wrap items-center gap-2">
+                <span className="mr-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gold-300">Try a demo</span>
+                {[
+                  { slug: "sizzle-house", label: "Restaurant" },
+                  { slug: "coreaxis-bpo", label: "Corporate" },
+                  { slug: "ironpeak-builders", label: "Construction" },
+                ].map((item) => (
+                  <Link key={item.slug} to={"/portfolio/" + item.slug + "/demo/"}
+                    className="inline-flex min-h-10 items-center rounded-full border border-white/15 bg-white/[0.03] px-3.5 text-xs font-semibold text-slate-200 transition-colors hover:border-gold-400/50 hover:text-gold-300">
+                    {item.label} <ArrowRight className="ml-1.5 h-3 w-3" />
+                  </Link>
+                ))}
+              </div>
               <div className="mt-7 flex items-center gap-3 text-xs text-slate-600">
                 <span className="hidden h-2 w-2 rounded-full bg-gold-400 sm:block" />
                 <span className="hidden sm:inline">Original concept studies · Not published client projects</span>
