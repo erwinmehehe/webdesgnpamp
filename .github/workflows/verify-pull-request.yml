@@ -23,6 +23,8 @@ jobs:
         run: npx tsc --noEmit
       - name: Build production pages
         run: npm run build
+      - name: Verify portfolio demos and direct routes
+        run: node scripts/verify-portfolio.mjs
       - name: Save built preview for review
         uses: actions/upload-artifact@v4
         with:
